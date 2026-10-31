@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.vite/
+
+# Capturas das referências (material de terceiros, só para estudo local)
+docs/referencias/
+
+# Capturas de verificação geradas pelos scripts
+capturas/
+
+# Relatórios do Lighthouse
+relatorios/
+
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*

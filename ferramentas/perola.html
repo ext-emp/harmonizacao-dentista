@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Ferramenta: imagem estática da pérola</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        background: transparent;
+      }
+      #palco {
+        width: 800px;
+        height: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Página só de desenvolvimento (não entra no build). Usada por
+         scripts/capturar-perola.mjs para gerar fotos/hero/perola.png. -->
+    <div id="palco"></div>
+    <script type="module">
+      import { criarPerola } from '/src/js/3d/perola.js';
+
+      const params = new URLSearchParams(location.search);
+      const tamanho = Number(params.get('tamanho') || 1600);
+      const material = JSON.parse(params.get('material') || '{}');
+      const forma = JSON.parse(params.get('forma') || '{}');
+      const perola = await criarPerola(document.getElementById('palco'), { tamanho, animar: false, material, forma });
+      window.__perola = perola ? perola.canvas.toDataURL('image/png') : 'sem-webgl';
+    </script>
+  </body>
+</html>

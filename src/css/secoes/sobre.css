@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Sobre: retrato grande à esquerda (colunas 1 a 5) e texto à direita.
+   No celular, o retrato vem primeiro.
+   ========================================================================== */
+
+.sobre .grade {
+  row-gap: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+}
+
+.sobre__retrato {
+  position: relative;
+  grid-column: 1 / -1;
+}
+
+.sobre__mascara {
+  aspect-ratio: 4 / 5;
+}
+
+.sobre__provisorio {
+  position: absolute;
+  top: var(--esp-4);
+  left: var(--esp-4);
+}
+
+.sobre__texto {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: start;
+}
+
+.sobre__titulo {
+  margin-top: var(--esp-5);
+}
+
+.sobre__registro {
+  margin-top: var(--esp-4);
+}
+
+.sobre__paragrafos {
+  display: grid;
+  gap: var(--esp-5);
+  max-width: 40ch;
+  margin-top: clamp(2rem, 1.5rem + 2vw, 3.5rem);
+}
+
+.sobre__formacao {
+  width: 100%;
+  max-width: 34rem;
+  margin-top: clamp(2.5rem, 2rem + 2vw, 4rem);
+}
+
+.sobre__formacao-titulo {
+  padding-bottom: var(--esp-4);
+  border-bottom: 1px solid var(--tema-linha);
+}
+
+.sobre__lista li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--esp-2) var(--esp-3);
+  padding-block: var(--esp-4);
+  border-bottom: 1px solid var(--tema-linha);
+}
+
+@media (min-width: 64em) {
+  .sobre__retrato {
+    grid-column: 1 / span 5;
+  }
+
+  .sobre__texto {
+    grid-column: 7 / span 6;
+    align-self: center;
+  }
+}

@@ -1,0 +1,106 @@
+/* ==========================================================================
+   Contato (grafite): chamada grande, botão magnético e as informações.
+   ========================================================================== */
+
+.contato {
+  padding-bottom: clamp(4rem, 2rem + 6vw, 8rem);
+}
+
+.contato__rotulo,
+.contato__titulo,
+.contato__acao,
+.contato__infos {
+  grid-column: 1 / -1;
+}
+
+.contato__titulo {
+  max-width: 11ch;
+  margin-top: var(--esp-5);
+}
+
+.contato__acao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-5) var(--esp-6);
+  margin-top: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+}
+
+/* Botão grande da chamada final. */
+.botao--grande {
+  --botao-altura: clamp(4rem, 3.5rem + 1.8vw, 5.25rem);
+  gap: 1.1rem;
+  padding-inline: 2rem 2.25rem;
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.1875rem);
+}
+
+.botao--grande .botao__ponto {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.contato__nota {
+  max-width: 26ch;
+  font-size: var(--fs-pequeno);
+}
+
+.contato__infos {
+  display: grid;
+  gap: var(--esp-7);
+  margin-top: clamp(4rem, 2rem + 6vw, 8rem);
+  padding-top: var(--esp-6);
+  border-top: 1px solid var(--tema-linha);
+}
+
+.contato__info {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--esp-2);
+}
+
+.contato__info-titulo {
+  margin-bottom: var(--esp-2);
+}
+
+.contato__info-titulo--segundo {
+  margin-top: var(--esp-5);
+}
+
+.contato__endereco {
+  font-style: normal;
+}
+
+.contato__link {
+  margin-top: var(--esp-2);
+}
+
+.contato__horarios {
+  display: grid;
+  gap: var(--esp-2);
+  width: 100%;
+  max-width: 22rem;
+}
+
+.contato__horarios li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--esp-5);
+}
+
+.contato__horarios li span:last-child {
+  color: var(--tema-texto-2);
+}
+
+@media (min-width: 48em) {
+  .contato__infos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: var(--grade-calha);
+  }
+}
+
+@media (min-width: 64em) {
+  .contato__titulo {
+    max-width: none;
+  }
+}

@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Pérola 3D. Começa no pé do hero, no espaço livre entre o texto e o
+   retrato. Enquanto o "O espaço" sobe por cima do hero, ela fica onde está,
+   depois sobe com ele e pousa acima da frase de abertura
+   (src/js/modulos/perola-viagem.js).
+     .perola-lugar   ponto de partida (uma área do grid do hero)
+     .perola-viagem  quem se move: o JS aplica x, y e escala
+     .perola-palco   imagem estática e, por cima, o canvas 3D
+     .perola-pouso   ponto de chegada, na abertura do "O espaço"
+   A pérola ocupa uns 65% do quadro (a imagem tem margem transparente para a
+   deformação): os tamanhos abaixo são do quadro, não da pérola.
+   Sem JavaScript ou com movimento reduzido, ela fica parada no hero.
+   ========================================================================== */
+
+:root {
+  /* Celular: a pérola cabe entre o botão (uns 216 px) e o "Rolar". Em telas
+     estreitas o quadro encolhe para não encostar no botão. */
+  --perola-quadro: clamp(4rem, (100vw - 18.8rem) / 0.65, 7rem);
+  /* Na abertura do "O espaço" ela chega um pouco maior. */
+  --perola-quadro-pouso: 9rem;
+  /* Altura do centro do pouso na abertura (fração da tela). */
+  --perola-pouso-y: 24svh;
+}
+
+@media (min-width: 64em) {
+  :root {
+    /* O limite pela altura (27svh) mantém a pérola longe do título em telas
+       largas e baixas (1920 × 1080). */
+    --perola-quadro: min(clamp(12rem, 4rem + 14vw, 21rem), 27svh);
+    --perola-quadro-pouso: calc(var(--perola-quadro) * 0.78);
+  }
+}
+
+/* ---- Partida (no hero) ------------------------------------------------ */
+/* Celular: na linha do botão, logo à esquerda do "Rolar". A margem põe a
+   borda da pérola (não a do quadro) a uns 14 px do "Rolar". */
+.perola-lugar {
+  position: relative;
+  grid-column: 1 / -1;
+  grid-row: 6;
+  justify-self: end;
+  align-self: start;
+  width: var(--perola-quadro);
+  /* Mesma margem e altura do botão (.hero__acoes): o centro da pérola fica
+     na linha dele. */
+  height: 3.375rem;
+  margin-top: var(--esp-6);
+  margin-right: calc(1.95rem - var(--perola-quadro) * 0.175);
+  pointer-events: none;
+}
+
+/* Desktop: nas colunas 5 e 6, ao lado do subtítulo e do botão. */
+@media (min-width: 64em) {
+  .perola-lugar {
+    grid-column: 5 / span 2;
+    grid-row: 4 / span 2;
+    justify-self: stretch;
+    align-self: stretch;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+}
+
+/* A caixa real (--perola-caixa) pode ser maior que o quadro: o JS usa a
+   maior das duas medidas (partida e pouso) e encolhe por escala, para o
+   canvas nunca ser ampliado. Sem JS, vale o quadro. */
+.perola-viagem {
+  --tamanho: var(--perola-caixa, var(--perola-quadro));
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--tamanho);
+  height: var(--tamanho);
+  margin: calc(var(--tamanho) / -2) 0 0 calc(var(--tamanho) / -2);
+  pointer-events: none;
+}
+
+.perola-palco {
+  position: absolute;
+  inset: 0;
+}
+
+.perola-palco__picture,
+.perola-palco__img,
+.perola-palco__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.perola-palco__canvas {
+  opacity: 0;
+}
+
+/* ---- Pouso (na abertura do "O espaço") ---------------------------------- */
+/* Centralizado, acima da frase. Com movimento, a pérola passa a morar aqui
+   (o JS a move para dentro do pouso) e, antes de pousar, um deslocamento a
+   leva até o lugar dela no hero. */
+.perola-pouso {
+  position: absolute;
+  top: var(--perola-pouso-y);
+  left: 50%;
+  z-index: 1;
+  width: var(--perola-quadro-pouso);
+  height: var(--perola-quadro-pouso);
+  margin: calc(var(--perola-quadro-pouso) / -2) 0 0 calc(var(--perola-quadro-pouso) / -2);
+  pointer-events: none;
+}

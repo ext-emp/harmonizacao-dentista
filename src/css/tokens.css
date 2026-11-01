@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Tokens do design system. Todo valor de cor, tipo, espaço, grid e movimento
+   sai daqui. Os tokens de movimento também são lidos pelo JavaScript
+   (src/js/core/tokens.js), então mudar uma curva aqui muda o site inteiro.
+   ========================================================================== */
+
+:root {
+  /* ---- Cores base ------------------------------------------------------ */
+  --cor-porcelana: #f3efe8;     /* fundo claro principal */
+  --cor-linho: #eae4da;         /* fundo claro alternativo */
+  --cor-perola: #fbf9f5;        /* superfícies claras (cards) */
+  --cor-grafite: #161513;       /* fundo escuro e texto principal */
+  --cor-grafite-2: #211f1c;     /* superfícies sobre o escuro */
+  --cor-champagne: #bfa77a;     /* SÓ detalhes: linhas, ícones, botão do slider.
+                                   Nunca texto sobre fundo claro (2,0:1). */
+
+  /* Texto secundário com contraste AA (medido sobre porcelana e grafite) */
+  --cor-texto-2-claro: #645e55;  /* 5,6:1 sobre porcelana, 5,1:1 sobre linho */
+  --cor-texto-2-escuro: #a8a196; /* 7,1:1 sobre grafite, 6,3:1 sobre grafite 2 */
+
+  --cor-linha-clara: rgb(22 21 19 / 0.16);
+  --cor-linha-escura: rgb(243 239 232 / 0.18);
+
+  /* Palavras do manifesto antes de acender: 3,9:1 sobre grafite (o texto
+     tem 30 px ou mais, então vale o mínimo de 3:1 para texto grande). */
+  --cor-manifesto-apagado: #7a746b;
+
+  /* Véu atrás das etiquetas brancas sobre as fotos: mesmo numa foto quase
+     branca, o texto branco fica com 4,9:1. */
+  --cor-veu: rgb(22 21 19 / 0.6);
+  /* Véu sobre a foto que vira fundo do manifesto (mais denso no centro, onde
+     fica o texto). Medido nos pixels com scripts/contraste-fundo.mjs. */
+  --cor-veu-fundo: radial-gradient(ellipse 75% 65% at 50% 50%, rgb(22 21 19 / 0.82), rgb(22 21 19 / 0.7));
+  /* Palavras apagadas do manifesto quando ele fica sobre a foto: um tom acima
+     do apagado normal, para passar de 3:1 mesmo sobre a parte mais clara da
+     foto (a poltrona). Ainda 3:1 abaixo do aceso: a diferença continua clara. */
+  --cor-manifesto-apagado-foto: #99928a;
+
+  /* ---- Tema (claro por padrão; [data-tema="escuro"] troca) --------------- */
+  --tema-fundo: var(--cor-porcelana);
+  --tema-superficie: var(--cor-perola);
+  --tema-texto: var(--cor-grafite);
+  --tema-texto-2: var(--cor-texto-2-claro);
+  --tema-linha: var(--cor-linha-clara);
+  --tema-foco: var(--cor-grafite);
+  --tema-botao-fundo: var(--cor-grafite);
+  --tema-botao-texto: var(--cor-porcelana);
+
+  /* ---- Tipografia ------------------------------------------------------ */
+  --fonte-titulo: 'Instrument Serif', 'Times New Roman', Times, serif;
+  --fonte-texto: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Escala fluida: valor no celular (390 px) -> valor no desktop (1440 px) */
+  --fs-display: clamp(4.25rem, 2.393rem + 7.619vw, 9.25rem);  /* 68 -> 148 px, hero */
+  --fs-titulo-1: clamp(3rem, 1.33rem + 6.86vw, 9rem);         /* 48 -> 120 px */
+  --fs-titulo-2: clamp(2.25rem, 1.41rem + 3.43vw, 5.25rem);   /* 36 -> 72 px */
+  --fs-titulo-3: clamp(1.625rem, 1.3rem + 1.33vw, 2.75rem);   /* 26 -> 40 px */
+  --fs-manifesto: clamp(1.875rem, 1.09rem + 3.24vw, 4.5rem);  /* 30 -> 64 px */
+  --fs-destaque: clamp(1.125rem, 1.03rem + 0.38vw, 1.5rem);   /* 18 -> 22 px */
+  --fs-texto: clamp(1rem, 0.96rem + 0.1vw, 1.0625rem);        /* 16 -> 17 px */
+  --fs-pequeno: 0.875rem;                                      /* 14 px */
+  --fs-rotulo: 0.75rem;                                        /* 12 px, caixa alta */
+
+  --lh-display: 0.9;
+  --lh-titulo: 0.98;
+  --lh-manifesto: 1.12;
+  --lh-texto: 1.6;
+
+  --ls-display: -0.035em;
+  --ls-titulo: -0.025em;
+  --ls-rotulo: 0.16em;
+
+  /* ---- Espaçamento ----------------------------------------------------- */
+  --esp-1: 0.25rem;
+  --esp-2: 0.5rem;
+  --esp-3: 0.75rem;
+  --esp-4: 1rem;
+  --esp-5: 1.5rem;
+  --esp-6: 2rem;
+  --esp-7: 3rem;
+  --esp-8: 4rem;
+  --esp-9: 6rem;
+  --esp-10: 8rem;
+  --secao-y: clamp(6rem, 3.5rem + 9vw, 13rem);  /* respiro vertical das seções */
+
+  /* ---- Grid editorial de 12 colunas ------------------------------------ */
+  --grade-colunas: 12;
+  --grade-margem: clamp(1.25rem, 0.55rem + 2.9vw, 4.5rem);   /* 20 -> 51 px */
+  --grade-calha: clamp(0.75rem, 0.45rem + 1.25vw, 1.875rem); /* 12 -> 25 px */
+  --grade-max: 120rem;
+
+  /* ---- Movimento ------------------------------------------------------- */
+  /* Saída longa: começa decidida e pousa devagar (revelações, entradas). */
+  --ease-saida: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Entrada e saída: cortinas, menu e trocas grandes de estado. */
+  --ease-cortina: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Suave: hovers e microinterações. */
+  --ease-suave: cubic-bezier(0.33, 0, 0.15, 1);
+  /* Trajeto da pérola (preso ao scroll): estas curvas dão a forma do
+     caminho, não o ritmo. A queda começa no ritmo da página e termina
+     pousada; o deslize começa e termina parado, sem trecho brusco. */
+  --ease-queda: cubic-bezier(0.33, 0.33, 0.55, 1);
+  --ease-deslize: cubic-bezier(0.45, 0, 0.55, 1);
+
+  --dur-rapida: 0.35s;
+  --dur-media: 0.7s;
+  --dur-cortina: 0.95s;        /* cortina do preloader e do menu */
+  --dur-lenta: 1.1s;
+  --dur-longa: 1.6s;
+  --atraso-sequencia: 0.08s;   /* intervalo entre itens em sequência */
+  /* Animações presas ao scroll (scrub) são lineares: quem dá o ritmo é a mão.
+     A exceção é o trajeto da pérola, desenhado com as curvas de trajeto acima. */
+
+  /* ---- Camadas --------------------------------------------------------- */
+  --z-hero-3d: 0;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-grao: 80;
+  --z-preloader: 100;
+  --z-cursor: 110;             /* acima do preloader: o cursor do sistema fica escondido */
+
+  --raio-pilula: 999px;
+  --raio-card: 1.25rem;
+  --altura-header: clamp(4.25rem, 3.6rem + 1.6vw, 5.5rem);
+}
+
+/* Seções claras alternativas (linho): o resto do tema claro continua valendo. */
+[data-tema='linho'] {
+  --tema-fundo: var(--cor-linho);
+}
+
+/* Seções escuras: só trocam os tokens de tema. */
+[data-tema='escuro'] {
+  --tema-fundo: var(--cor-grafite);
+  --tema-superficie: var(--cor-grafite-2);
+  --tema-texto: var(--cor-porcelana);
+  --tema-texto-2: var(--cor-texto-2-escuro);
+  --tema-linha: var(--cor-linha-escura);
+  --tema-foco: var(--cor-champagne);   /* 7,8:1 sobre grafite */
+  --tema-botao-fundo: var(--cor-porcelana);
+  --tema-botao-texto: var(--cor-grafite);
+}

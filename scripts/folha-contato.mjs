@@ -8,7 +8,7 @@ const [pasta, saida, colunasArg = '4', escalaArg = '0.33', inicioArg = '0', fimA
 const colunas = Number(colunasArg);
 const escala = Number(escalaArg);
 const arquivos = (await readdir(pasta))
-  .filter((f) => f.endsWith('.png'))
+  .filter((f) => /\.(png|jpe?g|webp)$/i.test(f))
   .sort()
   .slice(Number(inicioArg), Number(fimArg));
 

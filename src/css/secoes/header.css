@@ -1,0 +1,298 @@
+/* ==========================================================================
+   Header fixo e menu. No desktop o menu fica na barra; abaixo de 64em o
+   mesmo <nav> vira o menu em tela cheia.
+   ========================================================================== */
+
+.header {
+  --header-texto: var(--cor-grafite);
+  --header-fundo: var(--cor-porcelana);
+  --header-linha: var(--cor-linha-clara);
+  --header-botao-fundo: var(--cor-grafite);
+  --header-botao-texto: var(--cor-porcelana);
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-header);
+  height: var(--altura-header);
+  color: var(--header-texto);
+  transition:
+    transform var(--dur-media) var(--ease-cortina),
+    color var(--dur-media) var(--ease-suave);
+}
+
+/* Fundo sólido só fora do topo da página (nada de vidro ou desfoque). */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--header-fundo);
+  border-bottom: 1px solid var(--header-linha);
+  transition:
+    opacity var(--dur-media) var(--ease-suave),
+    background-color var(--dur-media) var(--ease-suave),
+    border-color var(--dur-media) var(--ease-suave);
+}
+
+/* Transparente no topo só com JavaScript (sem ele, o estado nunca muda). */
+.js .header--topo::before {
+  opacity: 0;
+}
+
+.header--oculto {
+  transform: translateY(-100%);
+}
+
+/* Sobre seções escuras (ligado pelo ScrollTrigger). */
+.header--escuro {
+  --header-texto: var(--cor-porcelana);
+  --header-fundo: var(--cor-grafite);
+  --header-linha: var(--cor-linha-escura);
+  --header-botao-fundo: var(--cor-porcelana);
+  --header-botao-texto: var(--cor-grafite);
+}
+
+.header .botao {
+  --botao-fundo: var(--header-botao-fundo);
+  --botao-texto: var(--header-botao-texto);
+}
+
+/* O menu em tela cheia é sempre grafite: o botão de dentro é sempre claro. */
+.header .menu .botao {
+  --botao-fundo: var(--cor-porcelana);
+  --botao-texto: var(--cor-grafite);
+}
+
+.header :focus-visible {
+  outline-color: currentColor;
+}
+
+.header__barra {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-6);
+  height: 100%;
+  max-width: var(--grade-max);
+  margin-inline: auto;
+  padding-inline: var(--grade-margem);
+}
+
+.header__marca {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: clamp(2.875rem, 2.5rem + 1vw, 3.5rem);
+  padding-block: var(--esp-2);
+}
+
+.monograma {
+  --mono-traco: 1.5;
+  --mono-serifa: 1.1;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.header__acoes {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-5);
+}
+
+/* ---- Botão do menu (celular) ----------------------------------------- */
+.header__menu-botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 2.75rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.header__menu-icone {
+  position: relative;
+  width: 1.375rem;
+  height: 0.5rem;
+}
+
+.header__menu-icone span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  transition: transform var(--dur-media) var(--ease-cortina);
+}
+
+.header__menu-icone span:first-child {
+  top: 0;
+}
+
+.header__menu-icone span:last-child {
+  bottom: 0;
+}
+
+.header--menu-aberto .header__menu-icone span:first-child {
+  transform: translateY(calc(0.25rem - 0.5px)) rotate(45deg);
+}
+
+.header--menu-aberto .header__menu-icone span:last-child {
+  transform: translateY(calc(-0.25rem + 0.5px)) rotate(-45deg);
+}
+
+/* ---- Menu no desktop ------------------------------------------------- */
+@media (min-width: 64em) {
+  .menu {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .menu__lista {
+    display: flex;
+    gap: clamp(1.25rem, 0.4rem + 1.6vw, 2.5rem);
+  }
+
+  .menu__link {
+    display: block;
+    padding-block: var(--esp-2);
+    font-size: var(--fs-pequeno);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+
+  .menu__texto {
+    padding-bottom: 0.15em;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size: 0% 1px;
+    transition: background-size var(--dur-media) var(--ease-saida);
+  }
+
+  .menu__link:focus-visible .menu__texto {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
+  }
+
+  .menu__numero,
+  .menu__extras,
+  .menu__fechar-semjs,
+  .header__menu-botao {
+    display: none;
+  }
+}
+
+@media (min-width: 64em) and (hover: hover) and (pointer: fine) {
+  .menu__link:hover .menu__texto {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
+  }
+}
+
+/* ---- Menu em tela cheia (celular e tablet) ---------------------------- */
+@media (max-width: 63.999em) {
+  .header__cta-extra {
+    display: none;
+  }
+
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--esp-8);
+    padding: calc(var(--altura-header) + var(--esp-7)) var(--grade-margem) var(--esp-7);
+    overflow-y: auto;
+    background: var(--cor-grafite);
+    color: var(--cor-porcelana);
+    visibility: hidden;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .menu:target,
+  .menu.esta-aberto {
+    visibility: visible;
+    clip-path: inset(0 0 0 0);
+  }
+
+  .menu__lista {
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  /* Cada item é a máscara do próprio link, que entra subindo. */
+  .menu__item {
+    overflow: hidden;
+  }
+
+  .menu__link {
+    display: flex;
+    align-items: baseline;
+    gap: var(--esp-4);
+    padding-block: 0.1em;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(2.75rem, 1.6rem + 6vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .menu__numero {
+    min-width: 1.75rem;
+    font-family: var(--fonte-texto);
+    font-size: var(--fs-rotulo);
+    font-weight: 600;
+    letter-spacing: var(--ls-rotulo);
+    color: var(--cor-texto-2-escuro);
+  }
+
+  .menu__extras {
+    display: grid;
+    justify-items: start;
+    gap: var(--esp-5);
+  }
+
+  .menu__info {
+    display: grid;
+    gap: var(--esp-2);
+    font-size: var(--fs-pequeno);
+    color: var(--cor-texto-2-escuro);
+  }
+
+  .menu__info a {
+    color: var(--cor-porcelana);
+  }
+
+  .menu :focus-visible {
+    outline-color: var(--cor-champagne);
+  }
+
+  .menu__fechar-semjs {
+    display: none;
+    align-self: flex-start;
+    font-size: var(--fs-pequeno);
+  }
+
+  html:not(.js) .menu__fechar-semjs {
+    display: inline-block;
+  }
+
+  /* Com o menu aberto, a barra fica clara sobre o grafite. */
+  .header--menu-aberto {
+    --header-texto: var(--cor-porcelana);
+  }
+
+  .header--menu-aberto::before {
+    opacity: 0;
+  }
+
+  .header--menu-aberto .header__cta {
+    visibility: hidden;
+  }
+}

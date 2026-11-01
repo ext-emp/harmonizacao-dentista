@@ -1,0 +1,135 @@
+<!-- Tratamentos: os dois focos em blocos grandes (imagem saindo de máscara e
+     tilt 3D no hover; no toque, uma rotação leve presa ao scroll) e a lista
+     numerada dos procedimentos (o texto desliza e uma imagem segue o cursor;
+     no toque, a imagem aparece na própria linha quando ela passa pelo centro).
+     As imagens são naturezas-mortas provisórias, nunca resultados. -->
+<section class="tratamentos secao" id="tratamentos" data-tema="claro" data-pilha aria-labelledby="tratamentos-titulo" tabindex="-1">
+  <div class="grade tratamentos__cabecalho">
+    <p class="tratamentos__rotulo rotulo texto-2">Tratamentos</p>
+    <h2 class="tratamentos__titulo titulo-2" id="tratamentos-titulo" data-revelar="linhas" data-linhas>
+      Harmonia que respeita <em>seus traços.</em>
+    </h2>
+    <p class="tratamentos__intro destaque texto-2" data-revelar="subir">
+      Dois focos de trabalho e um mesmo cuidado: mudar só o necessário.
+    </p>
+  </div>
+
+  <div class="grade tratamentos__blocos">
+    <!-- [CONFIRMAR] textos clínicos dos dois blocos -->
+    <article class="tratamento tratamento--rosto" data-tratamento data-toque-centro>
+      <div class="tratamento__midia" data-tilt>
+        <div class="tratamento__mascara mascara" data-revelar="imagem">
+          <div class="tratamento__parallax moldura-parallax" data-parallax>
+            <x-img
+              src="tratamentos/rosto"
+              alt=""
+              sizes="(min-width: 64em) 38vw, 90vw"
+              class="tratamento__img"
+              classe-picture="tratamento__picture"
+            ></x-img>
+          </div>
+        </div>
+      </div>
+      <div class="tratamento__texto">
+        <p class="tratamento__numero rotulo texto-2">01</p>
+        <h3 class="tratamento__nome titulo-1">Rosto</h3>
+        <p class="tratamento__area destaque">Harmonização orofacial</p>
+        <p class="tratamento__descricao texto-2">
+          Um olhar para o rosto inteiro, com ajustes discretos de proporção, contorno e qualidade da pele, planejados para
+          manter a sua expressão. <span class="pendente">[CONFIRMAR]</span>
+        </p>
+        <a class="tratamento__link link-linha" href="#resultados" data-cursor="ver">
+          Ver resultados<span class="visualmente-oculto"> de harmonização orofacial</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="tratamento tratamento--sorriso" data-tratamento data-toque-centro>
+      <div class="tratamento__midia" data-tilt>
+        <div class="tratamento__mascara mascara" data-revelar="imagem">
+          <div class="tratamento__parallax moldura-parallax" data-parallax>
+            <x-img
+              src="tratamentos/sorriso"
+              alt=""
+              sizes="(min-width: 64em) 38vw, 90vw"
+              class="tratamento__img"
+              classe-picture="tratamento__picture"
+            ></x-img>
+          </div>
+        </div>
+      </div>
+      <div class="tratamento__texto">
+        <p class="tratamento__numero rotulo texto-2">02</p>
+        <h3 class="tratamento__nome titulo-1">Sorriso</h3>
+        <p class="tratamento__area destaque">Lentes de contato dental</p>
+        <p class="tratamento__descricao texto-2">
+          Lâminas finas de cerâmica, desenhadas na cor, na forma e no tamanho que combinam com o seu rosto.
+          <span class="pendente">[CONFIRMAR]</span>
+        </p>
+        <a class="tratamento__link link-linha" href="#resultados" data-cursor="ver">
+          Ver resultados<span class="visualmente-oculto"> de lentes de contato dental</span>
+        </a>
+      </div>
+    </article>
+  </div>
+
+  <div class="grade procedimentos">
+    <div class="procedimentos__cabecalho">
+      <h3 class="procedimentos__titulo rotulo texto-2">Procedimentos</h3>
+      <p class="procedimentos__nota texto-2">Lista provisória <span class="pendente">[CONFIRMAR]</span></p>
+    </div>
+
+    <!-- [CONFIRMAR] lista final de tratamentos. Imagem de cada linha:
+         fotos/procedimentos/<nome>.jpg (4:5). -->
+    <ol class="procedimentos__lista" data-procedimentos data-revelar="lista">
+      <li class="procedimento" data-procedimento data-toque-centro="linha">
+        <span class="procedimento__numero rotulo" aria-hidden="true">01</span>
+        <span class="procedimento__nome">Lentes de contato dental</span>
+        <span class="procedimento__area texto-2">Sorriso</span>
+        <span class="procedimento__midia" aria-hidden="true">
+          <x-img src="procedimentos/lentes-de-contato-dental" alt="" sizes="16rem" class="procedimento__img"></x-img>
+        </span>
+      </li>
+      <li class="procedimento" data-procedimento data-toque-centro="linha">
+        <span class="procedimento__numero rotulo" aria-hidden="true">02</span>
+        <span class="procedimento__nome">Harmonização facial completa</span>
+        <span class="procedimento__area texto-2">Rosto</span>
+        <span class="procedimento__midia" aria-hidden="true">
+          <x-img src="procedimentos/harmonizacao-facial" alt="" sizes="16rem" class="procedimento__img"></x-img>
+        </span>
+      </li>
+      <li class="procedimento" data-procedimento data-toque-centro="linha">
+        <span class="procedimento__numero rotulo" aria-hidden="true">03</span>
+        <span class="procedimento__nome">Preenchimento labial</span>
+        <span class="procedimento__area texto-2">Rosto</span>
+        <span class="procedimento__midia" aria-hidden="true">
+          <x-img src="procedimentos/preenchimento-labial" alt="" sizes="16rem" class="procedimento__img"></x-img>
+        </span>
+      </li>
+      <li class="procedimento" data-procedimento data-toque-centro="linha">
+        <span class="procedimento__numero rotulo" aria-hidden="true">04</span>
+        <span class="procedimento__nome">Toxina botulínica</span>
+        <span class="procedimento__area texto-2">Rosto</span>
+        <span class="procedimento__midia" aria-hidden="true">
+          <x-img src="procedimentos/toxina-botulinica" alt="" sizes="16rem" class="procedimento__img"></x-img>
+        </span>
+      </li>
+      <li class="procedimento" data-procedimento data-toque-centro="linha">
+        <span class="procedimento__numero rotulo" aria-hidden="true">05</span>
+        <span class="procedimento__nome">Bioestimulador de colágeno</span>
+        <span class="procedimento__area texto-2">Rosto</span>
+        <span class="procedimento__midia" aria-hidden="true">
+          <x-img src="procedimentos/bioestimulador-de-colageno" alt="" sizes="16rem" class="procedimento__img"></x-img>
+        </span>
+      </li>
+      <li class="procedimento" data-procedimento data-toque-centro="linha">
+        <span class="procedimento__numero rotulo" aria-hidden="true">06</span>
+        <span class="procedimento__nome">Clareamento dental</span>
+        <span class="procedimento__area texto-2">Sorriso</span>
+        <span class="procedimento__midia" aria-hidden="true">
+          <x-img src="procedimentos/clareamento-dental" alt="" sizes="16rem" class="procedimento__img"></x-img>
+        </span>
+      </li>
+    </ol>
+  </div>
+</section>

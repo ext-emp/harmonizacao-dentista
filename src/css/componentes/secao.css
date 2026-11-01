@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Partes comuns das seções: respiro vertical, marca de conteúdo pendente,
+   estados iniciais das revelações e molduras de parallax.
+   ========================================================================== */
+
+.secao {
+  position: relative;
+  padding-block: var(--secao-y);
+}
+
+/* ---- Conteúdo pendente ------------------------------------------------ */
+/* Tudo que depende do doutor aparece com esta etiqueta tracejada, fácil de
+   achar na revisão (e no código: busque por [CONFIRMAR]). */
+.pendente {
+  display: inline-block;
+  padding: 0.15em 0.55em 0.1em;
+  border: 1px dashed currentColor;
+  border-radius: 0.3rem;
+  font-family: var(--fonte-texto);
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  white-space: nowrap;
+  vertical-align: 0.2em;
+  color: var(--tema-texto-2);
+}
+
+/* Etiqueta "provisório" sobre fotos que ainda vão ser trocadas. */
+.etiqueta-provisoria {
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-porcelana);
+  color: var(--cor-texto-2-claro);
+  font-size: 0.625rem;
+}
+
+/* ---- Molduras de imagem ----------------------------------------------- */
+/* A máscara recorta; dentro dela, a moldura de parallax é um pouco maior
+   que a máscara para a imagem nunca mostrar a borda quando se mexe. */
+.mascara {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Enquanto a imagem carrega, aparece a cor média dela (vem do manifesto). */
+.mascara picture {
+  background-color: var(--cor-media, transparent);
+}
+
+.moldura-parallax {
+  position: absolute;
+  inset: -8% 0;
+}
+
+.moldura-parallax picture,
+.moldura-parallax img {
+  width: 100%;
+  height: 100%;
+}
+
+.moldura-parallax img {
+  object-fit: cover;
+}
+
+/* ---- Empilhamento (src/js/modulos/pilha.js) ---------------------------- */
+/* O painel para quando o pé dele chega ao pé da tela (o "top" negativo vem
+   da altura, medida pelo JS) e a seção seguinte, que vem depois no HTML,
+   sobe por cima. Só com JavaScript e movimento liberado. */
+/* (Classe e atributo: vence o "position: relative" de cada seção.) */
+.pilha--ativa[data-pilha] {
+  position: sticky;
+  top: min(0px, calc(100svh - var(--pilha-altura, 100svh)));
+}
+
+.pilha__veu {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: var(--cor-grafite);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Enquanto o ScrollTrigger mede a página (e nas âncoras), nada fica parado:
+   valem as posições do HTML. [data-fixa] marca os palcos sticky internos.
+   Um painel todo coberto pela seção seguinte também sai do sticky: volta
+   para o lugar dele, já fora da tela, e deixa de ser pintado por baixo. */
+.pilha--coberta.pilha--ativa[data-pilha],
+.pilha-medindo .pilha--ativa[data-pilha],
+.pilha-medindo [data-fixa] {
+  position: relative !important;
+  top: auto !important;
+}
+
+/* ---- Estados iniciais das revelações ---------------------------------- */
+/* Só com JavaScript e com movimento liberado. Sem script, com movimento
+   reduzido ou se o script atrasar (.sem-animacao), tudo fica visível. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-revelar='subir'],
+  .js [data-revelar='lista'] > * {
+    opacity: 0;
+  }
+
+  .js [data-revelar='linhas'],
+  .js [data-revelar='letras'] {
+    visibility: hidden;
+  }
+
+  .js [data-revelar='imagem'] {
+    clip-path: inset(100% 0% 0% 0%);
+  }
+}
+
+.sem-animacao [data-revelar],
+.sem-animacao [data-revelar] > * {
+  opacity: 1 !important;
+  visibility: visible !important;
+  clip-path: none !important;
+}

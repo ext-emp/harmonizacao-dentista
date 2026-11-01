@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Resultados: cabeçalho e carrossel de antes e depois.
+   O trilho é um scroll horizontal nativo com encaixe (scroll-snap). Ele vai
+   de borda a borda da tela; o respiro lateral fica no padding, para o
+   pedaço do próximo card aparecer no celular.
+   ========================================================================== */
+
+.resultados__cabecalho {
+  row-gap: var(--esp-5);
+  margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+.resultados__rotulo,
+.resultados__titulo,
+.resultados__intro {
+  grid-column: 1 / -1;
+}
+
+.resultados__intro {
+  max-width: 36ch;
+}
+
+@media (min-width: 64em) {
+  .resultados__titulo {
+    grid-column: 1 / span 7;
+    grid-row: 2;
+  }
+
+  .resultados__intro {
+    grid-column: 9 / -1;
+    grid-row: 2;
+    align-self: end;
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+/* ---- Trilho ------------------------------------------------------------ */
+.carrossel {
+  --carrossel-coluna: 84%;
+  max-width: var(--grade-max);
+  margin-inline: auto;
+}
+
+.carrossel__trilho {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--carrossel-coluna);
+  gap: var(--grade-calha);
+  padding-inline: var(--grade-margem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--grade-margem);
+  scrollbar-width: none;
+}
+
+.carrossel__trilho::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 40em) {
+  .carrossel {
+    --carrossel-coluna: calc((100% - var(--grade-calha)) / 2);
+  }
+}
+
+/* Desktop: três cards exatos dentro do grid, sem pedaço do quarto aparecendo
+   (o trilho perde o padding e ganha margem: o recorte fica na borda do grid). */
+@media (min-width: 64em) {
+  .carrossel {
+    --carrossel-coluna: calc((100% - 2 * var(--grade-calha)) / 3);
+  }
+
+  .carrossel__trilho {
+    margin-inline: var(--grade-margem);
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+}
+
+/* ---- Card -------------------------------------------------------------- */
+.caso {
+  scroll-snap-align: start;
+  padding: 0.5rem;
+  border-radius: var(--raio-card);
+  background: var(--cor-perola);
+}
+
+.caso__nome {
+  padding: 1.25rem 1rem 1rem;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.5rem, 1.3rem + 0.6vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+/* ---- Rodapé do carrossel: nota, contador e setas ---------------------- */
+.carrossel__rodape {
+  align-items: center;
+  row-gap: var(--esp-5);
+  margin-top: var(--esp-6);
+}
+
+.resultados__nota {
+  grid-column: 1 / -1;
+  font-size: var(--fs-pequeno);
+}
+
+.carrossel__controles {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.carrossel__contador {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+  margin-right: auto;
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs-titulo-3);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.carrossel__barra,
+.carrossel__contador [data-carrossel-total] {
+  color: var(--tema-texto-2);
+}
+
+.carrossel__seta {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--tema-linha);
+  border-radius: 50%;
+  color: var(--tema-texto);
+  transition:
+    background-color var(--dur-media) var(--ease-suave),
+    color var(--dur-media) var(--ease-suave),
+    border-color var(--dur-media) var(--ease-suave),
+    opacity var(--dur-media) var(--ease-suave);
+}
+
+.carrossel__seta svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.carrossel__seta--anterior svg {
+  transform: scaleX(-1);
+}
+
+.carrossel__seta[aria-disabled='true'] {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .carrossel__seta:not([aria-disabled='true']):hover {
+    background-color: var(--cor-grafite);
+    border-color: var(--cor-grafite);
+    color: var(--cor-porcelana);
+  }
+}
+
+/* Equivalente no toque: as setas escurecem quando passam pelo centro da tela. */
+.carrossel__seta.is-active:not([aria-disabled='true']) {
+  background-color: var(--cor-grafite);
+  border-color: var(--cor-grafite);
+  color: var(--cor-porcelana);
+}
+
+@media (min-width: 64em) {
+  .resultados__nota {
+    grid-column: 1 / span 6;
+  }
+
+  .carrossel__controles {
+    grid-column: 8 / -1;
+    justify-content: flex-end;
+  }
+
+  .carrossel__contador {
+    margin-right: var(--esp-5);
+  }
+}
+
+/* Sem JavaScript, o carrossel é só o scroll nativo: setas e contador saem. */
+html:not(.js) .carrossel__controles {
+  display: none;
+}

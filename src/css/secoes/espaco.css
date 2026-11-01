@@ -1,0 +1,194 @@
+/* ==========================================================================
+   O espaço (grafite). Três partes:
+     .espaco__abertura  a frase, com a pérola pousada acima dela
+     .espaco__palco     a galeria. Sem JavaScript (ou com movimento reduzido),
+                        uma faixa com scroll lateral nativo. Com movimento
+                        (.espaco--animado, ligado pelo JS), o palco fica fixo
+                        e o trilho anda na horizontal (src/js/modulos/espaco.js)
+     .manifesto         vem dentro desta seção (secoes/manifesto.css)
+   A última foto é um quadro do tamanho da tela com um recorte (clip-path)
+   do tamanho de um cartão: abrir o recorte transforma o cartão no fundo.
+   ========================================================================== */
+
+.espaco {
+  /* Altura dos cartões e espaço entre eles (desktop: pela altura da tela). */
+  --espaco-alto: 58svh;
+  --espaco-vao: clamp(1rem, 0.4rem + 2.2vw, 2.25rem);
+  /* Cartão da última foto (3:2), antes de abrir. */
+  --fundo-largura: calc(var(--espaco-alto) * 1.5);
+  --fundo-altura: var(--espaco-alto);
+  position: relative;
+  overflow-x: clip;
+}
+
+@media (max-width: 63.999em) {
+  .espaco {
+    --fundo-largura: 80vw;
+    --fundo-altura: calc(80vw / 1.5);
+  }
+}
+
+/* ---- Abertura ----------------------------------------------------------- */
+.espaco__abertura {
+  position: relative;
+  align-content: start;
+  justify-items: center;
+  min-height: 100svh;
+  /* O texto começa logo abaixo da pérola pousada (perola.css). */
+  padding-top: calc(var(--perola-pouso-y) + var(--perola-quadro-pouso) * 0.4 + var(--esp-6));
+  padding-bottom: var(--esp-9);
+  text-align: center;
+}
+
+.espaco__rotulo {
+  grid-column: 1 / -1;
+  margin-bottom: var(--esp-5);
+}
+
+.espaco__frase {
+  grid-column: 1 / -1;
+  max-width: 16ch;
+}
+
+@media (min-width: 64em) {
+  .espaco__frase {
+    grid-column: 3 / span 8;
+    max-width: 19ch;
+  }
+}
+
+/* ---- Galeria: faixa com scroll lateral (sem JavaScript) ----------------- */
+.espaco__palco {
+  position: relative;
+  padding-bottom: var(--secao-y);
+}
+
+.espaco__trilho {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-vao);
+  overflow-x: auto;
+  padding-inline: var(--grade-margem);
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--grade-margem);
+  scrollbar-width: none;
+}
+
+.espaco__trilho::-webkit-scrollbar {
+  display: none;
+}
+
+.espaco__foto {
+  position: relative;
+  flex: none;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: var(--cor-grafite-2);
+}
+
+.espaco__foto--deitada {
+  width: min(80vw, 54rem);
+  aspect-ratio: 3 / 2;
+}
+
+.espaco__foto--em-pe {
+  width: min(52vw, 28rem);
+  aspect-ratio: 4 / 5;
+}
+
+.espaco__picture,
+.espaco__img {
+  width: 100%;
+  height: 100%;
+}
+
+.espaco__img {
+  object-fit: cover;
+}
+
+.espaco__fundo-imagem {
+  position: absolute;
+  inset: 0;
+}
+
+.espaco__veu {
+  display: none;
+}
+
+.espaco__provisorio {
+  position: absolute;
+  top: var(--esp-4);
+  right: var(--grade-margem);
+}
+
+/* ---- Galeria animada (só com JavaScript e movimento liberado) ----------- */
+.espaco--animado .espaco__palco {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+
+.espaco--animado .espaco__trilho {
+  width: max-content;
+  height: 100%;
+  overflow: visible;
+  padding: 0;
+  scroll-snap-type: none;
+  will-change: transform;
+}
+
+.espaco--animado .espaco__foto--deitada {
+  width: auto;
+  height: var(--espaco-alto);
+}
+
+.espaco--animado .espaco__foto--em-pe {
+  width: auto;
+  height: calc(var(--espaco-alto) * 0.9);
+}
+
+@media (max-width: 63.999em) {
+  .espaco--animado .espaco__foto--deitada {
+    width: 80vw;
+    height: auto;
+  }
+
+  .espaco--animado .espaco__foto--em-pe {
+    width: 52vw;
+    height: auto;
+  }
+}
+
+/* A última: um quadro do tamanho da tela, recortado no tamanho do cartão. A
+   margem negativa tira a sobra do quadro: o cartão fica a um vão do anterior. */
+.espaco--animado .espaco__foto--fundo {
+  width: 100vw;
+  height: 100svh;
+  aspect-ratio: auto;
+  margin-left: calc((100vw - var(--fundo-largura)) / -2);
+  background: none;
+  clip-path: inset(calc((100svh - var(--fundo-altura)) / 2) calc((100vw - var(--fundo-largura)) / 2));
+}
+
+.espaco--animado .espaco__fundo-imagem {
+  will-change: transform;
+}
+
+/* Véu do fundo: escurece a foto para o texto do manifesto ter contraste AA. */
+.espaco--animado .espaco__veu {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: var(--cor-veu-fundo);
+  opacity: 0;
+}
+
+.espaco--animado .espaco__provisorio {
+  top: auto;
+  bottom: var(--esp-6);
+  right: auto;
+  left: var(--grade-margem);
+}

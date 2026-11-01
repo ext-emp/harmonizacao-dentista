@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Preloader: monograma desenhado em traço fino e contador de 0 a 100.
+   Sai como cortina, com a borda de baixo curvando enquanto sobe.
+   ========================================================================== */
+
+.preloader {
+  display: none;
+}
+
+.tem-preloader .preloader {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-preloader);
+}
+
+/* Rede de segurança: sem o script principal, nada cobre a página. */
+.sem-animacao .preloader {
+  display: none !important;
+}
+
+.preloader__cortina {
+  --curva: 0vh;
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--cor-grafite);
+  color: var(--cor-porcelana);
+  border-bottom-left-radius: 50% var(--curva);
+  border-bottom-right-radius: 50% var(--curva);
+}
+
+.preloader__monograma {
+  width: clamp(5.5rem, 4rem + 5vw, 8.5rem);
+  height: auto;
+  overflow: visible;
+}
+
+.preloader__traco,
+.preloader__serifa {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.preloader__traco {
+  stroke-width: 0.85;
+}
+
+.preloader__serifa {
+  stroke-width: 0.6;
+}
+
+.preloader__contador {
+  position: absolute;
+  right: var(--grade-margem);
+  bottom: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  font-family: var(--fonte-titulo);
+  font-size: clamp(4.5rem, 2.5rem + 8vw, 11rem);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--cor-texto-2-escuro);
+  font-variant-numeric: tabular-nums;
+}

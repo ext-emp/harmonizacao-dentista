@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Comparador de antes e depois. --posicao é onde está a linha (0% a 100%,
+   da esquerda). À esquerda dela aparece o antes; à direita, o depois.
+   O botão do slider é champanhe (um dos poucos lugares onde ele aparece).
+   ========================================================================== */
+
+.comparador {
+  --posicao: 50%;
+  --respiro: 0.75rem;
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: calc(var(--raio-card) - 0.5rem);
+  background: var(--cor-linho);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  /* Corta o zoom com toque duplo e deixa o resto dos gestos com o navegador
+     (scroll da página e do carrossel). */
+  touch-action: manipulation;
+}
+
+.comparador__camada {
+  position: absolute;
+  inset: 0;
+}
+
+/* A camada do antes fica por cima, recortada até a linha. */
+.comparador__camada--antes {
+  clip-path: inset(0 calc(100% - var(--posicao)) 0 0);
+}
+
+.comparador__foto,
+.comparador__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.comparador__foto {
+  background-color: var(--cor-media, transparent);
+}
+
+.comparador__img {
+  object-fit: cover;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* ---- Etiquetas brancas sobre véu grafite (4,9:1 até sobre foto branca) -- */
+.comparador__rotulo,
+.comparador__marca {
+  position: absolute;
+  padding: 0.4rem 0.7rem 0.35rem;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-veu);
+  color: #fff;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+.comparador__rotulo {
+  bottom: var(--respiro);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: var(--ls-rotulo);
+  text-transform: uppercase;
+}
+
+.comparador__rotulo--antes {
+  left: var(--respiro);
+}
+
+.comparador__rotulo--depois {
+  right: var(--respiro);
+}
+
+/* Marca exigida pelo CFO: nome e CRO sobre cada foto. */
+.comparador__marca {
+  top: var(--respiro);
+  left: var(--respiro);
+  max-width: calc(100% - 2 * var(--respiro));
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Linha e botão ----------------------------------------------------- */
+.comparador__linha {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--posicao);
+  width: 1px;
+  margin-left: -0.5px;
+  background: rgb(255 255 255 / 0.92);
+  pointer-events: none;
+}
+
+.comparador__botao {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
+  background: var(--cor-champagne);
+  color: var(--cor-grafite);
+  translate: -50% -50%;
+  transition:
+    scale var(--dur-media) var(--ease-saida),
+    box-shadow var(--dur-rapida) var(--ease-suave);
+}
+
+.comparador__icone {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+.comparador.esta-arrastando .comparador__botao {
+  scale: 0.9;
+}
+
+/* Foco do teclado no controle: anel em volta do botão, visível em qualquer foto. */
+.comparador:has(.comparador__controle:focus-visible) .comparador__botao {
+  box-shadow:
+    0 0 0 3px var(--cor-perola),
+    0 0 0 5px var(--cor-grafite);
+}
+
+/* Faixa de toque em volta da linha: aqui o arrasto horizontal é do slider
+   (pan-y deixa o scroll vertical da página com o navegador). Fora dela, o
+   arrasto horizontal é do carrossel. */
+.comparador__alca {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--posicao);
+  width: 4rem;
+  translate: -50% 0;
+  touch-action: pan-y;
+}
+
+/* O controle nativo fica invisível mas no lugar (teclado e leitor de tela). */
+.comparador__controle {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  appearance: none;
+}

@@ -1,0 +1,76 @@
+<!-- Hero: título em serifa revelado linha a linha, subtítulo com os dois
+     focos e a cidade, botão principal e indicação de scroll. À direita, o
+     retrato do doutor recortado (sem fundo). A pérola fica no pé do hero, no
+     espaço livre entre o texto e o retrato; com o scroll, o "O espaço" sobe
+     por cima do hero e a pérola pousa na abertura dele
+     (src/js/modulos/perola-viagem.js).
+     Texto, retrato e pérola ficam em áreas separadas do grid: um nunca cobre o outro. -->
+<section class="hero" id="inicio" data-tema="claro" data-pilha aria-labelledby="hero-titulo" tabindex="-1" data-hero>
+  <div class="hero__grade grade">
+    <!-- PROVISÓRIO: fotos/hero/doutor-capa.png é imagem de banco (tem marca
+         d'água no jaleco) e mede só 554 × 554. Não pode ir ao ar [CONFIRMAR]
+         (docs/creditos-imagens.md).
+         Ao trocar pela foto dele recortada (PNG transparente, 4:5, 1600 × 2000):
+         troque o alt por "Retrato do Dr. Henrique Martins" e apague a marca
+         "Retrato provisório". A classe hero__composicao--sangria encosta a foto
+         na borda direita da tela, para fotos cortadas no ombro. Esta foto não
+         usa a classe: a pessoa cabe inteira na largura. -->
+    <div class="hero__composicao" data-hero-composicao>
+      <div class="hero__retrato" data-hero-retrato>
+        <x-img
+          src="hero/doutor-capa"
+          alt="Imagem provisória no lugar do retrato do Dr. Henrique Martins"
+          sizes="(min-width: 64em) 42vw, 74vw"
+          class="hero__retrato-img"
+          classe-picture="hero__retrato-picture"
+          loading="eager"
+          fetchpriority="high"
+        ></x-img>
+      </div>
+      <p class="hero__provisorio rotulo" data-provisorio>Retrato provisório</p>
+    </div>
+
+    <p class="hero__rotulo rotulo" data-hero-entra>{{ nomeCompleto }} · {{ doutor.profissao }}</p>
+
+    <h1 class="hero__titulo titulo-display" id="hero-titulo" data-hero-titulo data-linhas>
+      <span class="hero__linha">O luxo de</span>
+      <span class="hero__linha hero__linha--recuo">parecer <em>você.</em></span>
+    </h1>
+
+    <p class="hero__subtitulo destaque" data-hero-entra>
+      Harmonização orofacial e lentes de contato dental, com a naturalidade como ponto de partida.
+      <span class="hero__cidade">Novo Hamburgo, RS.</span>
+    </p>
+
+    <div class="hero__acoes" data-hero-entra>
+      <a class="botao" href="{{ whatsapp.link }}" target="_blank" rel="noopener" data-magnetico data-toque-centro>
+        <span class="botao__ponto" aria-hidden="true"></span>
+        <span class="botao__rolo"><span class="botao__texto">Agende sua avaliação</span></span>
+        <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
+      </a>
+      <p class="hero__nota texto-2">Atendimento pelo WhatsApp</p>
+    </div>
+
+    <!-- A pérola: primeiro a imagem estática, depois o 3D (se houver WebGL).
+         O lugar marca a posição de partida; a "viagem" é quem se move. -->
+    <div class="perola-lugar" aria-hidden="true" data-perola-lugar>
+      <div class="perola-viagem" data-perola-viagem>
+        <div class="perola-palco" data-hero-palco>
+          <x-img
+            src="hero/perola"
+            alt=""
+            sizes="(min-width: 64em) 21rem, 9rem"
+            class="perola-palco__img"
+            classe-picture="perola-palco__picture"
+            loading="eager"
+          ></x-img>
+        </div>
+      </div>
+    </div>
+
+    <a class="hero__rolar" href="#espaco" aria-label="Rolar para a próxima seção" data-hero-entra>
+      <span class="hero__rolar-texto rotulo">Rolar</span>
+      <span class="hero__rolar-trilho" aria-hidden="true"></span>
+    </a>
+  </div>
+</section>

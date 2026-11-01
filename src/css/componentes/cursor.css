@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Cursor customizado (só existe com mouse; o módulo nem cria os elementos
+   no toque ou com movimento reduzido). O ponto acompanha o ponteiro na hora;
+   o anel vem logo atrás. Em "diferença", os dois aparecem escuros sobre o
+   claro e claros sobre o escuro.
+   Estados (classes no <html>): link (o anel cresce e o ponto some), "Ver" e
+   "Arraste" (o anel vira um círculo champanhe com texto grafite, 7,8:1).
+   ========================================================================== */
+
+/* Tamanho do anel como fração de 5,5rem (0,41 ≈ 2,25rem; 0,64 ≈ 3,5rem).
+   Registrado para a transição interpolar o número. */
+@property --anel {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0.41;
+}
+
+.tem-cursor,
+.tem-cursor * {
+  cursor: none !important;
+}
+
+.cursor-ponto,
+.cursor-anel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.cursor-ponto {
+  width: 0.375rem;
+  height: 0.375rem;
+  margin: -0.1875rem 0 0 -0.1875rem;
+  background: #fff;
+  mix-blend-mode: difference;
+  transition: opacity var(--dur-rapida) var(--ease-suave);
+}
+
+.cursor-anel {
+  --anel: 0.41;
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: -2.75rem 0 0 -2.75rem;
+  mix-blend-mode: difference;
+  transition:
+    opacity var(--dur-rapida) var(--ease-suave),
+    --anel var(--dur-media) var(--ease-saida);
+}
+
+.cursor-visivel .cursor-ponto,
+.cursor-visivel .cursor-anel {
+  opacity: 1;
+}
+
+/* O desenho do anel muda de tamanho por escala (sem relayout); a borda
+   compensa a escala para ficar sempre com 1px. */
+.cursor-anel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: calc(1px / var(--anel)) solid #fff;
+  border-radius: 50%;
+  transform: scale(var(--anel));
+  transition:
+    background-color var(--dur-media) var(--ease-suave),
+    border-color var(--dur-media) var(--ease-suave);
+}
+
+.cursor-anel__texto {
+  position: relative;
+  font-size: var(--fs-rotulo);
+  font-weight: 600;
+  letter-spacing: var(--ls-rotulo);
+  text-transform: uppercase;
+  color: var(--cor-grafite);
+  opacity: 0;
+  transform: translateY(40%);
+  transition:
+    opacity var(--dur-rapida) var(--ease-suave),
+    transform var(--dur-media) var(--ease-saida);
+}
+
+/* Link ou botão: anel maior, ponto escondido. */
+.cursor--link .cursor-anel {
+  --anel: 0.64;
+}
+
+.cursor--link .cursor-ponto,
+.cursor--texto .cursor-ponto {
+  opacity: 0;
+}
+
+/* Ver e Arraste: círculo cheio, sem o modo diferença. */
+.cursor--texto .cursor-anel {
+  --anel: 1;
+  mix-blend-mode: normal;
+}
+
+.cursor--texto .cursor-anel::before {
+  background-color: var(--cor-champagne);
+  border-color: var(--cor-champagne);
+}
+
+.cursor--texto .cursor-anel__texto {
+  opacity: 1;
+  transform: none;
+}
+
+/* Arrastando o slider: o círculo encolhe um pouco, como se fosse apertado. */
+.cursor--texto.cursor--pressionado .cursor-anel {
+  --anel: 0.82;
+}

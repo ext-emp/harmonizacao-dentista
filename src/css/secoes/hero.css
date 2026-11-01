@@ -1,0 +1,259 @@
+/* ==========================================================================
+   Hero. Celular: retrato no alto, texto embaixo. Desktop: texto nas colunas
+   1 a 7 e o retrato nas colunas 8 a 12, apoiado na base. Tudo no fluxo do
+   grid: o texto nunca passa por cima da pessoa. A pérola tem CSS próprio
+   (componentes/perola.css).
+   ========================================================================== */
+
+.hero {
+  /* Quanto o retrato passa da borda do grid para encostar na borda da tela. */
+  --sangria: calc(var(--grade-margem) + max(0px, (100vw - var(--grade-max)) / 2));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding-top: var(--altura-header);
+  overflow-x: clip;
+}
+
+.hero__grade {
+  flex: 1;
+  grid-template-rows: auto 1fr auto auto auto auto;
+  padding-bottom: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
+}
+
+/* ---- Retrato ------------------------------------------------------------ */
+.hero__composicao {
+  position: relative;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  justify-self: center;
+  width: min(74vw, 33.6svh);
+  aspect-ratio: 4 / 5;
+  margin-top: 1svh;
+}
+
+/* Foto cortada no ombro: o retrato encosta na borda direita da tela, para
+   o corte coincidir com a borda (e não parar no meio do respiro). */
+.hero__composicao--sangria {
+  justify-self: end;
+  margin-right: calc(-1 * var(--sangria));
+}
+
+.hero__retrato {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+}
+
+.hero__retrato-picture,
+.hero__retrato-img {
+  width: 100%;
+  height: 100%;
+}
+
+/* A foto cabe inteira no quadro (qualquer proporção), apoiada na base. */
+.hero__retrato-img {
+  object-fit: contain;
+  object-position: 50% 100%;
+  /* No celular o retrato fica solto acima do texto: a base some em degradê. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
+}
+
+.hero__composicao--sangria .hero__retrato-img {
+  object-position: 100% 100%;
+}
+
+.hero__composicao--sangria .hero__provisorio {
+  right: var(--sangria);
+}
+
+/* Marca de provisório (some quando a foto definitiva entrar). */
+.hero__provisorio {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--raio-pilula);
+  background: var(--cor-porcelana);
+  color: var(--cor-texto-2-claro);
+  font-size: 0.625rem;
+}
+
+/* ---- Texto ------------------------------------------------------------- */
+.hero__rotulo {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  margin-top: var(--esp-5);
+  margin-bottom: clamp(1rem, 0.8rem + 1vw, 2rem);
+  color: var(--tema-texto-2);
+}
+
+.hero__titulo {
+  grid-column: 1 / -1;
+  grid-row: 4;
+}
+
+.hero__linha {
+  display: block;
+}
+
+.hero__subtitulo {
+  grid-column: 1 / -1;
+  grid-row: 5;
+  max-width: 31ch;
+  margin-top: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
+  color: var(--tema-texto-2);
+}
+
+.hero__cidade {
+  display: block;
+  margin-top: var(--esp-2);
+  color: var(--tema-texto);
+}
+
+.hero__acoes {
+  grid-column: 1 / span 10;
+  grid-row: 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-3) var(--esp-5);
+  margin-top: var(--esp-6);
+}
+
+.hero__nota {
+  font-size: var(--fs-pequeno);
+}
+
+/* Indicação de scroll: no celular, ao lado do botão. */
+.hero__rolar {
+  grid-column: 11 / -1;
+  grid-row: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-3);
+  justify-self: end;
+  align-self: end;
+  color: var(--tema-texto-2);
+}
+
+.hero__rolar-texto {
+  writing-mode: vertical-rl;
+}
+
+.hero__rolar-trilho {
+  position: relative;
+  width: 1px;
+  height: 3.5rem;
+  overflow: hidden;
+  background: var(--tema-linha);
+}
+
+.hero__rolar-trilho::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 40%;
+  background: var(--tema-texto);
+  animation: hm-rolar 2.6s var(--ease-cortina) infinite;
+}
+
+@keyframes hm-rolar {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  65%,
+  100% {
+    transform: translateY(250%);
+  }
+}
+
+/* ---- Desktop ----------------------------------------------------------- */
+@media (min-width: 64em) {
+  .hero__grade {
+    grid-template-rows: 1fr auto auto auto auto;
+  }
+
+  /* Retrato nas colunas 8 a 12, encostado na base do hero. */
+  .hero__composicao {
+    grid-column: 8 / -1;
+    grid-row: 1 / -1;
+    justify-self: end;
+    align-self: end;
+    width: min(100%, calc((100svh - var(--altura-header) - 3svh) * 0.8));
+    margin-top: 0;
+    margin-bottom: calc(-1 * clamp(1.75rem, 1rem + 2.4vw, 3.25rem));
+  }
+
+  .hero__composicao--sangria {
+    width: min(calc(100% + var(--sangria)), calc((100svh - var(--altura-header) - 3svh) * 0.8));
+  }
+
+  .hero__retrato-img {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .hero__provisorio {
+    top: 6%;
+  }
+
+  .hero__rotulo {
+    grid-column: 1 / span 7;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .hero__titulo {
+    grid-column: 1 / span 7;
+    grid-row: 3;
+  }
+
+  /* A segunda linha entra recuada uma coluna, em escada. */
+  .hero__linha--recuo {
+    padding-inline-start: calc((100% + var(--grade-calha)) / 7);
+  }
+
+  .hero__subtitulo {
+    grid-column: 1 / span 4;
+    grid-row: 4;
+  }
+
+  .hero__acoes {
+    grid-column: 1 / span 6;
+    grid-row: 5;
+  }
+
+  .hero__rolar {
+    grid-column: 7;
+    grid-row: 4 / span 2;
+    justify-self: center;
+  }
+
+  .hero__rolar-texto {
+    writing-mode: horizontal-tb;
+  }
+}
+
+/* ---- Estados de entrada (só com JavaScript) ---------------------------- */
+/* O título fica oculto até o SplitText montar as linhas (após as fontes). */
+.js .hero__titulo {
+  visibility: hidden;
+}
+
+.js [data-hero-entra],
+.js [data-hero-retrato] {
+  opacity: 0;
+}
+
+.sem-animacao .hero__titulo,
+.sem-animacao [data-hero-entra],
+.sem-animacao [data-hero-retrato] {
+  visibility: visible !important;
+  opacity: 1 !important;
+}

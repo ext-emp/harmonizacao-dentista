@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{{ nomeCompleto }} · Cirurgião-dentista em Novo Hamburgo/RS</title>
+    <meta
+      name="description"
+      content="Harmonização orofacial e lentes de contato dental com naturalidade, em Novo Hamburgo/RS. Agende sua avaliação com o {{ nomeCompleto }}, cirurgião-dentista."
+    />
+    <meta name="theme-color" content="#f3efe8" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- @gerar metaSocial -->
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Fontes do hero e do texto: carregam junto com o HTML -->
+    <link rel="preload" href="/fonts/instrument-serif-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/instrument-serif-400-italico.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/manrope-variavel.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script>
+      // Antes da primeira pintura: liga os estados que dependem de JavaScript.
+      (function () {
+        var html = document.documentElement;
+        html.classList.add('js');
+        var reduzir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var visitou = false;
+        try {
+          visitou = sessionStorage.getItem('hm:visitou') === '1';
+        } catch (e) {}
+        // Preloader só na primeira visita da sessão e com movimento liberado.
+        if (!visitou && !reduzir) html.classList.add('tem-preloader');
+        // Rede de segurança: se o script principal não iniciar, mostra tudo.
+        setTimeout(function () {
+          if (!window.__hmIniciado) html.classList.add('sem-animacao');
+        }, 6000);
+      })();
+    </script>
+
+    <link rel="stylesheet" href="/src/css/main.css" />
+    <script type="module" src="/src/js/main.js"></script>
+
+    <!-- @gerar schema -->
+  </head>
+  <body>
+    <!-- @incluir secoes/simbolos.html -->
+
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <!-- @incluir secoes/preloader.html -->
+    <!-- @incluir secoes/header.html -->
+
+    <main id="conteudo" tabindex="-1">
+      <!-- @incluir secoes/hero.html -->
+      <!-- O espaço traz o manifesto dentro dele (fundo fixo compartilhado). -->
+      <!-- @incluir secoes/espaco.html -->
+      <!-- @incluir secoes/tratamentos.html -->
+      <!-- @incluir secoes/resultados.html -->
+      <!-- @incluir secoes/sobre.html -->
+      <!-- @incluir secoes/experiencia.html -->
+      <!-- @incluir secoes/consulta.html -->
+      <!-- @incluir secoes/faq.html -->
+      <!-- @incluir secoes/contato.html -->
+    </main>
+
+    <!-- @incluir secoes/rodape.html -->
+  </body>
+</html>

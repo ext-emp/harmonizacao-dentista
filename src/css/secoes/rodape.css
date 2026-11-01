@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Rodapé (grafite): "Henrique Martins" de borda a borda do grid e a
+   assinatura exigida pelo CFO.
+   O tamanho do nome sai da largura do grid (unidade cqi do container):
+   --rodape-proporcao é a razão entre o corpo da fonte e a largura do nome,
+   medida com a Instrument Serif (scripts/medidas/rodape.js).
+   ========================================================================== */
+
+.rodape {
+  padding-bottom: var(--esp-5);
+  overflow: clip;
+}
+
+.rodape .grade {
+  container-type: inline-size;
+}
+
+.rodape__nome {
+  --rodape-proporcao: 0.1845;
+  grid-column: 1 / -1;
+  font-family: var(--fonte-titulo);
+  font-size: calc(var(--rodape-proporcao) * 100cqi);
+  line-height: 0.82;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+  text-align: center;
+  /* Margem para os descendentes do "q" não encostarem na linha de baixo. */
+  padding-bottom: 0.08em;
+}
+
+.rodape__base {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--esp-3) var(--esp-6);
+  margin-top: var(--esp-5);
+  padding-top: var(--esp-5);
+  border-top: 1px solid var(--tema-linha);
+  font-size: var(--fs-pequeno);
+}
+
+.rodape__assinatura {
+  flex: 1 1 22rem;
+}
+
+.rodape__topo {
+  margin-left: auto;
+}

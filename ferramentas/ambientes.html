@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Ferramenta: ambientes provisórios</title>
+  </head>
+  <body>
+    <!-- Página só de desenvolvimento (não entra no build). -->
+    <script type="module">
+      import { renderizar } from './ambientes.js';
+
+      const p = new URLSearchParams(location.search);
+      window.__render = await renderizar({
+        cena: p.get('cena') || 'recepcao',
+        largura: Number(p.get('largura') || 1600),
+        altura: Number(p.get('altura') || 1067),
+        exposicao: Number(p.get('exposicao') || 1),
+        ao: Number(p.get('ao') || 1),
+      }).catch((e) => 'erro: ' + e.message);
+    </script>
+  </body>
+</html>

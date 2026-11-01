@@ -1,0 +1,47 @@
+<!-- Sobre o doutor: retrato grande (máscara abrindo e parallax), texto curto
+     e formação. [CONFIRMAR] texto, formação e retrato (fotos/sobre/retrato.jpg,
+     4:5). Não inventar cursos: cada linha da formação espera o dado real. -->
+<section class="sobre secao" id="sobre" data-tema="claro" data-pilha aria-labelledby="sobre-titulo" tabindex="-1">
+  <div class="grade">
+    <figure class="sobre__retrato">
+      <div class="sobre__mascara mascara" data-revelar="imagem">
+        <div class="sobre__parallax moldura-parallax" data-parallax>
+          <x-img
+            src="sobre/retrato"
+            alt="Imagem provisória no lugar do retrato do Dr. Henrique Martins"
+            sizes="(min-width: 64em) 40vw, 90vw"
+            class="sobre__img"
+            classe-picture="sobre__picture"
+          ></x-img>
+        </div>
+      </div>
+      <figcaption class="sobre__provisorio etiqueta-provisoria rotulo" data-provisorio>Retrato provisório</figcaption>
+    </figure>
+
+    <div class="sobre__texto">
+      <p class="sobre__rotulo rotulo texto-2">Sobre</p>
+      <h2 class="sobre__titulo titulo-2" id="sobre-titulo" data-revelar="linhas" data-linhas>{{ nomeCompleto }}</h2>
+      <p class="sobre__registro rotulo texto-2">{{ doutor.profissao }} · {{ cro }}</p>
+
+      <div class="sobre__paragrafos" data-revelar="subir">
+        <p class="destaque">
+          {{ doutor.nome }} é cirurgião-dentista em Novo Hamburgo. Dedica-se à harmonização orofacial e às lentes de
+          contato dental, com atenção ao que torna cada rosto único.
+        </p>
+        <p class="texto-2">
+          No consultório, o tempo é para ouvir, examinar e explicar. As decisões são tomadas junto com o paciente,
+          depois de entender o que ele deseja e o que deve ficar como está. <span class="pendente">[CONFIRMAR]</span>
+        </p>
+      </div>
+
+      <div class="sobre__formacao" data-revelar="subir">
+        <h3 class="sobre__formacao-titulo rotulo texto-2">Formação</h3>
+        <ul class="sobre__lista">
+          <li>Graduação em Odontologia <span class="pendente">[CONFIRMAR] instituição e ano</span></li>
+          <li>Cursos em harmonização orofacial <span class="pendente">[CONFIRMAR] nomes, instituições e anos</span></li>
+          <li>Cursos em lentes de contato dental <span class="pendente">[CONFIRMAR] nomes, instituições e anos</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

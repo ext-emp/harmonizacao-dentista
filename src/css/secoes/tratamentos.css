@@ -1,0 +1,291 @@
+/* ==========================================================================
+   Tratamentos: cabeçalho, os dois blocos (Rosto e Sorriso) e a lista
+   numerada dos procedimentos.
+   ========================================================================== */
+
+.tratamentos__cabecalho {
+  row-gap: var(--esp-5);
+  margin-bottom: clamp(3.5rem, 2rem + 5vw, 8rem);
+}
+
+.tratamentos__rotulo,
+.tratamentos__titulo,
+.tratamentos__intro {
+  grid-column: 1 / -1;
+}
+
+.tratamentos__intro {
+  max-width: 30ch;
+}
+
+@media (min-width: 64em) {
+  .tratamentos__titulo {
+    grid-column: 1 / span 7;
+    grid-row: 2;
+  }
+
+  .tratamentos__intro {
+    grid-column: 9 / -1;
+    grid-row: 2;
+    align-self: end;
+  }
+}
+
+/* ---- Blocos ------------------------------------------------------------ */
+.tratamentos__blocos {
+  row-gap: clamp(4.5rem, 3rem + 5vw, 8rem);
+}
+
+.tratamento {
+  position: relative;
+  grid-column: 1 / -1;
+  display: grid;
+  align-content: start;
+  gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
+}
+
+@media (min-width: 64em) {
+  .tratamento--rosto {
+    grid-column: 1 / span 5;
+  }
+
+  /* O segundo bloco desce: os dois formam uma escada, não uma grade. */
+  .tratamento--sorriso {
+    grid-column: 8 / span 5;
+    margin-top: clamp(8rem, 2rem + 12vw, 17rem);
+  }
+}
+
+.tratamento__midia {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tratamento__mascara {
+  aspect-ratio: 4 / 5;
+}
+
+.tratamento__img {
+  transition: scale var(--dur-lenta) var(--ease-saida);
+}
+
+.tratamento__texto {
+  display: grid;
+  justify-items: start;
+}
+
+.tratamento__numero {
+  margin-bottom: var(--esp-3);
+}
+
+.tratamento__area {
+  margin-top: var(--esp-3);
+}
+
+.tratamento__descricao {
+  max-width: 38ch;
+  margin-top: var(--esp-4);
+}
+
+.tratamento__link {
+  margin-top: var(--esp-5);
+  font-size: var(--fs-pequeno);
+  font-weight: 600;
+}
+
+/* O link cobre o bloco inteiro (imagem e texto). */
+.tratamento__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tratamento:hover .tratamento__img {
+    scale: 1.04;
+  }
+
+  .tratamento:hover .tratamento__link {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
+  }
+}
+
+/* Equivalente no toque (bloco no centro da tela). */
+.tratamento.is-active .tratamento__img {
+  scale: 1.04;
+}
+
+.tratamento.is-active .tratamento__link {
+  background-position: 0% 100%;
+  background-size: 100% 1px;
+}
+
+/* ---- Procedimentos ----------------------------------------------------- */
+.procedimentos {
+  margin-top: clamp(6rem, 3rem + 9vw, 13rem);
+}
+
+.procedimentos__cabecalho {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--esp-3) var(--esp-5);
+  padding-bottom: var(--esp-5);
+}
+
+.procedimentos__nota {
+  font-size: var(--fs-pequeno);
+}
+
+.procedimentos__lista {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--tema-linha);
+}
+
+.procedimento {
+  --deslize: 0.75rem;
+  --miniatura: 3.5rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr var(--miniatura);
+  align-items: baseline;
+  column-gap: var(--esp-4);
+  padding-block: clamp(1.4rem, 1.1rem + 1.2vw, 2.4rem);
+  border-bottom: 1px solid var(--tema-linha);
+}
+
+/* Linha champanhe que se desenha sob a linha ativa (só detalhe, sem texto). */
+.procedimento::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--cor-champagne);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-lenta) var(--ease-saida);
+}
+
+.procedimento__numero {
+  color: var(--tema-texto-2);
+  transition: color var(--dur-media) var(--ease-suave);
+}
+
+.procedimento__nome {
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs-titulo-2);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: translate var(--dur-media) var(--ease-saida);
+}
+
+.procedimento__area {
+  justify-self: end;
+  font-size: var(--fs-pequeno);
+  transition:
+    opacity var(--dur-media) var(--ease-suave),
+    translate var(--dur-media) var(--ease-saida);
+}
+
+/* Imagem da linha. No toque: miniatura na própria linha, na coluna da área. */
+.procedimento__midia {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--miniatura);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  translate: 0 -50%;
+  clip-path: inset(100% 0% 0% 0%);
+  pointer-events: none;
+  transition: clip-path var(--dur-lenta) var(--ease-cortina);
+}
+
+.procedimento__midia picture,
+.procedimento__img {
+  width: 100%;
+  height: 100%;
+}
+
+.procedimento__img {
+  object-fit: cover;
+}
+
+/* Equivalente no toque: a linha que passa pelo centro da tela desliza,
+   ganha o traço champanhe e mostra a miniatura no lugar da área. */
+.procedimento.is-active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.procedimento.is-active .procedimento__numero {
+  color: var(--tema-texto);
+}
+
+.procedimento.is-active .procedimento__nome {
+  translate: var(--deslize) 0;
+}
+
+.procedimento.is-active .procedimento__area {
+  opacity: 0;
+}
+
+.procedimento.is-active .procedimento__midia {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+@media (min-width: 48em) {
+  .procedimento {
+    --miniatura: 4.5rem;
+    grid-template-columns: 4rem 1fr var(--miniatura);
+  }
+}
+
+/* Com mouse: a imagem sai da linha e segue o cursor (posição em
+   --cursor-x/--cursor-y, definida pelo JS na lista). */
+@media (hover: hover) and (pointer: fine) {
+  .procedimento {
+    --deslize: 1.75rem;
+    grid-template-columns: 4rem 1fr auto;
+  }
+
+  .procedimento__midia {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: auto;
+    z-index: 5;
+    width: clamp(13rem, 9rem + 7vw, 19rem);
+    translate: calc(var(--cursor-x, 50vw) - 50%) calc(var(--cursor-y, 50vh) - 50%);
+    rotate: var(--cursor-giro, 0deg);
+    clip-path: inset(50% 50% 50% 50%);
+  }
+
+  .procedimento:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .procedimento:hover .procedimento__numero {
+    color: var(--tema-texto);
+  }
+
+  .procedimento:hover .procedimento__nome {
+    translate: var(--deslize) 0;
+  }
+
+  .procedimento:hover .procedimento__area {
+    opacity: 0;
+    translate: -0.5rem 0;
+  }
+
+  .procedimento:hover .procedimento__midia {
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}

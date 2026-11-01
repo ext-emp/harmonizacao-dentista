@@ -1,0 +1,59 @@
+<!-- Header fixo: esconde ao rolar para baixo e volta ao rolar para cima.
+     No celular o mesmo <nav> vira o menu em tela cheia. Sem JavaScript, o
+     botão "Menu" abre o menu por âncora (#menu). -->
+<header class="header header--topo" data-header>
+  <div class="header__barra">
+    <a class="header__marca" href="#inicio" aria-label="{{ nomeCompleto }}, voltar ao início" data-cursor="link">
+      <svg class="monograma" viewBox="0 0 60 40" aria-hidden="true" focusable="false"><use href="#monograma" /></svg>
+    </a>
+
+    <nav class="menu" id="menu" aria-label="Principal" data-menu>
+      <ol class="menu__lista">
+        <li class="menu__item">
+          <a class="menu__link" href="#tratamentos"><span class="menu__numero" aria-hidden="true">01</span><span class="menu__texto">Tratamentos</span></a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#resultados"><span class="menu__numero" aria-hidden="true">02</span><span class="menu__texto">Resultados</span></a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#sobre"><span class="menu__numero" aria-hidden="true">03</span><span class="menu__texto">Sobre</span></a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#consulta"><span class="menu__numero" aria-hidden="true">04</span><span class="menu__texto">Consulta</span></a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#faq"><span class="menu__numero" aria-hidden="true">05</span><span class="menu__texto">FAQ</span></a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#contato"><span class="menu__numero" aria-hidden="true">06</span><span class="menu__texto">Contato</span></a>
+        </li>
+      </ol>
+
+      <!-- Só aparece no menu em tela cheia -->
+      <div class="menu__extras" data-menu-extras>
+        <a class="botao botao--claro" href="{{ whatsapp.link }}" target="_blank" rel="noopener">
+          <span class="botao__ponto" aria-hidden="true"></span>
+          <span class="botao__rolo"><span class="botao__texto">Agendar avaliação</span></span>
+          <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
+        </a>
+        <ul class="menu__info">
+          <li><a class="link-linha" href="{{ instagram.url }}" target="_blank" rel="noopener">{{ instagram.arroba }}<span class="visualmente-oculto"> no Instagram (abre em nova aba)</span></a></li>
+          <li>{{ endereco.cidadeUf }}</li>
+        </ul>
+      </div>
+      <a class="menu__fechar-semjs link-linha" href="#inicio">Fechar menu</a>
+    </nav>
+
+    <div class="header__acoes">
+      <a class="botao botao--compacto header__cta" href="{{ whatsapp.link }}" target="_blank" rel="noopener" data-magnetico>
+        <span class="botao__ponto" aria-hidden="true"></span>
+        <span class="botao__rolo"><span class="botao__texto">Agendar<span class="header__cta-extra"> avaliação</span></span></span>
+        <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
+      </a>
+      <a class="header__menu-botao" href="#menu" aria-controls="menu" data-menu-botao>
+        <span class="header__menu-rotulo" data-menu-rotulo>Menu</span>
+        <span class="header__menu-icone" aria-hidden="true"><span></span><span></span></span>
+      </a>
+    </div>
+  </div>
+</header>

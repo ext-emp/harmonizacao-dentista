@@ -1,0 +1,56 @@
+<!-- Contato: chamada final grande com o botão magnético do WhatsApp (mensagem
+     pré-preenchida, em src/dados/doutor.js), endereço com link para o mapa,
+     horários e Instagram. Todos os dados vêm de doutor.js. -->
+<section class="contato secao" id="contato" data-tema="escuro" data-pilha-entrada="caixa" aria-labelledby="contato-titulo" tabindex="-1">
+  <div class="grade">
+    <p class="contato__rotulo rotulo texto-2">Contato</p>
+    <h2 class="contato__titulo titulo-1" id="contato-titulo" data-revelar="linhas" data-linhas>
+      Comece por uma <em>conversa.</em>
+    </h2>
+
+    <div class="contato__acao" data-revelar="subir">
+      <a
+        class="botao botao--grande"
+        href="{{ whatsapp.link }}"
+        target="_blank"
+        rel="noopener"
+        data-magnetico="0.4"
+        data-toque-centro
+      >
+        <span class="botao__ponto" aria-hidden="true"></span>
+        <span class="botao__rolo"><span class="botao__texto">Agendar avaliação</span></span>
+        <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
+      </a>
+      <p class="contato__nota texto-2">Pelo WhatsApp. A mensagem já vai escrita, é só enviar.</p>
+    </div>
+
+    <div class="contato__infos" data-revelar="lista">
+      <div class="contato__info">
+        <h3 class="contato__info-titulo rotulo texto-2">Endereço</h3>
+        <address class="contato__endereco">
+          {{ endereco.linha1 }}<br />
+          {{ endereco.linha2 }}
+        </address>
+        <a class="contato__link link-linha" href="{{ endereco.mapa }}" target="_blank" rel="noopener" data-toque-centro>
+          Abrir no mapa<span class="visualmente-oculto"> (abre em nova aba)</span>
+        </a>
+      </div>
+
+      <div class="contato__info">
+        <h3 class="contato__info-titulo rotulo texto-2">Horários</h3>
+        <ul class="contato__horarios">
+          <!-- @gerar horarios -->
+        </ul>
+      </div>
+
+      <div class="contato__info">
+        <h3 class="contato__info-titulo rotulo texto-2">WhatsApp</h3>
+        <p>{{ whatsapp.exibicao }}</p>
+        <h3 class="contato__info-titulo contato__info-titulo--segundo rotulo texto-2">Instagram</h3>
+        <a class="contato__link link-linha" href="{{ instagram.url }}" target="_blank" rel="noopener" data-toque-centro>
+          {{ instagram.arroba }}<span class="visualmente-oculto"> (abre em nova aba)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

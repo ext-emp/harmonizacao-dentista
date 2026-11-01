@@ -1,0 +1,450 @@
+{
+  "atendimento/atendimento-01": {
+    "largura": 960,
+    "altura": 1200,
+    "larguras": [
+      320,
+      640,
+      960
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8d8c8"
+  },
+  "atendimento/atendimento-02": {
+    "largura": 960,
+    "altura": 1200,
+    "larguras": [
+      320,
+      640,
+      960
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#d8c8b8"
+  },
+  "atendimento/atendimento-03": {
+    "largura": 960,
+    "altura": 1200,
+    "larguras": [
+      320,
+      640,
+      960
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#282828"
+  },
+  "atendimento/atendimento-04": {
+    "largura": 960,
+    "altura": 1200,
+    "larguras": [
+      320,
+      640,
+      960
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-01-antes": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-01-depois": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "casos/caso-02-antes": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-02-depois": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "casos/caso-03-antes": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-03-depois": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "casos/caso-04-antes": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-04-depois": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "casos/caso-05-antes": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-05-depois": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "casos/caso-06-antes": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "casos/caso-06-depois": {
+    "largura": 1080,
+    "altura": 1080,
+    "larguras": [
+      480,
+      720,
+      1080
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "espaco/espaco-01": {
+    "largura": 2400,
+    "altura": 1600,
+    "larguras": [
+      640,
+      1024,
+      1600,
+      2400
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#a89888"
+  },
+  "espaco/espaco-02": {
+    "largura": 1600,
+    "altura": 2000,
+    "larguras": [
+      640,
+      1024,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#a89888"
+  },
+  "espaco/espaco-03": {
+    "largura": 2400,
+    "altura": 1600,
+    "larguras": [
+      640,
+      1024,
+      1600,
+      2400
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8c8"
+  },
+  "espaco/espaco-04": {
+    "largura": 1600,
+    "altura": 2000,
+    "larguras": [
+      640,
+      1024,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#a89888"
+  },
+  "espaco/espaco-05": {
+    "largura": 2880,
+    "altura": 1920,
+    "larguras": [
+      640,
+      1024,
+      1600,
+      2400,
+      2880
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#281818"
+  },
+  "hero/doutor-capa": {
+    "largura": 480,
+    "altura": 480,
+    "larguras": [
+      480
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "transparent"
+  },
+  "hero/perola": {
+    "largura": 1600,
+    "altura": 1600,
+    "larguras": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "transparent"
+  },
+  "procedimentos/bioestimulador-de-colageno": {
+    "largura": 640,
+    "altura": 800,
+    "larguras": [
+      320,
+      640
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "procedimentos/clareamento-dental": {
+    "largura": 640,
+    "altura": 800,
+    "larguras": [
+      320,
+      640
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "procedimentos/harmonizacao-facial": {
+    "largura": 640,
+    "altura": 800,
+    "larguras": [
+      320,
+      640
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8d8c8"
+  },
+  "procedimentos/lentes-de-contato-dental": {
+    "largura": 640,
+    "altura": 800,
+    "larguras": [
+      320,
+      640
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8e8d8"
+  },
+  "procedimentos/preenchimento-labial": {
+    "largura": 640,
+    "altura": 800,
+    "larguras": [
+      320,
+      640
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#f8e8e8"
+  },
+  "procedimentos/toxina-botulinica": {
+    "largura": 640,
+    "altura": 800,
+    "larguras": [
+      320,
+      640
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#e8d8d8"
+  },
+  "sobre/retrato": {
+    "largura": 1600,
+    "altura": 2000,
+    "larguras": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#282828"
+  },
+  "tratamentos/rosto": {
+    "largura": 1600,
+    "altura": 2000,
+    "larguras": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#d8c8b8"
+  },
+  "tratamentos/sorriso": {
+    "largura": 1600,
+    "altura": 2000,
+    "larguras": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#282828"
+  }
+}

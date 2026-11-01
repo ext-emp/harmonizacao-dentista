@@ -1,0 +1,130 @@
+/* ==========================================================================
+   FAQ (linho): cabeçalho fixo à esquerda no desktop e o acordeão à direita.
+   ========================================================================== */
+
+.faq .grade {
+  row-gap: clamp(2.5rem, 2rem + 2vw, 4rem);
+}
+
+.faq__cabecalho {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-5);
+}
+
+.faq__lista {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--tema-linha);
+}
+
+@media (min-width: 64em) {
+  .faq__cabecalho {
+    position: sticky;
+    top: calc(var(--altura-header) + var(--esp-8));
+    grid-column: 1 / span 4;
+    align-self: start;
+  }
+
+  .faq__lista {
+    grid-column: 6 / -1;
+  }
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--tema-linha);
+}
+
+.faq__pergunta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-5);
+  padding-block: clamp(1.25rem, 1rem + 1vw, 2rem);
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs-titulo-3);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.faq__pergunta::-webkit-details-marker {
+  display: none;
+}
+
+.faq__pergunta:focus-visible {
+  outline-offset: 2px;
+}
+
+.faq__pergunta-texto {
+  transition: translate var(--dur-media) var(--ease-saida);
+}
+
+/* Mais e menos desenhados com duas linhas finas. */
+.faq__icone {
+  position: relative;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--tema-linha);
+  border-radius: 50%;
+  transition:
+    background-color var(--dur-media) var(--ease-suave),
+    border-color var(--dur-media) var(--ease-suave),
+    color var(--dur-media) var(--ease-suave);
+}
+
+.faq__icone::before,
+.faq__icone::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.875rem;
+  height: 1px;
+  background: currentColor;
+  translate: -50% -50%;
+  transition: rotate var(--dur-media) var(--ease-saida);
+}
+
+.faq__icone::after {
+  rotate: 90deg;
+}
+
+.faq__item[open]:not(.esta-fechando) .faq__icone::after {
+  rotate: 0deg;
+}
+
+.faq__resposta {
+  overflow: hidden;
+}
+
+.faq__resposta p {
+  max-width: 52ch;
+  padding-bottom: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+  color: var(--tema-texto-2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq__pergunta:hover .faq__icone {
+    background-color: var(--cor-grafite);
+    border-color: var(--cor-grafite);
+    color: var(--cor-porcelana);
+  }
+
+  .faq__pergunta:hover .faq__pergunta-texto {
+    translate: 0.5rem 0;
+  }
+}
+
+/* Equivalente no toque (pergunta no centro da tela). */
+.faq__item.is-active .faq__icone {
+  background-color: var(--cor-grafite);
+  border-color: var(--cor-grafite);
+  color: var(--cor-porcelana);
+}
+
+.faq__item.is-active .faq__pergunta-texto {
+  translate: 0.5rem 0;
+}

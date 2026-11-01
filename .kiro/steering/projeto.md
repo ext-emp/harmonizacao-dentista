@@ -23,6 +23,14 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 - "Cirurgião-dentista", nunca "especialista", até a especialidade ser confirmada no CFO.
 - Sem depoimentos de pacientes até confirmação com o CRO-RS.
 
+## Estrutura e movimento (decisões do usuário)
+
+- Ordem: preloader, header, hero, O espaço (galeria lateral; a última foto vira o fundo do manifesto e dos números), tratamentos, resultados, sobre, experiência, consulta, FAQ, contato e rodapé.
+- Hero: retrato do Dr. Henrique recortado, sem fundo (`fotos/hero/doutor-capa.png`, PNG transparente 4:5), texto à esquerda, nunca sobre a pessoa. A pérola tem área própria no hero (nunca atrás do retrato) e, com o scroll, pousa na abertura de "O espaço" (`perola-viagem.js`). Nunca paciente nem foto de banco no hero.
+- Transições no estilo da LAVA dental: cada seção com `data-pilha` sobe por cima da anterior, que fica parada (`position: sticky` em `pilha.js` e `secao.css`); o contato entra em caixa.
+- Experiência e consulta: a roda (`roda.js`, `roda.css`). Um gesto de rolagem = um passo no mouse e no trackpad; snap no toque. A lista `<ol>` real fica no HTML e a roda desenhada é `aria-hidden`.
+- Sem JavaScript ou com `prefers-reduced-motion`: rolagem normal, galeria com scroll lateral nativo, rodas como lista numerada.
+
 ## Convenções
 
 - Texto em português do Brasil, tom sereno e direto. Nunca dizer "alto padrão": a exclusividade aparece no design.
@@ -34,4 +42,5 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 - Comentários de código em português. Módulos pequenos em `src/js/`.
 - Contenção: nenhuma seção, widget ou efeito fora do briefing sem perguntar. Nada de gradiente roxo, glassmorphism, ícones genéricos, emojis ou cards iguais com sombra.
 - Sem formulários, cookies ou rastreamento.
-- Commit no git ao fim de cada etapa.
+- Git: o repositório de destino é `origin` = https://github.com/ext-emp/harmonizacao-dentista.git (branch `main`), indicado pelo usuário em 31/10/2026, que mandou subir tudo para continuar em outro computador. Daí em diante, só fazer commit e push quando o usuário pedir, e nunca publicar em outro lugar (Vercel, Netlify etc.) sem pedido.
+- Estado e próximos passos: `docs/plano-transicoes.md` (o que foi feito, como foi testado e o que falta). Pendências do doutor: `CONTEUDO-PENDENTE.md`.

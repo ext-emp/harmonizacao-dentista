@@ -1,0 +1,40 @@
+<!-- Resultados: carrossel de antes e depois. Os cards saem de
+     src/dados/casos.js (lista única) pelo gerador "casos" em vite/geradores.js.
+     Desktop: 3 cards visíveis. Celular: 1 card e um pedaço do próximo.
+     O carrossel é um scroll horizontal nativo com encaixe: funciona com o
+     dedo, com o trackpad e sem JavaScript; as setas e o contador vêm do JS. -->
+<section class="resultados secao" id="resultados" data-tema="linho" data-pilha aria-labelledby="resultados-titulo" tabindex="-1">
+  <div class="grade resultados__cabecalho">
+    <p class="resultados__rotulo rotulo texto-2">Resultados</p>
+    <h2 class="resultados__titulo titulo-2" id="resultados-titulo" data-revelar="linhas" data-linhas>
+      Antes e <em>depois.</em>
+    </h2>
+    <p class="resultados__intro texto-2" data-revelar="subir">
+      Arraste a linha sobre a foto para comparar.
+      <span class="pendente">Fotos provisórias [CONFIRMAR]</span>
+    </p>
+  </div>
+
+  <div class="carrossel" data-carrossel role="region" aria-roledescription="carrossel" aria-label="Casos de antes e depois">
+    <ul class="carrossel__trilho" data-carrossel-trilho>
+      <!-- @gerar casos -->
+    </ul>
+
+    <div class="grade carrossel__rodape">
+      <p class="resultados__nota texto-2">Imagens divulgadas com autorização dos pacientes.</p>
+      <div class="carrossel__controles" data-carrossel-controles>
+        <p class="carrossel__contador" aria-hidden="true">
+          <span class="carrossel__atual" data-carrossel-atual>01</span>
+          <span class="carrossel__barra">/</span>
+          <span data-carrossel-total><!-- @gerar totalCasos --></span>
+        </p>
+        <button class="carrossel__seta carrossel__seta--anterior" type="button" data-carrossel-anterior data-toque-centro aria-label="Caso anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#seta" /></svg>
+        </button>
+        <button class="carrossel__seta" type="button" data-carrossel-proximo data-toque-centro aria-label="Próximo caso">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#seta" /></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

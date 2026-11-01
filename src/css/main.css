@@ -1,0 +1,23 @@
+/* Folha principal: só importa as partes, na ordem da cascata. */
+@import './fontes.css';
+@import './tokens.css';
+@import './base.css';
+
+@import './componentes/botao.css';
+@import './componentes/secao.css';
+@import './componentes/cursor.css';
+@import './componentes/comparador.css';
+@import './componentes/perola.css';
+@import './componentes/roda.css';
+
+@import './secoes/preloader.css';
+@import './secoes/header.css';
+@import './secoes/hero.css';
+@import './secoes/espaco.css';
+@import './secoes/manifesto.css';
+@import './secoes/tratamentos.css';
+@import './secoes/resultados.css';
+@import './secoes/sobre.css';
+@import './secoes/faq.css';
+@import './secoes/contato.css';
+@import './secoes/rodape.css';

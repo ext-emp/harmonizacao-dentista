@@ -156,3 +156,15 @@ Junto com o briefing veio um print (não salvo aqui; é de outro segmento, corre
 - Legenda abaixo, alinhada à esquerda, em sans ("Correção postural — vista de perfil"), e contador "01 / 15" à direita.
 
 O texto do briefing pede algo diferente em alguns pontos (foto quadrada, cantos arredondados, ícone de olho, rótulos brancos nos cantos inferiores, nome centralizado em serifa). Vale o texto do briefing; do print aproveitamos a mecânica (linha fina, botão central, rótulos e contador).
+
+---
+
+## Atualizações do usuário
+
+- 31/10/2026: não fazer commit nem push e não subir o projeto em lugar nenhum. O repositório de destino será informado no fim do projeto. (Substitui o pedido de commit ao fim de cada etapa.)
+- 31/10/2026: o usuário indicou o repositório de destino (https://github.com/ext-emp/harmonizacao-dentista.git, branch `main`) e pediu para subir tudo, para continuar em outro computador. A regra de não fazer commit nem push vale de novo depois desse envio, até o usuário pedir.
+- 31/10/2026: etapa 1 aprovada (paleta, tipografia, pérola e título "O luxo de parecer você.").
+- 31/10/2026: **hero com retrato.** Além da pérola, o hero leva o retrato do Dr. Henrique recortado, sem fundo (só a pessoa), com a pérola 3D atrás dele e os mesmos efeitos (cursor, scroll, deformação). O layout continua limpo: texto à esquerda, sem passar por cima da pessoa. É sempre o doutor: nunca paciente (a Resolução CFO 196/2019 só libera imagem de paciente como diagnóstico ou resultado final) e nunca foto de banco. Até a foto chegar, fica um busto de porcelana sem rosto como provisório.
+- 31/10/2026: **pérola fora de trás do retrato.** A pérola atrás do doutor não fazia sentido. O retrato do hero passa a ser `fotos/hero/doutor-capa.png`, e a pérola ganha um lugar próprio no hero, sem cruzar a pessoa nem o texto. Com o scroll, ela viaja e pousa na abertura de "O espaço". (Substitui a pérola atrás do retrato e o busto provisório do item anterior.)
+- 31/10/2026: **transições da LAVA e "O espaço".** Copiar as transições de https://lavadental.lv/en: cada seção sobe por cima da anterior, que fica parada. "O espaço" (o consultório) vira a segunda seção, com galeria em scroll lateral, e a última foto abre até a tela cheia e vira o fundo dos atendimentos (o manifesto, com fotos do atendimento subindo por cima). O resto do site fica como estava. Ordem nova: preloader, header, hero, O espaço (com o manifesto e os números), tratamentos, resultados, sobre, experiência, consulta, FAQ, contato e rodapé.
+- 31/10/2026: **a roda.** A experiência e a primeira consulta seguem a roda da LAVA: a cada gesto de rolagem, a roda gira e passa um passo. (Substitui o título fixo do item 8 e o scroll horizontal do item 9.)

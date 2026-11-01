@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Ferramenta: naturezas-mortas provisórias</title>
+  </head>
+  <body>
+    <!-- Página só de desenvolvimento (não entra no build). -->
+    <script type="module">
+      import { renderizar } from './natureza-morta.js';
+
+      const p = new URLSearchParams(location.search);
+      window.__render = await renderizar({
+        cena: p.get('cena') || 'seixos',
+        largura: Number(p.get('largura') || 1600),
+        altura: Number(p.get('altura') || 2000),
+        fundo: p.get('fundo') || 'porcelana',
+        exposicao: Number(p.get('exposicao') || 1),
+        cor: p.get('cor') || undefined,
+      }).catch((e) => 'erro: ' + e.message);
+    </script>
+  </body>
+</html>

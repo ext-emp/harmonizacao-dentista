@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Botão em pílula. O texto "rola" no hover: uma cópia feita com text-shadow
+   espera logo abaixo e sobe no lugar do original (sem duplicar o texto).
+   ========================================================================== */
+
+.botao {
+  --botao-altura: 3.375rem;
+  --botao-fundo: var(--tema-botao-fundo);
+  --botao-texto: var(--tema-botao-texto);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  height: var(--botao-altura);
+  padding-inline: 1.5rem 1.625rem;
+  border-radius: var(--raio-pilula);
+  background-color: var(--botao-fundo);
+  color: var(--botao-texto);
+  font-size: var(--fs-pequeno);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-media) var(--ease-suave),
+    color var(--dur-media) var(--ease-suave);
+}
+
+.botao--compacto {
+  --botao-altura: 2.75rem;
+  gap: 0.625rem;
+  padding-inline: 1.125rem 1.25rem;
+  font-size: 0.8125rem;
+}
+
+.botao--claro {
+  --botao-fundo: var(--cor-porcelana);
+  --botao-texto: var(--cor-grafite);
+}
+
+.botao:focus-visible {
+  outline-offset: 3px;
+}
+
+/* Ponto champanhe: o único brilho do botão. */
+.botao__ponto {
+  flex: none;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--cor-champagne);
+  transition: transform var(--dur-media) var(--ease-saida);
+}
+
+.botao__rolo {
+  display: block;
+  height: 1.3em;
+  overflow: hidden;
+  line-height: 1.3em;
+}
+
+.botao__texto {
+  display: block;
+  text-shadow: 0 1.3em 0 currentColor;
+  transition: transform var(--dur-media) var(--ease-saida);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .botao:hover .botao__texto {
+    transform: translateY(-1.3em);
+  }
+
+  .botao:hover .botao__ponto {
+    transform: scale(1.75);
+  }
+}
+
+/* Equivalente no toque: classe ligada quando o botão passa pelo centro da tela. */
+.botao.is-active .botao__texto {
+  transform: translateY(-1.3em);
+}
+
+.botao.is-active .botao__ponto {
+  transform: scale(1.75);
+}
+
+/* ==========================================================================
+   Link com traço que se desenha da esquerda para a direita.
+   ========================================================================== */
+
+.link-linha {
+  padding-bottom: 0.12em;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--dur-media) var(--ease-saida);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link-linha:hover {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
+  }
+}
+
+.link-linha.is-active,
+.link-linha:focus-visible {
+  background-position: 0% 100%;
+  background-size: 100% 1px;
+}

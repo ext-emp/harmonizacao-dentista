@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Roda (experiência e consulta), no estilo da LAVA dental.
+   Sem JavaScript ou com movimento reduzido: título e uma lista numerada.
+   Com movimento (.roda--ativa, ligado por src/js/modulos/roda.js): o palco
+   fica fixo; um círculo grande com os números gira um passo a cada gesto de
+   rolagem. O número ativo fica no topo, com um traço descendo até o texto.
+   O tema (claro ou escuro) vem da seção; o champanhe só aparece nos pontos.
+   ========================================================================== */
+
+.roda {
+  --roda-raio: min(30vw, 44svh);
+  --roda-topo: 44svh;
+  --roda-haste: 9svh;
+  --roda-selo: 1.875rem;
+}
+
+@media (max-width: 63.999em) {
+  .roda {
+    --roda-raio: 52vw;
+    --roda-topo: 40svh;
+    --roda-haste: 7svh;
+  }
+}
+
+/* ---- Lista (sem roda) ---------------------------------------------------- */
+.roda__cabecalho {
+  align-items: baseline;
+  row-gap: var(--esp-4);
+}
+
+.roda__rotulo {
+  grid-column: 1 / span 8;
+  grid-row: 1;
+}
+
+.roda__titulo-secao {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  max-width: 14ch;
+}
+
+.roda__contador,
+.roda__disco,
+.roda__haste {
+  display: none;
+}
+
+.roda__itens {
+  margin-top: var(--esp-8);
+}
+
+.roda__item {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 2.75rem 1fr;
+  column-gap: var(--esp-4);
+  row-gap: var(--esp-3);
+  padding-block: clamp(1.75rem, 1.4rem + 1.4vw, 2.75rem);
+  border-top: 1px solid var(--tema-linha);
+}
+
+.roda__numero {
+  grid-row: 1 / span 2;
+  padding-top: 0.55em;
+  font-size: var(--fs-rotulo);
+  font-weight: 600;
+  letter-spacing: var(--ls-rotulo);
+  color: var(--tema-texto-2);
+}
+
+.roda__texto {
+  max-width: 40ch;
+}
+
+.roda__nota {
+  width: 100%;
+  max-width: var(--grade-max);
+  margin: var(--esp-6) auto 0;
+  padding-inline: var(--grade-margem);
+}
+
+@media (min-width: 64em) {
+  .roda__item {
+    grid-column: 5 / -1;
+    grid-template-columns: 4rem 1fr;
+  }
+
+  .roda__nota {
+    padding-left: calc(var(--grade-margem) + (100% - 2 * var(--grade-margem) + var(--grade-calha)) / 3);
+  }
+}
+
+/* ---- Roda ---------------------------------------------------------------- */
+.roda--ativa {
+  padding-block: 0;
+}
+
+.roda--ativa .roda__palco {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.roda--ativa .roda__cabecalho {
+  padding-top: calc(var(--altura-header) + var(--esp-5));
+}
+
+.roda--ativa .roda__titulo-secao {
+  grid-column: 1 / span 8;
+  /* Telas baixas: o título não pode encostar no número do topo da roda. */
+  font-size: min(var(--fs-titulo-2), 8svh);
+}
+
+/* Contador "01 / 06": o número atual rola dentro de uma janela de uma linha. */
+.roda--ativa .roda__contador {
+  grid-column: 9 / -1;
+  grid-row: 1;
+  justify-self: end;
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  font-family: var(--fonte-titulo);
+  font-size: var(--fs-titulo-3);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.roda__atual {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+
+.roda__atual > span {
+  display: block;
+}
+
+.roda__total {
+  font-size: 0.6em;
+  color: var(--tema-texto-2);
+}
+
+/* O disco é só o centro da roda: tudo dentro dele gira junto. */
+.roda--ativa .roda__disco {
+  position: absolute;
+  top: calc(var(--roda-topo) + var(--roda-raio));
+  left: 50%;
+  display: block;
+  width: 0;
+  height: 0;
+  will-change: transform;
+}
+
+.roda__circulo {
+  position: absolute;
+  top: calc(-1 * var(--roda-raio));
+  left: calc(-1 * var(--roda-raio));
+  width: calc(2 * var(--roda-raio));
+  height: calc(2 * var(--roda-raio));
+  border: 1px solid var(--tema-linha);
+  border-radius: 50%;
+}
+
+/* Cada marco gira até o ângulo dele; o ponto fica no círculo e o número,
+   do lado de fora. Os números de lado ficam inclinados, como na roda. */
+.roda__marco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(var(--angulo));
+}
+
+.roda__ponto {
+  position: absolute;
+  top: calc(-1 * var(--roda-raio) - 3.5px);
+  left: -3.5px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cor-champagne);
+}
+
+.roda__selo {
+  position: absolute;
+  top: calc(-1 * var(--roda-raio) - var(--esp-4) - var(--roda-selo));
+  left: calc(var(--roda-selo) / -2);
+  display: grid;
+  place-items: center;
+  width: var(--roda-selo);
+  height: var(--roda-selo);
+  border: 1px solid color-mix(in srgb, var(--tema-texto) 45%, transparent);
+  border-radius: 50%;
+  font-size: var(--fs-rotulo);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--tema-texto);
+  transition:
+    background-color var(--dur-media) var(--ease-suave),
+    color var(--dur-media) var(--ease-suave),
+    border-color var(--dur-media) var(--ease-suave);
+}
+
+.roda__marco.esta-ativo .roda__selo {
+  border-color: transparent;
+  background: var(--tema-texto);
+  color: var(--tema-fundo);
+}
+
+/* Traço do ponto do topo até o texto (não gira). */
+.roda--ativa .roda__haste {
+  position: absolute;
+  top: calc(var(--roda-topo) + var(--esp-3));
+  left: 50%;
+  display: block;
+  width: 1px;
+  height: var(--roda-haste);
+  background: var(--tema-texto);
+  opacity: 0.45;
+}
+
+/* Os textos ficam todos no mesmo lugar; só o ativo aparece (o JS controla a
+   opacidade). Os outros continuam no HTML para o leitor de tela. */
+.roda--ativa .roda__itens {
+  position: absolute;
+  top: calc(var(--roda-topo) + var(--esp-3) + var(--roda-haste) + var(--esp-5));
+  right: 0;
+  left: 0;
+  margin: 0;
+}
+
+.roda--ativa .roda__item {
+  grid-area: 1 / 1 / 2 / -1;
+  display: block;
+  justify-self: center;
+  width: min(34ch, 74vw);
+  padding: 0;
+  border: 0;
+  text-align: center;
+  pointer-events: none;
+}
+
+.roda--ativa .roda__item.esta-ativo {
+  pointer-events: auto;
+}
+
+.roda--ativa .roda__numero {
+  display: none;
+}
+
+.roda--ativa .roda__nome {
+  margin-bottom: var(--esp-4);
+}
+
+.roda--ativa .roda__texto {
+  margin-inline: auto;
+}
+
+.roda--ativa .roda__nota {
+  position: absolute;
+  right: 0;
+  bottom: var(--esp-6);
+  left: 0;
+  margin: 0;
+  padding-left: var(--grade-margem);
+}

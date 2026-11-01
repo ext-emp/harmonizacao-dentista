@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" fill="none" stroke="#161513" stroke-width="1.4" stroke-linecap="square">
+  <!-- Monograma HM: o H e o M dividem a haste central -->
+  <path d="M7 6v28M7 20h17M24 6v28M24 6l14 23 14-23v28"/>
+  <path d="M3.5 6h7M3.5 34h7M20.5 6h3.5M20.5 34h7M52 6h3.5M48.5 34h7" stroke-width="1"/>
+</svg>

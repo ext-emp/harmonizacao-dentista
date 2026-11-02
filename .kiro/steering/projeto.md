@@ -28,7 +28,8 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 - Ordem: preloader, header, hero, O espaço (galeria lateral; a última foto vira o fundo do manifesto e dos números), tratamentos, resultados, sobre, experiência, consulta, FAQ, contato e rodapé.
 - Hero: retrato do Dr. Henrique recortado, sem fundo (`fotos/hero/doutor-capa.png`, PNG transparente 4:5), texto à esquerda, nunca sobre a pessoa. A pérola tem área própria no hero (nunca atrás do retrato) e, com o scroll, pousa na abertura de "O espaço" (`perola-viagem.js`). Nunca paciente nem foto de banco no hero.
 - Transições no estilo da LAVA dental: cada seção com `data-pilha` sobe por cima da anterior, que fica parada (`position: sticky` em `pilha.js` e `secao.css`); o contato entra em caixa.
-- Experiência e consulta: a roda (`roda.js`, `roda.css`). Um gesto de rolagem = um passo no mouse e no trackpad; snap no toque. A lista `<ol>` real fica no HTML e a roda desenhada é `aria-hidden`.
+- Experiência e consulta: a roda (`roda.js`, `roda.css`). Um gesto de rolagem (ou um Page Down, Page Up ou Espaço) = um passo no mouse e no trackpad; snap no toque. A lista `<ol>` real fica no HTML e a roda desenhada é `aria-hidden`. A nota da seção fica no cabeçalho (no desktop, à direita, sob o contador), e a roda desce o quanto o cabeçalho pedir. No celular deitado e em telas baixas demais, fica a lista.
+- Girar o celular ou redimensionar a janela mantém a seção que a pessoa lia (`lugar.js`).
 - Sem JavaScript ou com `prefers-reduced-motion`: rolagem normal, galeria com scroll lateral nativo, rodas como lista numerada.
 
 ## Convenções

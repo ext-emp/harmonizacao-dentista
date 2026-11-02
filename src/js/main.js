@@ -33,6 +33,7 @@ import { iniciarFaq } from './modulos/faq.js';
 import { iniciarRevelacoes } from './modulos/revelar.js';
 import { iniciarParallax } from './modulos/parallax.js';
 import { iniciarToqueCentro } from './modulos/toque.js';
+import { manterLugar } from './modulos/lugar.js';
 
 window.__hmIniciado = true;
 
@@ -60,6 +61,7 @@ iniciarFaq();
 iniciarRevelacoes(fontes);
 iniciarParallax();
 iniciarToqueCentro();
+manterLugar();
 
 let preloader = Promise.resolve();
 if (semAnimacao()) {

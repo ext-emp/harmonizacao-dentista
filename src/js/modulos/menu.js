@@ -17,7 +17,12 @@ export function iniciarMenu() {
   const extras = menu.querySelector('[data-menu-extras]');
   const telaCheia = window.matchMedia('(max-width: 63.999em)');
   const foraDoMenu = () =>
-    [document.querySelector('main'), document.querySelector('footer'), header.querySelector('.header__cta')].filter(Boolean);
+    [
+      document.querySelector('.pular-conteudo'),
+      document.querySelector('main'),
+      document.querySelector('footer'),
+      header.querySelector('.header__cta'),
+    ].filter(Boolean);
 
   let aberto = false;
   let animacao = null;
@@ -75,9 +80,13 @@ export function iniciarMenu() {
     else abrir();
   });
 
-  // Clicar num link fecha o menu; o módulo de âncoras cuida da rolagem.
+  // Clicar num link (ou no monograma, que leva ao início) fecha o menu; o
+  // módulo de âncoras cuida da rolagem.
   menu.addEventListener('click', (e) => {
     if (aberto && e.target.closest('a')) fechar({ devolverFoco: false });
+  });
+  header.querySelector('.header__marca')?.addEventListener('click', () => {
+    if (aberto) fechar({ devolverFoco: false });
   });
 
   document.addEventListener('keydown', (e) => {

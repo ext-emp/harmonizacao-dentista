@@ -2,7 +2,10 @@
 // Quadros da página em passos fixos de scroll, para revisar as transições
 // (empilhamento, galeria do espaço, rodas). Monta uma folha de contato no fim.
 // Uso: node scripts/capturar-jornada.mjs [--vp desktop|mobile|LxA] [--de 0] [--ate 9000]
-//        [--passo 450] [--saida capturas/jornada] [--colunas 6]
+//        [--passo 450] [--saida capturas/jornada] [--colunas 6] [--espera 750]
+// --espera: ms de espera em cada quadro. O último quadro (a posição final do
+// trecho, mesmo fora do passo) espera pelo menos 3 s: o nome do rodapé ainda
+// está entrando antes disso.
 // ---------------------------------------------------------------------------
 import { chromium } from 'playwright';
 import sharp from 'sharp';
@@ -21,6 +24,8 @@ const PASSO = Number(opcao('passo', '450'));
 const REDUZIDO = args.includes('--reduzido');
 const SAIDA = opcao('saida', `capturas/jornada/${VP}${REDUZIDO ? '-reduzido' : ''}`);
 const COLUNAS = Number(opcao('colunas', '6'));
+const ESPERA = Number(opcao('espera', '750'));
+const ESPERA_FINAL = Math.max(ESPERA, 3000);
 
 const livre = /^(\d+)x(\d+)$/.exec(VP);
 const vp =
@@ -44,10 +49,13 @@ await pagina.addStyleTag({ content: '.cursor-ponto,.cursor-anel{display:none!imp
 await pagina.waitForTimeout(3500);
 
 const fim = Math.min(ATE, await pagina.evaluate(() => document.documentElement.scrollHeight - innerHeight));
-let i = 0;
-for (let y = DE; y <= fim; y += PASSO, i++) {
+// Os múltiplos do passo e, se ficar de fora, a posição final.
+const posicoes = [];
+for (let y = DE; y <= fim; y += PASSO) posicoes.push(y);
+if (posicoes.at(-1) !== fim) posicoes.push(fim);
+for (const [i, y] of posicoes.entries()) {
   await pagina.evaluate((v) => (window.__lenis ? window.__lenis.scrollTo(v, { immediate: true, force: true }) : window.scrollTo(0, v)), y);
-  await pagina.waitForTimeout(750);
+  await pagina.waitForTimeout(i === posicoes.length - 1 ? ESPERA_FINAL : ESPERA);
   await pagina.screenshot({ path: `${SAIDA}/${String(i).padStart(3, '0')}-${y}.png` });
 }
 await navegador.close();

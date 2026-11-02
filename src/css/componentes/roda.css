@@ -9,7 +9,10 @@
 
 .roda {
   --roda-raio: min(30vw, 44svh);
-  --roda-topo: 44svh;
+  /* Topo do círculo: a partir de --roda-inicio, mais o que o JS mandar descer
+     (--roda-desce) para o número do topo não encostar no cabeçalho. */
+  --roda-inicio: 44svh;
+  --roda-topo: calc(var(--roda-inicio) + var(--roda-desce, 0px));
   --roda-haste: 9svh;
   --roda-selo: 1.875rem;
 }
@@ -17,7 +20,7 @@
 @media (max-width: 63.999em) {
   .roda {
     --roda-raio: 52vw;
-    --roda-topo: 40svh;
+    --roda-inicio: 40svh;
     --roda-haste: 7svh;
   }
 }
@@ -37,6 +40,12 @@
   grid-column: 1 / -1;
   grid-row: 2;
   max-width: 14ch;
+}
+
+/* Nota da seção, logo abaixo do título. */
+.roda__nota {
+  grid-column: 1 / -1;
+  grid-row: 3;
 }
 
 .roda__contador,
@@ -72,21 +81,10 @@
   max-width: 40ch;
 }
 
-.roda__nota {
-  width: 100%;
-  max-width: var(--grade-max);
-  margin: var(--esp-6) auto 0;
-  padding-inline: var(--grade-margem);
-}
-
 @media (min-width: 64em) {
   .roda__item {
     grid-column: 5 / -1;
     grid-template-columns: 4rem 1fr;
-  }
-
-  .roda__nota {
-    padding-left: calc(var(--grade-margem) + (100% - 2 * var(--grade-margem) + var(--grade-calha)) / 3);
   }
 }
 
@@ -257,11 +255,15 @@
   margin-inline: auto;
 }
 
-.roda--ativa .roda__nota {
-  position: absolute;
-  right: 0;
-  bottom: var(--esp-6);
-  left: 0;
-  margin: 0;
-  padding-left: var(--grade-margem);
+/* No desktop, a nota fica à direita, sob o contador: longe do caminho dos
+   números quando a roda gira. (No celular, continua sob o título; a roda
+   desce para dar espaço.) */
+@media (min-width: 64em) {
+  .roda--ativa .roda__nota {
+    grid-column: 9 / -1;
+    grid-row: 2;
+    align-self: start;
+    justify-self: end;
+    text-align: end;
+  }
 }

@@ -2,6 +2,8 @@
 // Testa as rodas (experiência e consulta): cada gesto deve girar um passo.
 //  - Desktop: gestos de roda do mouse (vários eventos seguidos, como um
 //    trackpad), descendo e subindo; confere o passo ativo e a posição.
+//    Também a troca de sentido logo depois de um passo e o teclado (Page
+//    Down, Page Up, Espaço e Shift+Espaço: um passo por tecla).
 //  - Celular: arrasto com o dedo (toque emulado via CDP); ao soltar, a
 //    página deve encaixar num passo.
 // Precisa do servidor de desenvolvimento (window.__rodas só existe no dev).
@@ -104,6 +106,41 @@ async function testarDesktop(navegador) {
     await espera(1500);
     const giro = (await estado(pagina)).rodas[indice].ativo;
     conferir(giro >= 2 && giro <= 3, `${roda.id}: girando sem parar por 3 s anda 2 ou 3 passos (ativo ${giro})`);
+
+    // Troca de sentido logo depois de um passo (sem a pausa entre gestos):
+    // conta como gesto novo e volta ao passo de onde saiu.
+    await pagina.evaluate((v) => window.__lenis.scrollTo(v, { immediate: true, force: true }), roda.inicio + 2 * roda.passo);
+    await espera(1200);
+    await gesto(pagina, 240);
+    await espera(60);
+    await gesto(pagina, -240);
+    await espera(1800);
+    const virou = await estado(pagina);
+    conferir(
+      virou.rodas[indice].ativo === 2 && Math.abs(virou.y - (roda.inicio + 2 * roda.passo)) <= 3,
+      `${roda.id}: desce e logo sobe, volta ao mesmo passo (ativo ${virou.rodas[indice].ativo})`,
+    );
+
+    // Teclado: Page Down e Espaço (e o contrário, Page Up e Shift+Espaço)
+    // andam um passo por vez, sem pular nenhum.
+    for (const [tecla, partida, esperado] of [
+      ['PageDown', roda.inicio, sequencia],
+      ['Space', roda.inicio, sequencia],
+      ['PageUp', roda.fim, [...sequencia].reverse()],
+      ['Shift+Space', roda.fim, [...sequencia].reverse()],
+    ]) {
+      await pagina.evaluate((v) => window.__lenis.scrollTo(v, { immediate: true, force: true }), partida);
+      await espera(1200);
+      await pagina.evaluate(() => document.activeElement?.blur());
+      const vistos = [(await estado(pagina)).rodas[indice].ativo];
+      for (let k = 0; k < total - 1; k++) {
+        await pagina.keyboard.press(tecla);
+        await espera(1300);
+        const a = (await estado(pagina)).rodas[indice].ativo;
+        if (a !== vistos.at(-1)) vistos.push(a);
+      }
+      conferir(JSON.stringify(vistos) === JSON.stringify(esperado), `${roda.id}: ${tecla} anda um passo por vez (${vistos.join(' ')})`);
+    }
     ({ rodas } = await estado(pagina));
   }
   conferir(!erros.length, `console sem erros ${erros.join(' | ')}`);

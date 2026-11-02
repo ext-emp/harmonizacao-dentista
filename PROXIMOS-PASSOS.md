@@ -2,6 +2,21 @@
 
 O site está completo e testado: todas as seções, as transições no estilo da LAVA, "O espaço" e as rodas. Falta o fechamento (etapa 4 do briefing), em quatro passos.
 
+## Situação em 01/11/2026 (nada commitado)
+
+- **Passo 1, parcial.** A revisão por outro modelo não terminou: o Fable foi parado pelo custo (regra nova no `CLAUDE.md` global: não usar Fable) e o Sonnet parou no limite de 5 horas da conta antes do relatório. O relatório `.agents/reviews/revisao.md` junta a pista que o Fable deixou e uma revisão do agente principal (mesmo modelo, não independente). Falta: se quiser o segundo olhar de outro modelo, retomar o revisor Sonnet depois que o limite liberar (o trabalho dele fica salvo).
+- **Passo 2, feito.** Sete achados reproduzidos e corrigidos, com o destino de cada um no relatório:
+  - rodas por cima do título e da nota;
+  - lugar da leitura perdido ao girar ou redimensionar;
+  - Page Down e Espaço pulando passos;
+  - troca de sentido ignorada;
+  - duas falhas do menu do celular;
+  - contador fixo no HTML.
+
+  Todos os testes abaixo passam.
+- **Passo 3, feito.** Capturas em `capturas/final/` (seções, movimento reduzido, sem WebGL e a página inteira em quadros, nos dois tamanhos). Única sobreposição achada: as rodas, corrigida no passo 2. Console limpo.
+- **Passo 4, feito.** `README.md` criado e seguido num clone limpo (`npm install` e `npm run build` sem erro, nenhum `.map`). `CONTEUDO-PENDENTE.md` cobre todos os `[CONFIRMAR]` e ganhou a imagem de prévia do link.
+
 Para pedir um deles, escreva, por exemplo: **"Faça o passo 1 do PROXIMOS-PASSOS.md"**. Vale a ordem 1, 2, 3, 4, porque o passo 2 usa o relatório do passo 1. Os passos 3 e 4 não dependem dos outros.
 
 Desempenho e SEO não entram aqui: o usuário trata depois (veja "Fora dos quatro passos").
@@ -29,7 +44,7 @@ npx vite preview --port 4173 --strictPort
 URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs
 ```
 
-`testar-roda.mjs` e `capturar-viagem.mjs` só funcionam com o servidor de desenvolvimento: usam `window.__rodas` e `window.__perola`, que só existem nele.
+`testar-roda.mjs`, `testar-tamanhos.mjs`, `testar-redimensionar.mjs` e `capturar-viagem.mjs` só funcionam com o servidor de desenvolvimento: usam `window.__rodas`, `window.__lenis` e `window.__perola`, que só existem nele.
 
 ---
 
@@ -64,9 +79,11 @@ URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs
 npm run build
 node scripts/testar-interacoes.mjs              # 45/45
 node scripts/testar-interacoes.mjs --reduzido   # 36/36
-node scripts/testar-roda.mjs
-node scripts/testar-foco.mjs
+node scripts/testar-roda.mjs                    # inclui troca de sentido e teclado
+node scripts/testar-foco.mjs                    # inclui o menu do celular
 node scripts/testar-foco.mjs --reduzido
+node scripts/testar-tamanhos.mjs                # rodas em 11 tamanhos de tela
+node scripts/testar-redimensionar.mjs           # lugar da leitura e giro do celular
 node scripts/contraste-fundo.mjs
 node scripts/verificar-imagens.mjs
 node scripts/capturar-viagem.mjs                # nenhuma sobreposição
@@ -102,10 +119,7 @@ node scripts/folha-contato.mjs capturas/final/desktop capturas/final/folha-deskt
 
 Os valores de `--ate` são a rolagem máxima de hoje: 22351 px no desktop e 19859 px no celular; com movimento reduzido, 14307 e 12665 px. Eles mudam quando o conteúdo muda. Meça de novo com `document.documentElement.scrollHeight - innerHeight` no console do navegador.
 
-Duas limitações do `capturar-jornada.mjs`, conhecidas e ainda não corrigidas:
-
-- O laço anda de `--passo` em `--passo` e para no último múltiplo, então a posição final (o rodapé) não sai. Para pegá-la: `node scripts/capturar-jornada.mjs --vp desktop --de 22351 --ate 22351 --saida capturas/final/fim-desktop` (no celular, `--vp mobile --de 19859 --ate 19859`).
-- Ele espera só 750 ms por quadro. O nome "Henrique Martins" do rodapé ainda está entrando nesse tempo e sai cortado na base. Com 3 s de espera ele aparece inteiro nos dois tamanhos (conferido em 31/10/2026), então não é defeito do site. Se esses comandos forem rodados muitas vezes, vale acrescentar ao script a posição final e uma opção `--espera`.
+O `capturar-jornada.mjs` sempre inclui a posição final (o rodapé) como último quadro, com pelo menos 3 s de espera, para o nome "Henrique Martins" sair inteiro. A espera dos outros quadros muda com `--espera` (padrão: 750 ms).
 
 - Abrir as imagens e olhar de verdade, porque o script rodar não prova nada sobre o visual: texto sobre texto, imagem cortada, espaço sobrando, contraste, etiquetas `[CONFIRMAR]` sobrepostas, itens fora da tela no celular. Corrigir e capturar de novo.
 - Repetir a verificação do briefing: console sem erros (os scripts avisam), toque emulado, movimento reduzido, slider com mouse, toque e teclado (o `testar-interacoes.mjs` cobre os dois últimos), hero sem WebGL.

@@ -66,6 +66,7 @@ Formato dos originais: JPG (ou PNG, quando precisa de fundo transparente), o mai
 | `fotos/procedimentos/<nome>.jpg` (um por procedimento, mesmo nome da linha) | Lista de procedimentos | 640 × 800 px | 4:5 |
 | `fotos/sobre/retrato.jpg` | Sobre | 1600 × 2000 px | 4:5 |
 | `fotos/casos/<id>-antes.jpg` e `fotos/casos/<id>-depois.jpg` (o `id` vem de `casos.js`) | Resultados | 1080 × 1080 px | 1:1, o mesmo enquadramento nas duas |
+| `public/og-imagem.jpg` (vai direto, sem `npm run imagens`) | Prévia do link no WhatsApp, Instagram e Facebook | 1200 × 630 px, exatos | 1,91:1. Hoje é provisória (monograma, nome e a pérola sobre fundo liso): trocar por uma foto real do consultório ou do doutor, sem paciente, com o nome por cima se quiser |
 
 Ao trocar uma foto provisória, apague também a etiqueta da seção ("Retrato provisório", "Fotos provisórias" ou "Fotos do atendimento provisórias [CONFIRMAR]") e ajuste o texto alternativo (`alt`), que hoje diz "Imagem provisória…" ou "Ilustração provisória…".
 

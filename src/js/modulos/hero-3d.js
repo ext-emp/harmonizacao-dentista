@@ -1,5 +1,6 @@
-// Carrega a pérola 3D DEPOIS do conteúdo (evento load + ócio do navegador)
-// e troca a imagem estática pelo canvas num cruzamento suave.
+// Carrega a pérola 3D DEPOIS do conteúdo (evento load, o que o main.js pedir
+// para esperar, como a entrada do hero, e um momento de ócio do navegador) e
+// troca a imagem estática pelo canvas num cruzamento suave.
 // Sem WebGL 2, ou se algo falhar, a imagem estática continua no lugar.
 import { gsap } from '../core/gsap.js';
 import { dur, ease } from '../core/tokens.js';
@@ -17,7 +18,7 @@ const quandoOcioso = () =>
 
 /**
  * @param {object} opcoes
- * @param {Promise} [opcoes.depoisDe] espera também isso (ex.: o preloader sair)
+ * @param {Promise} [opcoes.depoisDe] espera também isso (ex.: a entrada do hero terminar)
  * @param {Function} [opcoes.aoCriar] recebe a pérola criada
  */
 export async function carregarPerola3d({ depoisDe = Promise.resolve(), aoCriar } = {}) {

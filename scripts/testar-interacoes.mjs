@@ -4,8 +4,8 @@
 //
 //  Desktop (mouse): slider (clicar, arrastar, teclado, leitor de tela),
 //  carrossel (setas e contador), cursor ("Arraste", "Ver", link), imagem da
-//  lista de procedimentos seguindo o cursor, FAQ (abrir e fechar) e as rodas
-//  da experiência e da consulta (um gesto, um passo).
+//  lista de procedimentos seguindo o cursor, FAQ (abrir e fechar) e a roda
+//  da experiência (um gesto, um passo).
 //  Celular (toque emulado pelo CDP): arrastar perto da linha move o slider;
 //  arrastar no resto da foto passa o carrossel; arrastar na vertical rola a
 //  página; equivalentes de toque (.is-active).
@@ -242,9 +242,9 @@ const posicao = (pagina, i = 0) =>
   await espera(1300);
   conferir('FAQ: abre pelo teclado (Enter)', await pagina.evaluate(() => document.querySelectorAll('[data-faq] details')[2].open));
 
-  // ---- Rodas (experiência e consulta): um gesto da roda do mouse = um passo ----
+  // ---- Roda (experiência): um gesto da roda do mouse = um passo ----
   // (O teste completo, com trackpad e inércia, é scripts/testar-roda.mjs.)
-  for (const [id, total] of [['experiencia', 6], ['consulta', 5]]) {
+  for (const [id, total] of [['experiencia', 6]]) {
     if (REDUZIDO) {
       // Movimento reduzido: sem roda, a lista inteira à vista.
       const lista = await pagina.evaluate((i) => {

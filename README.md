@@ -49,7 +49,7 @@ Com `npm run dev` ligado, a página recarrega sozinha ao salvar um dado ou uma s
 
 ## Publicar (Vercel ou Netlify)
 
-1. Preencha `site.url` em `src/dados/doutor.js` com o domínio definitivo (com `https://` e sem barra no fim). Sem ele, o build não gera o canonical nem as URLs absolutas do Open Graph e dos dados estruturados.
+1. Preencha `site.url` em `src/dados/doutor.js` com o domínio definitivo (com `https://` e sem barra no fim). Sem ele, o build não gera o canonical, o `sitemap.xml` nem as URLs absolutas do Open Graph e dos dados estruturados (e avisa no fim do `npm run build`). O `robots.txt` e o `sitemap.xml` saem sozinhos no `dist/`, a partir desse domínio.
 2. Resolva o que está em `CONTEUDO-PENDENTE.md`. A foto do hero de agora é de banco de imagens e **não pode ir ao ar**.
 3. Na Vercel ou na Netlify, importe o repositório com o comando de build `npm run build` e a pasta de publicação `dist`, em Node 20.19 ou mais novo (na Netlify, a variável `NODE_VERSION`, se o padrão for mais antigo). Não há outra variável de ambiente nem servidor.
 
@@ -65,16 +65,17 @@ Com o `npm run dev` ligado em outro terminal:
 
 ```bash
 npm run build
-node scripts/testar-interacoes.mjs              # slider (mouse, toque, teclado), carrossel, cursor, tratamentos, FAQ, rodas
+node scripts/testar-interacoes.mjs              # slider (mouse, toque, teclado), carrossel, cursor, tratamentos, FAQ, roda
 node scripts/testar-interacoes.mjs --reduzido   # o mesmo, com movimento reduzido
-node scripts/testar-roda.mjs                    # rodas: um gesto ou uma tecla = um passo (desktop) e encaixe no toque
+node scripts/testar-roda.mjs                    # roda: um gesto ou uma tecla = um passo (desktop) e encaixe no toque
 node scripts/testar-foco.mjs                    # teclado, âncoras e o menu do celular
 node scripts/testar-foco.mjs --reduzido
-node scripts/testar-tamanhos.mjs                # rodas em 11 tamanhos de tela, sem texto sobreposto
+node scripts/testar-tamanhos.mjs                # roda em 16 tamanhos (celulares, iPad, 2560×1440): sem texto sobreposto e centralizada
 node scripts/testar-redimensionar.mjs           # girar o celular ou redimensionar mantém a seção
 node scripts/contraste-fundo.mjs                # contraste do texto sobre a foto de fundo do manifesto
 node scripts/verificar-imagens.mjs              # todas as imagens aparecem na tela
 node scripts/capturar-viagem.mjs                # a pérola não passa por cima do texto nem do retrato
+node scripts/verificar-seo.mjs                  # meta tags, JSON-LD, robots.txt e sitemap.xml (como os robôs leem)
 ```
 
 Para testar o build, sirva o `dist/` e aponte os scripts para ele com `URL_SITE`:
@@ -82,6 +83,14 @@ Para testar o build, sirva o `dist/` e aponte os scripts para ele com `URL_SITE`
 ```bash
 npx vite preview --port 4173 --strictPort
 URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs
+URL_SITE=http://localhost:4173/ node scripts/verificar-seo.mjs
+```
+
+Desempenho (Lighthouse mobile, com o build no ar na porta 4173; as notas e o que foi feito estão em `docs/plano-transicoes.md`):
+
+```bash
+npx -y lighthouse@13.6.0 http://localhost:4173/ --output=json --output=html --output-path=capturas/lighthouse/mobile --chrome-flags="--headless=new"
+node scripts/resumo-lighthouse.mjs capturas/lighthouse/mobile.report.json
 ```
 
 `testar-roda.mjs`, `testar-tamanhos.mjs`, `testar-redimensionar.mjs` e `capturar-viagem.mjs` só funcionam no servidor de desenvolvimento.
@@ -89,6 +98,7 @@ URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs
 Capturas de tela para revisão visual (saem em `capturas/`, fora do git):
 
 ```bash
-node scripts/capturar.mjs --roteiro secoes --vp desktop,mobile --saida capturas/final --ancoras "#espaco,#tratamentos,#resultados,#sobre,#experiencia,#consulta,#faq,#contato"
+node scripts/capturar.mjs --roteiro secoes --vp desktop,mobile --saida capturas/final --ancoras "#espaco,#tratamentos,#resultados,#sobre,#experiencia,#faq,#contato"
 node scripts/capturar-jornada.mjs --vp desktop --ate 30000 --passo 900 --colunas 8   # a página inteira em quadros
+node scripts/capturar-jornada.mjs --vp 820x1180t --ate 60000 --passo 1180            # LxAt: com toque (aqui, um iPad Air em pé)
 ```

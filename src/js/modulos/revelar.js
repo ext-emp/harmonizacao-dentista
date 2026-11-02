@@ -6,7 +6,7 @@
 //   "letras"  o mesmo, letra por letra (nome gigante do rodapé)
 // Cada uma roda uma vez. Com movimento reduzido, nada é escondido (CSS) e
 // este módulo não faz nada.
-import { gsap, ScrollTrigger, SplitText } from '../core/gsap.js';
+import { gsap, SplitText } from '../core/gsap.js';
 import { dur, ease, sequencia } from '../core/tokens.js';
 import { reduzMovimento } from '../core/ambiente.js';
 
@@ -110,8 +110,7 @@ export function iniciarRevelacoes(fontes) {
   if (reduzMovimento) return;
   revelarBlocos();
   revelarImagens();
-  fontes.then(() => {
-    revelarTextos();
-    ScrollTrigger.refresh();
-  });
+  // Os gatilhos dos títulos medem a posição deles ao nascer; o main.js
+  // recalcula a página inteira logo depois (fontes.then registrado depois).
+  fontes.then(revelarTextos);
 }

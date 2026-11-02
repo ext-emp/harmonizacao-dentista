@@ -1,9 +1,11 @@
-<!-- A experiência: seis diferenciais numerados, na roda da LAVA dental.
-     Com movimento, o palco fica fixo e cada gesto de rolagem gira a roda um
-     passo: o número seguinte chega ao topo e o texto dele aparece embaixo
-     (src/js/modulos/roda.js). O contador "01 / 06" acompanha.
+<!-- A experiência: as etapas, do primeiro contato ao retorno, na roda da LAVA
+     dental. Com movimento, o palco fica fixo e cada gesto de rolagem gira a
+     roda um passo: o número seguinte chega ao topo e o texto dele aparece
+     embaixo (src/js/modulos/roda.js). O contador "01 / 06" acompanha.
      Sem JavaScript ou com movimento reduzido, é uma lista numerada.
-     [CONFIRMAR] os seis diferenciais: precisam descrever a rotina real do
+     Em 01/11/2026 a primeira consulta, que tinha uma roda igual a esta, foi
+     unida a esta seção (a pedido do usuário).
+     [CONFIRMAR] as etapas e os textos: precisam descrever a rotina real do
      consultório. Não citar equipamentos sem confirmação. -->
 <section class="experiencia secao roda" id="experiencia" data-tema="escuro" data-pilha data-roda aria-labelledby="experiencia-titulo" tabindex="-1">
   <div class="roda__palco" data-roda-palco data-fixa>
@@ -16,7 +18,9 @@
       <h2 class="roda__titulo-secao titulo-2" id="experiencia-titulo" data-revelar="linhas" data-linhas>
         Do primeiro contato <em>ao retorno.</em>
       </h2>
-      <p class="roda__nota texto-2"><span class="pendente">Diferenciais provisórios [CONFIRMAR]</span></p>
+      <p class="roda__nota texto-2">
+        Atendimento reservado, do agendamento ao último retorno. <span class="pendente">Etapas provisórias [CONFIRMAR]</span>
+      </p>
     </div>
 
     <!-- A roda desenhada (círculo, pontos e números) é montada pelo JS. -->
@@ -26,38 +30,44 @@
     <ol class="roda__itens grade" data-roda-itens>
       <li class="roda__item" data-roda-item>
         <span class="roda__numero" aria-hidden="true">01</span>
-        <h3 class="roda__nome titulo-3">Escuta antes do plano</h3>
+        <h3 class="roda__nome titulo-3">Agendamento</h3>
+        <p class="roda__texto texto-2">
+          Pelo WhatsApp, você escolhe o dia e o horário. Se quiser, já conta o que gostaria de tratar.
+        </p>
+      </li>
+      <li class="roda__item" data-roda-item>
+        <span class="roda__numero" aria-hidden="true">02</span>
+        <h3 class="roda__nome titulo-3">Conversa</h3>
         <p class="roda__texto texto-2">
           A primeira conversa é sobre você: o que incomoda, o que deve ficar como está e o que você espera do
           tratamento.
         </p>
       </li>
       <li class="roda__item" data-roda-item>
-        <span class="roda__numero" aria-hidden="true">02</span>
-        <h3 class="roda__nome titulo-3">Planejamento individual</h3>
-        <p class="roda__texto texto-2">Cada plano parte das suas proporções, da sua expressão e da sua rotina.</p>
-      </li>
-      <li class="roda__item" data-roda-item>
         <span class="roda__numero" aria-hidden="true">03</span>
-        <h3 class="roda__nome titulo-3">Etapas explicadas</h3>
-        <p class="roda__texto texto-2">Antes de começar, você sabe o que vai ser feito, em que ordem e por quê.</p>
+        <h3 class="roda__nome titulo-3">Avaliação</h3>
+        <p class="roda__texto texto-2">Exame clínico do rosto e do sorriso, com os registros necessários para o planejamento.</p>
       </li>
       <li class="roda__item" data-roda-item>
         <span class="roda__numero" aria-hidden="true">04</span>
-        <h3 class="roda__nome titulo-3">Tempo para perguntas</h3>
-        <p class="roda__texto texto-2">As consultas têm espaço para dúvidas. Nenhuma decisão é tomada às pressas.</p>
+        <h3 class="roda__nome titulo-3">Plano</h3>
+        <p class="roda__texto texto-2">
+          Um plano feito para o seu caso: as opções, as etapas e o tempo de cada uma, explicados com calma.
+        </p>
       </li>
       <li class="roda__item" data-roda-item>
         <span class="roda__numero" aria-hidden="true">05</span>
-        <h3 class="roda__nome titulo-3">Acompanhamento</h3>
+        <h3 class="roda__nome titulo-3">Decisão</h3>
         <p class="roda__texto texto-2">
-          Retornos combinados para avaliar a evolução de cada etapa e ajustar o plano quando for preciso.
+          Você decide no seu tempo. Nada começa antes de todas as dúvidas estarem respondidas.
         </p>
       </li>
       <li class="roda__item" data-roda-item>
         <span class="roda__numero" aria-hidden="true">06</span>
-        <h3 class="roda__nome titulo-3">Discrição</h3>
-        <p class="roda__texto texto-2">Atendimento reservado, do agendamento ao último retorno.</p>
+        <h3 class="roda__nome titulo-3">Acompanhamento</h3>
+        <p class="roda__texto texto-2">
+          Retornos combinados para avaliar a evolução de cada etapa e ajustar o plano quando for preciso.
+        </p>
       </li>
     </ol>
   </div>

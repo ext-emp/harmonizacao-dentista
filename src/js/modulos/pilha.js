@@ -19,8 +19,13 @@ import { comPosicoesNaturais, rolarPara } from '../core/scroll.js';
 // Quanto o véu escurece o painel coberto (0 a 1).
 const VEU_MAXIMO = 0.32;
 
+// Primeiro todas as leituras, depois as escritas: alternar as duas faria o
+// navegador refazer o layout da página a cada painel.
 function medirAlturas(paineis) {
-  for (const painel of paineis) painel.style.setProperty('--pilha-altura', `${painel.offsetHeight}px`);
+  const alturas = paineis.map((painel) => `${painel.offsetHeight}px`);
+  paineis.forEach((painel, i) => {
+    if (painel.style.getPropertyValue('--pilha-altura') !== alturas[i]) painel.style.setProperty('--pilha-altura', alturas[i]);
+  });
 }
 
 // Seção que cobre o painel: o próximo elemento da página.

@@ -12,61 +12,89 @@ const SERVICOS = [
   'Clareamento dental',
 ];
 
-// Dados estruturados schema.org (Dentist). Campos pendentes ficam de fora.
-export function schema(c) {
-  const d = c.doutor;
-  const e = d.endereco;
-  const dados = {
-    '@context': 'https://schema.org',
-    '@type': 'Dentist',
-    name: c.nomeCompleto,
-    description: 'Cirurgião-dentista em Novo Hamburgo/RS. Harmonização orofacial e lentes de contato dental com naturalidade.',
-    url: c.site.temUrl ? `${c.site.url}/` : undefined,
-    image: c.site.temUrl ? `${c.site.url}/og-imagem.jpg` : undefined,
-    telephone: c.whatsapp.temNumero ? `+${d.whatsapp.numero.replace(/\D/g, '')}` : undefined,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: confirmado([e.logradouro, e.complemento].filter(confirmado).join(', ')),
-      addressLocality: e.cidade,
-      addressRegion: e.uf,
-      postalCode: confirmado(e.cep),
-      addressCountry: 'BR',
-    },
-    areaServed: { '@type': 'City', name: e.cidade },
-    sameAs: [c.instagram.url],
-    employee: {
-      '@type': 'Person',
-      name: d.nome,
-      jobTitle: d.profissao,
-      identifier: confirmado(d.cro.numero) ? c.cro : undefined,
-    },
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Tratamentos',
-      itemListElement: SERVICOS.map((nome) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: nome } })),
-    },
-  };
-  // JSON.stringify descarta as chaves undefined; "<" escapado evita fechar o <script>.
-  const json = JSON.stringify(dados, null, 2).replace(/</g, '\\u003c');
+// Um bloco <script type="application/ld+json">. JSON.stringify descarta as
+// chaves undefined; "<" escapado evita fechar o <script>.
+function jsonLd(dados) {
+  const json = JSON.stringify({ '@context': 'https://schema.org', ...dados }, null, 2).replace(/</g, '\\u003c');
   return `<script type="application/ld+json">\n${json}\n</script>`;
 }
 
-// Open Graph e canonical. Sem o domínio confirmado, não há URLs absolutas.
+// Dados estruturados schema.org: o consultório (Dentist), o site (WebSite) e
+// as perguntas do FAQ (FAQPage, lidas do HTML da seção). Campos pendentes
+// ficam de fora.
+export function schema(c) {
+  const d = c.doutor;
+  const e = d.endereco;
+  const url = c.site.temUrl ? `${c.site.url}/` : undefined;
+  const blocos = [
+    {
+      '@type': 'Dentist',
+      name: c.nomeCompleto,
+      description: 'Cirurgião-dentista em Novo Hamburgo/RS. Harmonização orofacial e lentes de contato dental com naturalidade.',
+      url,
+      image: c.site.temUrl ? `${c.site.url}/og-imagem.jpg` : undefined,
+      telephone: c.whatsapp.temNumero ? `+${d.whatsapp.numero.replace(/\D/g, '')}` : undefined,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: confirmado([e.logradouro, e.complemento].filter(confirmado).join(', ')),
+        addressLocality: e.cidade,
+        addressRegion: e.uf,
+        postalCode: confirmado(e.cep),
+        addressCountry: 'BR',
+      },
+      hasMap: confirmado(e.mapa),
+      areaServed: { '@type': 'City', name: e.cidade },
+      sameAs: [c.instagram.url],
+      employee: {
+        '@type': 'Person',
+        name: d.nome,
+        jobTitle: d.profissao,
+        identifier: confirmado(d.cro.numero) ? c.cro : undefined,
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Tratamentos',
+        itemListElement: SERVICOS.map((nome) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: nome } })),
+      },
+    },
+    { '@type': 'WebSite', name: c.nomeCompleto, url, inLanguage: 'pt-BR' },
+  ];
+  if (c.faq?.length) {
+    blocos.push({
+      '@type': 'FAQPage',
+      mainEntity: c.faq.map((f) => ({
+        '@type': 'Question',
+        name: f.pergunta,
+        acceptedAnswer: { '@type': 'Answer', text: f.resposta },
+      })),
+    });
+  }
+  return blocos.map(jsonLd).join('\n    ');
+}
+
+// Open Graph, Twitter Card e canonical. Sem o domínio confirmado, não há URLs absolutas.
 export function metaSocial(c) {
   const titulo = `${c.nomeCompleto} · Cirurgião-dentista em Novo Hamburgo/RS`;
   const descricao = 'Harmonização orofacial e lentes de contato dental com naturalidade, em Novo Hamburgo/RS.';
   const base = c.site.temUrl ? c.site.url : '';
+  const imagem = `${escapar(base)}/og-imagem.jpg`;
+  const alt = `Monograma HM e o nome ${escapar(c.nomeCompleto)}`;
   const linhas = [
     `<meta property="og:type" content="website" />`,
     `<meta property="og:locale" content="pt_BR" />`,
     `<meta property="og:site_name" content="${escapar(c.nomeCompleto)}" />`,
     `<meta property="og:title" content="${escapar(titulo)}" />`,
     `<meta property="og:description" content="${escapar(descricao)}" />`,
-    `<meta property="og:image" content="${escapar(base)}/og-imagem.jpg" />`,
+    `<meta property="og:image" content="${imagem}" />`,
+    `<meta property="og:image:type" content="image/jpeg" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="Monograma HM e o nome ${escapar(c.nomeCompleto)}" />`,
+    `<meta property="og:image:alt" content="${alt}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:title" content="${escapar(titulo)}" />`,
+    `<meta name="twitter:description" content="${escapar(descricao)}" />`,
+    `<meta name="twitter:image" content="${imagem}" />`,
+    `<meta name="twitter:image:alt" content="${alt}" />`,
   ];
   if (c.site.temUrl) {
     linhas.push(`<link rel="canonical" href="${escapar(base)}/" />`, `<meta property="og:url" content="${escapar(base)}/" />`);

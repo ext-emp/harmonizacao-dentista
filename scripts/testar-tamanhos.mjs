@@ -1,11 +1,12 @@
 // ---------------------------------------------------------------------------
-// Rodas (experiência e consulta) em vários tamanhos de tela, inclusive a
+// A roda (seções com data-roda) em vários tamanhos de tela, inclusive a
 // altura de verdade de um celular com as barras do navegador (390x664 é um
-// iPhone no Safari). Em cada passo, confere que nenhum texto do palco
-// (rótulo, contador, título, nota, nome e texto do passo) é cruzado pela
-// linha do círculo nem fica no caminho dos números quando a roda gira, e que
-// nada sai da tela. Onde a roda não cabe (celular deitado, tela muito baixa),
-// confere que virou a lista, sem sobra da roda.
+// iPhone no Safari), tablets e telas mais largas que a grade (2560x1440).
+// Em cada passo, confere que nenhum texto do palco (rótulo, contador,
+// título, nota, nome e texto do passo) é cruzado pela linha do círculo nem
+// fica no caminho dos números quando a roda gira, que nada sai da tela e que
+// o texto do passo fica centralizado sob a roda. Onde a roda não cabe
+// (celular deitado, tela muito baixa), confere que virou a lista, sem sobra.
 // Precisa do servidor de desenvolvimento (window.__rodas só existe no dev).
 // Uso: node scripts/testar-tamanhos.mjs [LxA ou LxAt (com toque) ...] [--capturas pasta]
 // ---------------------------------------------------------------------------
@@ -18,7 +19,11 @@ const CAPTURAS = iCapturas >= 0 ? args[iCapturas + 1] : null;
 const tamanhos = args.filter((a, i) => /^\d+x\d+t?$/.test(a) && i !== iCapturas + 1);
 const LISTA = tamanhos.length
   ? tamanhos
-  : ['1440x900', '1920x1080', '1366x657', '1024x768', '390x844t', '390x664t', '360x640t', '412x780t', '768x1024t', '375x553t', '844x390t'];
+  : [
+      '1440x900', '1920x1080', '2560x1440', '1366x657', '1024x768',
+      '390x844t', '390x664t', '360x640t', '412x780t', '375x553t', '844x390t',
+      '768x1024t', '820x1180t', '1024x1366t', '1180x820t', '1366x1024t',
+    ];
 const URL_SITE = process.env.URL_SITE || 'http://localhost:5173/';
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 if (CAPTURAS) await mkdir(CAPTURAS, { recursive: true });
@@ -72,6 +77,11 @@ function medirPalco(id) {
       if (b.bottom > innerHeight || b.top < 0) achados.add(`${nome} fora da tela`);
     }
   }
+  if (ativo) {
+    const caixa = ativo.getBoundingClientRect();
+    const desvio = Math.round(caixa.left + caixa.width / 2 - c.x);
+    if (Math.abs(desvio) > 1) achados.add(`texto fora do centro da roda (${desvio} px)`);
+  }
   return [...achados];
 }
 
@@ -95,7 +105,8 @@ for (const t of LISTA) {
   await espera(3000);
 
   const rodas = await pagina.evaluate(() => window.__rodas());
-  for (const id of ['experiencia', 'consulta']) {
+  const ids = await pagina.evaluate(() => [...document.querySelectorAll('[data-roda]')].map((s) => s.id));
+  for (const id of ids) {
     const roda = rodas.find((r) => r.id === id);
     if (!roda) {
       const sobra = await pagina.evaluate((i) => {

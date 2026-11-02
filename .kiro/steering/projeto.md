@@ -7,6 +7,8 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 - Vite + JavaScript puro (módulos ES), GSAP (ScrollTrigger, SplitText), Lenis, Three.js. Site estático em `dist/`, para Vercel ou Netlify.
 - O conteúdo fica escrito em HTML (`index.html` + `src/secoes/*.html`). O plugin em `vite/` monta as seções, injeta os dados e gera o markup das imagens no build. A página precisa funcionar sem JavaScript.
 - Fontes OFL hospedadas em `public/fonts/` (com preload). Nada de CDN de fontes.
+- SEO: title, description, robots, Open Graph e Twitter Card (`index.html` e `vite/geradores.js`); JSON-LD `Dentist`, `WebSite` e `FAQPage` (lido do HTML do FAQ); `robots.txt` e `sitemap.xml` gerados pelo plugin a partir de `site.url` (`vite/arquivos-raiz.js`). Conferir com `scripts/verificar-seo.mjs`.
+- Desempenho: o recálculo da página inteira pelo ScrollTrigger custa caro no celular. Ele acontece uma vez quando as fontes chegam e, depois, só se a altura da página mudar (`main.js`); os módulos não chamam `ScrollTrigger.refresh()` na carga. Medições de layout em bloco (todas as leituras, depois as escritas). A pérola 3D só é montada depois da entrada do hero.
 
 ## Onde ficam os dados editáveis
 
@@ -25,10 +27,10 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 
 ## Estrutura e movimento (decisões do usuário)
 
-- Ordem: preloader, header, hero, O espaço (galeria lateral; a última foto vira o fundo do manifesto e dos números), tratamentos, resultados, sobre, experiência, consulta, FAQ, contato e rodapé.
+- Ordem: preloader, header, hero, O espaço (galeria lateral; a última foto vira o fundo do manifesto e dos números), tratamentos, resultados, sobre, experiência (com as etapas da consulta), FAQ, contato e rodapé.
 - Hero: retrato do Dr. Henrique recortado, sem fundo (`fotos/hero/doutor-capa.png`, PNG transparente 4:5), texto à esquerda, nunca sobre a pessoa. A pérola tem área própria no hero (nunca atrás do retrato) e, com o scroll, pousa na abertura de "O espaço" (`perola-viagem.js`). Nunca paciente nem foto de banco no hero.
 - Transições no estilo da LAVA dental: cada seção com `data-pilha` sobe por cima da anterior, que fica parada (`position: sticky` em `pilha.js` e `secao.css`); o contato entra em caixa.
-- Experiência e consulta: a roda (`roda.js`, `roda.css`). Um gesto de rolagem (ou um Page Down, Page Up ou Espaço) = um passo no mouse e no trackpad; snap no toque. A lista `<ol>` real fica no HTML e a roda desenhada é `aria-hidden`. A nota da seção fica no cabeçalho (no desktop, à direita, sob o contador), e a roda desce o quanto o cabeçalho pedir. No celular deitado e em telas baixas demais, fica a lista.
+- Experiência: a roda (`roda.js`, `roda.css`), uma só no site. A primeira consulta, que tinha uma roda igual, foi unida a ela em 01/11/2026 (o usuário não quis duas seções iguais): seis etapas, do agendamento ao acompanhamento. Um gesto de rolagem (ou um Page Down, Page Up ou Espaço) = um passo no mouse e no trackpad; snap no toque. A lista `<ol>` real fica no HTML e a roda desenhada é `aria-hidden`. A nota da seção fica no cabeçalho (no desktop, à direita, sob o contador), e a roda desce o quanto o cabeçalho pedir. No celular deitado e em telas baixas demais, fica a lista.
 - Girar o celular ou redimensionar a janela mantém a seção que a pessoa lia (`lugar.js`).
 - Sem JavaScript ou com `prefers-reduced-motion`: rolagem normal, galeria com scroll lateral nativo, rodas como lista numerada.
 

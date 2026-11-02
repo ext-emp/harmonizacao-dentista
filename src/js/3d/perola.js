@@ -81,6 +81,10 @@ const POSICAO = /* glsl */ `
   #endif
 `;
 
+// Devolve a vez ao navegador entre as etapas pesadas da montagem: várias
+// tarefas curtas em vez de uma longa, e a página continua respondendo.
+const pausa = () => new Promise((resolver) => setTimeout(resolver, 0));
+
 /**
  * Cria a pérola dentro de `palco` (elemento quadrado).
  * @param {HTMLElement} palco
@@ -119,6 +123,7 @@ export async function criarPerola(
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = NeutralToneMapping;
   renderer.toneMappingExposure = ajustes.exposicao;
+  await pausa();
 
   // Luz de estúdio: o reflexo vem de um estúdio montado aqui (softboxes sobre
   // fundo cinza quente), mais uma luz direta suave para o brilho principal.
@@ -128,6 +133,7 @@ export async function criarPerola(
   cena.environment = pmrem.fromScene(estudio, 0.02).texture;
   estudio.traverse((o) => o.isMesh && (o.geometry.dispose(), o.material.dispose()));
   pmrem.dispose();
+  await pausa();
 
   const luzChave = new DirectionalLight('#fff1de', 1.1);
   luzChave.position.set(-3, 4, 5);
@@ -178,6 +184,7 @@ export async function criarPerola(
   perola.scale.set(...ajustes.escala);
   perola.rotation.set(0.18, -0.4, 0.06);
   cena.add(perola);
+  await pausa();
 
   const rotacaoBase = { x: perola.rotation.x, y: perola.rotation.y };
   const estado = { tempo: 0, scroll: 0, giroX: 0, giroY: 0, cx: 0, cy: 0, alvoX: 0, alvoY: 0, agitacao: 0, ultimo: 0 };

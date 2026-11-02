@@ -1,8 +1,9 @@
 // ---------------------------------------------------------------------------
 // Quadros da página em passos fixos de scroll, para revisar as transições
 // (empilhamento, galeria do espaço, rodas). Monta uma folha de contato no fim.
-// Uso: node scripts/capturar-jornada.mjs [--vp desktop|mobile|LxA] [--de 0] [--ate 9000]
+// Uso: node scripts/capturar-jornada.mjs [--vp desktop|mobile|LxA|LxAt] [--de 0] [--ate 9000]
 //        [--passo 450] [--saida capturas/jornada] [--colunas 6] [--espera 750]
+// LxAt (com "t" no fim): com toque, como um celular ou tablet (820x1180t é um iPad Air em pé).
 // --espera: ms de espera em cada quadro. O último quadro (a posição final do
 // trecho, mesmo fora do passo) espera pelo menos 3 s: o nome do rodapé ainda
 // está entrando antes disso.
@@ -27,12 +28,12 @@ const COLUNAS = Number(opcao('colunas', '6'));
 const ESPERA = Number(opcao('espera', '750'));
 const ESPERA_FINAL = Math.max(ESPERA, 3000);
 
-const livre = /^(\d+)x(\d+)$/.exec(VP);
+const livre = /^(\d+)x(\d+)(t?)$/.exec(VP);
 const vp =
   VP === 'mobile'
     ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }
     : livre
-      ? { viewport: { width: Number(livre[1]), height: Number(livre[2]) } }
+      ? { viewport: { width: Number(livre[1]), height: Number(livre[2]) }, isMobile: Boolean(livre[3]), hasTouch: Boolean(livre[3]) }
       : { viewport: { width: 1440, height: 900 } };
 
 await rm(SAIDA, { recursive: true, force: true });

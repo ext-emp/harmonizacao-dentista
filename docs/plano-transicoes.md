@@ -36,7 +36,7 @@ Pedido do usuário (31/10/2026):
 - Rodas (`roda.js` + `roda.css`): lista acessível de verdade no HTML; a roda desenhada é aria-hidden e
   se ajusta ao número de itens. Mouse: trava por gesto via `virtualScroll` do Lenis (um gesto = um
   passo, com `scrollTo` animado). Toque: snap direcional do ScrollTrigger. Movimento reduzido/sem JS:
-  lista simples. A consulta passou para o tema claro.
+  lista simples. Em 01/11/2026 a consulta, que tinha uma roda igual, foi unida à experiência (uma roda só).
 - Imagens provisórias novas: fotos/espaco/espaco-01..05 (ambientes renderizados, ferramentas/ambientes.js)
   e fotos/atendimento/atendimento-01..04 (detalhes sem paciente; CFO proíbe foto do "durante").
 
@@ -52,25 +52,30 @@ Pedido do usuário (31/10/2026):
 - Capturas da página inteira: `capturas/jornada/` (com e sem movimento reduzido) e
   `capturas/transicoes-sem-js/` (sem JavaScript, desktop e celular).
 
-## Lighthouse mobile (31/10/2026, adiado a pedido do usuário)
+## Lighthouse mobile
 Medido no build local (`npm run build` + `npx vite preview --port 4173`) com `npx -y lighthouse@13.6.0 http://localhost:4173/ --output=json --output=html --output-path=capturas/lighthouse/mobile --chrome-flags="--headless=new"`.
-O resumo sai com `node scripts/resumo-lighthouse.mjs capturas/lighthouse/mobile.report.json`.
+O resumo sai com `node scripts/resumo-lighthouse.mjs capturas/lighthouse/mobile.report.json`. O relatório completo fica em `capturas/lighthouse/` (pasta ignorada pelo git).
 
-| Categoria | Nota | Meta do briefing |
-| --- | --- | --- |
-| Desempenho | 49 | 80 ou mais |
-| Acessibilidade | 100 | 95 ou mais |
-| Boas práticas | 100 | |
-| SEO | 92 | 95 ou mais |
+| Categoria | 31/10/2026 | 02/11/2026 (três rodadas) | Meta do briefing |
+| --- | --- | --- | --- |
+| Desempenho | 49 | 90 a 96 | 80 ou mais |
+| Acessibilidade | 100 | 100 | 95 ou mais |
+| Boas práticas | 100 | 100 | |
+| SEO | 92 | 100 | 95 ou mais |
 
-Desempenho: FCP 2,2 s, LCP 4,9 s, TBT 2.510 ms, CLS 0,001, Speed Index 4,0 s.
-- LCP: o elemento é a imagem do retrato do hero. Ela chega em 51 ms, mas o "atraso para renderizar o elemento" é de 3,4 s dos 4,9 s. Hipótese, ainda não verificada: o retrato só aparece depois do preloader (cerca de 2 s na primeira visita) e da animação de entrada do hero, e a thread principal está ocupada nesse tempo.
-- Thread principal (6,7 s simulados no celular): 2,9 s de scripts, 2,6 s de estilo e layout, 1,0 s de outros. O `index-*.js` (177 kB) responde por quase tudo (4,3 s, contando o estilo e o layout que ele dispara). O `perola-*.js` (Three.js, 543 kB) custa só 139 ms.
-- O CSS (47 kB) bloqueia a renderização (economia estimada de 150 ms).
-SEO: a única falha é "robots.txt inválido". Não existe `public/robots.txt`, e o `vite preview` devolve o `index.html` para qualquer caminho, o que o Lighthouse lê como robots.txt quebrado. Provavelmente some no host de verdade (um arquivo ausente dá 404); confirmar lá, ou criar `public/robots.txt`.
-O relatório completo fica em `capturas/lighthouse/` (pasta ignorada pelo git).
+02/11/2026: LCP 2,5 a 2,6 s (era 4,2 a 4,9 s), TBT 100 a 260 ms (era 1.700 a 2.510 ms), FCP 0,8 a 1,5 s, CLS 0,001.
+
+O que pesava (perfil de CPU com a CPU 4x mais lenta, como no Lighthouse, num build sem minificação) e o que mudou:
+- Recálculos repetidos do ScrollTrigger na carga: os automáticos do DOMContentLoaded e do load, mais os pedidos do código (fontes no `main.js` e no `revelar.js`, load e cada leva de imagens). Cada um mede a página inteira: de 50 a 200 ms com a tela travada no celular. Agora há um só, quando as fontes chegam; depois disso, só se a altura da página mudar (`main.js`).
+- Títulos divididos duas vezes: o `autoSplit` do SplitText refaz a divisão no evento `loadingdone` das fontes, que chegava logo depois da primeira. Agora `aguardarFontes` espera também o `document.fonts.ready`, que o Chrome só resolve depois desse evento.
+- `medirAlturas` (`pilha.js`) alternava leitura e escrita: um layout da página inteira por painel. Agora lê tudo e depois escreve.
+- `lugar.js` media a página na carga (mais um layout inteiro). Agora só mede quando a rolagem para.
+- Pérola 3D: a montagem era uma tarefa só de uns 470 ms no celular (o mapa de reflexos, PMREM, compila shaders de forma síncrona) e caía no meio da entrada do hero. Agora espera a entrada terminar e é dividida em etapas (`perola.js`).
+- SEO: faltava o robots.txt. O build gera `robots.txt` e, com `site.url`, o `sitemap.xml` (`vite/arquivos-raiz.js`).
+
+Ainda pesam o primeiro layout da página (uns 250 ms no celular simulado) e o CSS que bloqueia a renderização (uns 180 ms). O Speed Index acompanha o preloader, que é decisão de design. A categoria nova "Agentic Browsing" do Lighthouse 13 (`llms.txt`) só falha no `vite preview`, que devolve o `index.html` para qualquer endereço.
 
 ## Próximos passos
-- Etapa 3: polimento de celular e acessibilidade em aparelhos reais; desempenho e SEO (ver Lighthouse acima), que o usuário vai tratar depois.
+- Etapa 3: polimento de celular e acessibilidade em aparelhos reais. Desempenho e SEO tratados em 02/11/2026 (ver Lighthouse acima).
 - Etapa 4: capturas finais em 1440×900 e 390×844, revisão independente do código por outro modelo, correção dos bugs reais, `README.md` (como rodar, trocar fotos e dados e publicar) e resumo das pendências.
 - Em outro computador: `git clone`, `npm install`, `npx playwright install chrome` (só para os scripts de teste em `scripts/`), `npm run dev`. Os testes (`scripts/testar-*.mjs`) esperam o site em http://localhost:5173/ (ou em `URL_SITE`).

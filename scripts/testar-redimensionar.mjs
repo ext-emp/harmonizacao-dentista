@@ -3,7 +3,7 @@
 //  1. A pessoa continua na seção que estava lendo (lugar.js). As alturas dos
 //     trechos animados mudam com a tela; sem o ajuste, a mesma rolagem em
 //     pixels cairia em outra seção.
-//  2. Celular deitado: as rodas viram lista, sem sobra (classe, disco,
+//  2. Celular deitado: a roda vira lista, sem sobra (classe, disco,
 //     percurso, estilos nos itens); em pé de novo, voltam e giram.
 // Precisa do servidor de desenvolvimento (window.__rodas só existe no dev).
 // Uso: node scripts/testar-redimensionar.mjs
@@ -70,13 +70,12 @@ for (const [nome, de, para, toque] of casos) {
   conferir(!mudaram.length, `${nome}: continua na mesma seção${mudaram.length ? ` (${mudaram.join(', ')})` : ''}`);
 }
 
-// ---- 2. Girar o celular: rodas viram lista e voltam ------------------------
-console.log('\n== girar o celular (rodas)');
+// ---- 2. Girar o celular: a roda vira lista e volta -------------------------
+console.log('\n== girar o celular (roda)');
 const { contexto, pagina, erros } = await abrir({ width: 390, height: 844 }, true);
 const estadoDasRodas = () =>
   pagina.evaluate(() =>
-    ['experiencia', 'consulta'].map((id) => {
-      const s = document.getElementById(id);
+    [...document.querySelectorAll('[data-roda]')].map((s) => {
       const itens = [...s.querySelectorAll('[data-roda-item]')];
       return {
         ativa: s.classList.contains('roda--ativa'),
@@ -90,18 +89,18 @@ const estadoDasRodas = () =>
     }),
   );
 let e = await estadoDasRodas();
-conferir(e.every((r) => r.ativa && r.marcos === r.total && r.percurso > 0), 'em pé: as duas rodas ligadas');
+conferir(e.length && e.every((r) => r.ativa && r.marcos === r.total && r.percurso > 0), 'em pé: a roda ligada');
 await pagina.setViewportSize({ width: 844, height: 390 });
 await espera(2500);
 e = await estadoDasRodas();
 conferir(
   e.every((r) => !r.ativa && !r.marcos && !r.percurso && r.visiveis === r.total && !r.estilo && !r.desce),
-  'deitado: as duas viram lista, sem sobra da roda',
+  'deitado: vira lista, sem sobra da roda',
 );
 await pagina.setViewportSize({ width: 390, height: 844 });
 await espera(2500);
 e = await estadoDasRodas();
-conferir(e.every((r) => r.ativa && r.marcos === r.total && r.percurso > 0), 'em pé de novo: as rodas voltam');
+conferir(e.every((r) => r.ativa && r.marcos === r.total && r.percurso > 0), 'em pé de novo: a roda volta');
 const roda = (await pagina.evaluate(() => window.__rodas()))[0];
 await pagina.evaluate((v) => window.scrollTo(0, v), roda.inicio + roda.passo * 1.3);
 await espera(2000);

@@ -1,5 +1,6 @@
 // ---------------------------------------------------------------------------
-// Testa as rodas (experiência e consulta): cada gesto deve girar um passo.
+// Testa a roda da experiência (e qualquer outra seção com data-roda): cada
+// gesto deve girar um passo.
 //  - Desktop: gestos de roda do mouse (vários eventos seguidos, como um
 //    trackpad), descendo e subindo; confere o passo ativo e a posição.
 //    Também a troca de sentido logo depois de um passo e o teclado (Page
@@ -47,7 +48,9 @@ async function testarDesktop(navegador) {
   await espera(3500);
   await pagina.mouse.move(720, 450);
 
-  for (const indice of [0, 1]) {
+  const { rodas: todas } = await estado(pagina);
+  conferir(todas.length > 0, `há roda na página (${todas.map((r) => r.id).join(', ')})`);
+  for (const indice of todas.keys()) {
     let { rodas } = await estado(pagina);
     const roda = rodas[indice];
     // Começa um pouco antes da roda e entra com um gesto.
@@ -64,7 +67,7 @@ async function testarDesktop(navegador) {
     }
     const ativos = passos.map((p) => p.ativo);
     console.log(`  ${roda.id}: passos ${ativos.join(' ')} | y ${passos.map((p) => p.y).join(' ')}`);
-    const total = indice === 0 ? 6 : 5;
+    const total = roda.total;
     const sequencia = Array.from({ length: total }, (_, i) => i);
     conferir(JSON.stringify(ativos.slice(0, total)) === JSON.stringify(sequencia), `${roda.id}: um gesto = um passo, descendo (0..${total - 1})`);
     const alinhados = passos.slice(0, total).every((p, i) => Math.abs(p.y - (roda.inicio + i * roda.passo)) <= 3);

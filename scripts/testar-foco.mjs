@@ -63,7 +63,7 @@ cobertos.slice(0, 10).forEach((c) => console.log(`        ${c}`));
 
 // ---- Links do menu ----------------------------------------------------------
 console.log('\n== links do menu');
-for (const id of ['tratamentos', 'resultados', 'sobre', 'consulta', 'faq', 'contato', 'espaco']) {
+for (const id of ['tratamentos', 'resultados', 'sobre', 'experiencia', 'faq', 'contato', 'espaco']) {
   await pagina.evaluate(() => (window.__lenis ? window.__lenis.scrollTo(0, { immediate: true, force: true }) : scrollTo(0, 0)));
   await espera(500);
   // O link "Rolar" do hero leva ao "O espaço"; os outros estão no menu.

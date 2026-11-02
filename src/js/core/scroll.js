@@ -7,9 +7,9 @@ import { reduzMovimento } from './ambiente.js';
 import { dur, ease } from './tokens.js';
 
 let lenis = null;
-// Quem quiser decidir sobre a roda do mouse antes do Lenis (as rodas da
-// experiência e da consulta, que andam um passo por gesto). Devolve false
-// para o Lenis ignorar o evento.
+// Quem quiser decidir sobre a roda do mouse antes do Lenis (a roda da
+// experiência, que anda um passo por gesto). Devolve false para o Lenis
+// ignorar o evento.
 const interceptadores = new Set();
 
 export function iniciarScroll() {

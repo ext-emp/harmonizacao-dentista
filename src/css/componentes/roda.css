@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Roda (experiência e consulta), no estilo da LAVA dental.
+   Roda (a experiência), no estilo da LAVA dental.
    Sem JavaScript ou com movimento reduzido: título e uma lista numerada.
    Com movimento (.roda--ativa, ligado por src/js/modulos/roda.js): o palco
    fica fixo; um círculo grande com os números gira um passo a cada gesto de
@@ -225,7 +225,9 @@
   top: calc(var(--roda-topo) + var(--esp-3) + var(--roda-haste) + var(--esp-5));
   right: 0;
   left: 0;
-  margin: 0;
+  /* Só em cima e embaixo: dos lados fica a margem automática da grade, que
+     centraliza o texto sob a roda em telas mais largas que a grade (1920 px). */
+  margin-block: 0;
 }
 
 .roda--ativa .roda__item {

@@ -9,8 +9,10 @@ const hero = document.querySelector('[data-hero]');
 
 // Chamado quando a cortina do preloader começa a subir (ou logo, sem preloader).
 // Precisa das fontes carregadas: o SplitText mede as linhas reais.
+// Devolve uma promessa resolvida quando a entrada termina (a pérola 3D só é
+// montada depois: montar no meio da entrada travaria a animação no celular).
 export function revelarHero() {
-  if (!hero) return;
+  if (!hero) return Promise.resolve();
   const titulo = hero.querySelector('[data-hero-titulo]');
   const entram = hero.querySelectorAll('[data-hero-entra]');
   // A pérola pode ter saído do hero (perola-viagem.js a move para o pouso).
@@ -19,8 +21,7 @@ export function revelarHero() {
 
   if (reduzMovimento) {
     gsap.set(titulo, { visibility: 'visible' });
-    gsap.to([...entram, retrato], { opacity: 1, duration: dur.rapida, ease: ease.suave });
-    return;
+    return gsap.to([...entram, retrato], { opacity: 1, duration: dur.rapida, ease: ease.suave }).then();
   }
 
   // autoSplit refaz as linhas no resize; o onSplit devolve a animação para
@@ -48,5 +49,8 @@ export function revelarHero() {
   );
   // A pérola entra por último, crescendo um pouco. (O palco é filho do
   // elemento que viaja com o scroll: as duas animações não se misturam.)
-  gsap.fromTo(palco, { scale: 0.86, opacity: 0 }, { scale: 1, opacity: 1, duration: dur.longa * 1.25, ease: ease.saida, delay: dur.media });
+  // É a animação que termina por último.
+  return gsap
+    .fromTo(palco, { scale: 0.86, opacity: 0 }, { scale: 1, opacity: 1, duration: dur.longa * 1.25, ease: ease.saida, delay: dur.media })
+    .then();
 }

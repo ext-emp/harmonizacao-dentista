@@ -7,12 +7,15 @@
 //   <x-img src="hero/perola" ...></x-img> vira <picture> com AVIF/WebP e srcset
 //
 // O resultado é HTML estático completo: o conteúdo funciona sem JavaScript.
+// O plugin também serve (no dev) e grava (no build) o robots.txt e o
+// sitemap.xml (vite/arquivos-raiz.js).
 // ---------------------------------------------------------------------------
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { montarContexto } from './contexto.js';
 import * as geradores from './geradores.js';
+import { robotsTxt, sitemapXml } from './arquivos-raiz.js';
 import { escapar } from './util.js';
 
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -57,6 +60,27 @@ function substituir(html, contexto) {
     }
     return escapar(valor);
   });
+}
+
+// Perguntas e respostas do FAQ, lidas do próprio HTML (o texto fica num
+// lugar só), para os dados estruturados (FAQPage).
+function lerFaq(html) {
+  const texto = (trecho = '') =>
+    trecho
+      .replace(/<[^>]+>/g, '')
+      .replace(/\s+/g, ' ')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .trim();
+  return [...html.matchAll(/<details class="faq__item"[\s\S]*?<\/details>/g)]
+    .map(([item]) => ({
+      pergunta: texto(/class="faq__pergunta-texto">([\s\S]*?)<\/span>/.exec(item)?.[1]),
+      resposta: texto(/class="faq__resposta">([\s\S]*?)<\/div>/.exec(item)?.[1]),
+    }))
+    .filter((f) => f.pergunta && f.resposta);
 }
 
 function lerManifesto() {
@@ -117,11 +141,38 @@ export default function montarHtml() {
       async handler(html) {
         const contexto = await carregarDados();
         let saida = incluir(html);
-        saida = gerar(saida, contexto);
+        // Os {{ }} antes dos geradores: assim o FAQ já chega com os dados.
+        // (O HTML gerado não tem {{ }}.)
         saida = substituir(saida, contexto);
+        contexto.faq = lerFaq(saida);
+        saida = gerar(saida, contexto);
         saida = imagens(saida);
         return saida;
       },
+    },
+    // robots.txt e sitemap.xml: no dev, servidos direto; no build, gravados em dist/.
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const caminho = req.url?.split('?')[0];
+        if (caminho !== '/robots.txt' && caminho !== '/sitemap.xml') return next();
+        const contexto = await carregarDados();
+        const robots = caminho === '/robots.txt';
+        const corpo = robots ? robotsTxt(contexto) : sitemapXml(contexto);
+        res.statusCode = corpo == null ? 404 : 200;
+        res.setHeader('Content-Type', robots ? 'text/plain; charset=utf-8' : 'application/xml; charset=utf-8');
+        res.end(corpo ?? '');
+      });
+    },
+    async generateBundle() {
+      const contexto = await carregarDados();
+      this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt(contexto) });
+      const sitemap = sitemapXml(contexto);
+      if (sitemap) this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap });
+      else {
+        this.warn(
+          'site.url vazio em src/dados/doutor.js: o build sai sem sitemap.xml, sem canonical e sem URLs absolutas no Open Graph. Preencha antes de publicar.',
+        );
+      }
     },
     // Seções, dados e manifesto não fazem parte do grafo de módulos:
     // qualquer mudança neles recarrega a página inteira.

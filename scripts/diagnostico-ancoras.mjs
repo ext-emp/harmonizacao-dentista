@@ -15,7 +15,7 @@ const VPS = {
 
 for (const [nome, vp] of Object.entries(VPS)) {
   for (const primeiraVisita of [true, false]) {
-    for (const ancora of ['#resultados', '#consulta', '#faq', '#contato']) {
+    for (const ancora of ['#resultados', '#experiencia', '#faq', '#contato']) {
       const contexto = await navegador.newContext(vp);
       if (!primeiraVisita) await contexto.addInitScript(() => sessionStorage.setItem('hm:visitou', '1'));
       const pagina = await contexto.newPage();

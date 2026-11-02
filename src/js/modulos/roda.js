@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Roda (experiência e consulta), no estilo da LAVA dental.
+// Roda (a experiência), no estilo da LAVA dental.
 // O palco fica fixo (sticky) e cada passo gira a roda: o número seguinte
 // chega ao topo, o texto dele aparece embaixo e o contador rola.
 //  - Mouse ou trackpad: um gesto de rolagem = um passo. A roda do mouse passa
@@ -335,6 +335,7 @@ export function iniciarRodas() {
         inicio: Math.round(r.gatilho.start),
         fim: Math.round(r.gatilho.end),
         passo: r.passo(),
+        total: r.total,
         ativo: [...r.secao.querySelectorAll('.roda__marco')].findIndex((m) => m.classList.contains('esta-ativo')),
         travada: r.travada,
       }));

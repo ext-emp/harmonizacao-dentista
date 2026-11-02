@@ -54,7 +54,9 @@ export function manterLugar() {
     largura = window.innerWidth;
     altura = window.innerHeight;
   });
+  // Sem medir na carga (medir pede um layout da página inteira, caro no
+  // celular): parada no topo, a página continua no topo depois do resize; e
+  // a rolagem restaurada numa recarga já dispara o scrollEnd.
   ScrollTrigger.addEventListener('scrollEnd', guardar);
   ScrollTrigger.addEventListener('refresh', voltar);
-  guardar();
 }

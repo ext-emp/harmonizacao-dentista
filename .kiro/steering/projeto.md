@@ -15,7 +15,7 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 - `src/dados/doutor.js`: nome, CRO, WhatsApp e mensagem, endereço e mapa, Instagram, horários. Único lugar desses dados.
 - `src/dados/casos.js`: lista única dos antes e depois.
 - `fotos/`: originais com nomes padronizados. `npm run imagens` gera AVIF/WebP com srcset em `public/img/`.
-- Origem de cada imagem provisória: `docs/creditos-imagens.md`.
+- Origem de cada imagem provisória: `docs/creditos-imagens.md`. Desde 02/11/2026, a pedido do usuário, várias provisórias são fotos de banco do Unsplash (espaço, manifesto, blocos de tratamento) e o Sobre usa o retrato de banco do hero: só como provisórias, com etiqueta na tela e crédito registrado, nunca como resultado e nunca do "durante".
 
 ## Regras do CFO (Resolução CFO 196/2019), obrigatórias
 
@@ -37,10 +37,11 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 ## Convenções
 
 - Texto em português do Brasil, tom sereno e direto. Nunca dizer "alto padrão": a exclusividade aparece no design.
-- Tudo que depende do doutor fica marcado com `[CONFIRMAR]` e listado em `CONTEUDO-PENDENTE.md`. Não inventar números, cursos nem equipamentos.
+- Tudo que depende do doutor fica listado em `CONTEUDO-PENDENTE.md`. Desde 01/11/2026, a pedido do usuário, não há marca na tela: os dados e textos estão preenchidos com valores fictícios realistas, marcados com `FICTÍCIO` só no código, e o build avisa enquanto `ficticio: true` estiver em `doutor.js`. Os fictícios seguem as regras do CFO (nada de especialista, superlativo, promessa, preço ou depoimento). O número do WhatsApp no link fica vazio até o real chegar (um número inventado mandaria a pessoa para um desconhecido). Não inventar equipamentos.
 - Paleta: porcelana e grafite quente como base; champagne só em detalhes (linhas, ícones, botão do slider), nunca em texto sobre fundo claro. Todo texto com contraste WCAG AA.
 - Tokens em `src/css/tokens.css` (cores, tipografia, espaçamentos, grid de 12 colunas, easings e durações) espelhados em `src/js/core/tokens.js`. Nada de easing ou duração solta no código.
 - Hover só dentro de `@media (hover: hover) and (pointer: fine)`. Cada hover (menos cursor e magnetismo) tem equivalente no toque via classe `is-active`, ligada pelo ScrollTrigger quando o elemento passa pelo centro da tela. Tipo de aparelho pela media query, nunca pela largura.
+- Tablets: abaixo de 64em vale o layout de celular, mas Sobre e Tratamentos ficam em duas colunas a partir de 48em. O hero (e a pérola) só usam o layout de texto à esquerda em tela larga **e deitada** (`(min-width: 64em) and (orientation: landscape)`): num iPad Pro em pé, o retrato fica no alto. Conferir com `capturar-jornada.mjs --vp 820x1180t` (o `t` é toque).
 - `prefers-reduced-motion`: sem Lenis, parallax ou animação longa, todo o conteúdo visível.
 - Comentários de código em português. Módulos pequenos em `src/js/`.
 - Contenção: nenhuma seção, widget ou efeito fora do briefing sem perguntar. Nada de gradiente roxo, glassmorphism, ícones genéricos, emojis ou cards iguais com sombra.

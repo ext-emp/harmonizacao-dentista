@@ -65,12 +65,18 @@ for (const nome of VPS) {
 
     // Cores e caixas das linhas de cada texto; depois esconde tudo para fotografar o fundo.
     const medidas = await pagina.evaluate((textos) => {
+      // A seção seguinte sobe por cima do espaço: o que fica abaixo da borda
+      // dela está coberto e não conta.
+      const borda = Math.min(
+        innerHeight,
+        ...[...document.querySelectorAll('main > section:not(.espaco)')].map((s) => s.getBoundingClientRect().top).filter((t) => t > 0),
+      );
       const linhas = (el) => {
         const r = document.createRange();
         r.selectNodeContents(el);
         return [...r.getClientRects()]
-          .filter((c) => c.width > 4 && c.height > 4 && c.bottom > 0 && c.top < innerHeight)
-          .map((c) => ({ x: Math.max(0, c.left), y: Math.max(0, c.top), w: Math.min(innerWidth, c.right) - Math.max(0, c.left), h: Math.min(innerHeight, c.bottom) - Math.max(0, c.top) }));
+          .map((c) => ({ x: Math.max(0, c.left), y: Math.max(0, c.top), w: Math.min(innerWidth, c.right) - Math.max(0, c.left), h: Math.min(borda, c.bottom) - Math.max(0, c.top) }))
+          .filter((c) => c.w > 4 && c.h > 4);
       };
       const saida = textos.map((t) => {
         const els = [...document.querySelectorAll(t.seletor)];

@@ -5,7 +5,8 @@
 // O que do hero já foi coberto pela seção escura (que sobe por cima dele)
 // não conta.
 // Precisa do servidor de desenvolvimento (window.__perola só existe no dev).
-// Uso: node scripts/capturar-viagem.mjs [--vp desktop,mobile] [--saida capturas/viagem]
+// Uso: node scripts/capturar-viagem.mjs [--vp desktop,mobile,ipad-em-pe,...] [--saida capturas/viagem]
+// (sem --vp, todos: desktop em três tamanhos, quatro celulares e três iPads)
 // ---------------------------------------------------------------------------
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
@@ -17,7 +18,6 @@ const opcao = (nome, padrao) => {
 };
 const URL_SITE = process.env.URL_SITE || 'http://localhost:5173/';
 const SAIDA = opcao('saida', 'capturas/viagem');
-const VPS = opcao('vp', 'desktop,mobile').split(',');
 const FRACOES = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.85, 1, 1.25];
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -27,7 +27,15 @@ const VIEWPORTS = {
   'desktop-1280': { viewport: { width: 1280, height: 720 } },
   mobile: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
   'mobile-360': { viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true },
+  // Telas baixas: retrato menor em pé; deitado, retrato ao lado do texto (hero.css).
+  'mobile-baixo': { viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true },
+  'mobile-deitado': { viewport: { width: 844, height: 390 }, isMobile: true, hasTouch: true },
+  'ipad-em-pe': { viewport: { width: 820, height: 1180 }, isMobile: true, hasTouch: true },
+  'ipad-pro-em-pe': { viewport: { width: 1024, height: 1366 }, isMobile: true, hasTouch: true },
+  'ipad-deitado': { viewport: { width: 1180, height: 820 }, isMobile: true, hasTouch: true },
 };
+// Sem --vp, todos os tamanhos acima.
+const VPS = opcao('vp', Object.keys(VIEWPORTS).join(',')).split(',');
 
 // Roda na página: caixa visível da pérola (65% do quadro, já com a escala) e
 // os elementos que ela não pode cobrir. Devolve as sobreposições.
@@ -72,9 +80,10 @@ const examinar = () => {
   const [px, py] = getComputedStyle(img).objectPosition.split(' ').map((v) => parseFloat(v) / 100);
   const x0 = ri.left + (ri.width - largura) * px;
   const y0 = ri.top + (ri.height - altura) * py;
-  // Pessoa entre 20% e 80% da largura e em toda a altura (scripts/limites-alfa.mjs
-  // em fotos/hero/doutor-capa.png). Medir de novo quando a foto mudar.
-  const pessoa = doHero({ left: x0 + largura * 0.2, right: x0 + largura * 0.8, top: y0, bottom: y0 + altura });
+  // Pessoa entre 0,8% e 99,4% da largura e de 6% da altura até a base
+  // (scripts/limites-alfa.mjs em fotos/hero/doutor-capa.png, retrato de
+  // 03/11/2026). Medir de novo quando a foto mudar.
+  const pessoa = doHero({ left: x0 + largura * 0.008, right: x0 + largura * 0.994, top: y0 + altura * 0.06, bottom: y0 + altura });
   if (pessoa) alvos.push({ nome: 'retrato', c: pessoa });
 
   const encosta = (a, b, folga = 4) =>

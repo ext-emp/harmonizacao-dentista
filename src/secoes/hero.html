@@ -7,9 +7,9 @@
      Texto, retrato e pérola ficam em áreas separadas do grid: um nunca cobre o outro. -->
 <section class="hero" id="inicio" data-tema="claro" data-pilha aria-labelledby="hero-titulo" tabindex="-1" data-hero>
   <div class="hero__grade grade">
-    <!-- PROVISÓRIO: fotos/hero/doutor-capa.png é imagem de banco (tem marca
-         d'água no jaleco) e mede só 554 × 554. Não pode ir ao ar [CONFIRMAR]
-         (docs/creditos-imagens.md).
+    <!-- PROVISÓRIO: fotos/hero/doutor-capa.png é uma foto de banco (Unsplash)
+         de um modelo, com o fundo recortado aqui (docs/creditos-imagens.md).
+         Não é o doutor: não pode ir ao ar como retrato dele.
          Ao trocar pela foto dele recortada (PNG transparente, 4:5, 1600 × 2000):
          troque o alt por "Retrato do Dr. Henrique Martins" e apague a marca
          "Retrato provisório". A classe hero__composicao--sangria encosta a foto
@@ -20,7 +20,7 @@
         <x-img
           src="hero/doutor-capa"
           alt="Imagem provisória no lugar do retrato do Dr. Henrique Martins"
-          sizes="(min-width: 64em) 42vw, 74vw"
+          sizes="(min-width: 64em) and (orientation: landscape) 40vw, (min-width: 40em) 48vw, 74vw"
           class="hero__retrato-img"
           classe-picture="hero__retrato-picture"
           loading="eager"
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    <a class="hero__rolar" href="#espaco" aria-label="Rolar para a próxima seção" data-hero-entra>
+    <a class="hero__rolar area-toque" href="#espaco" aria-label="Rolar para a próxima seção" data-hero-entra>
       <span class="hero__rolar-texto rotulo">Rolar</span>
       <span class="hero__rolar-trilho" aria-hidden="true"></span>
     </a>

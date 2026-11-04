@@ -26,8 +26,10 @@ export function montarContexto(doutor) {
     cro,
     // Assinatura do rodapé, exigida pelo CFO.
     assinatura: `${nomeCompleto} · ${doutor.profissao} · ${cro}`,
-    // Marca discreta sobre as fotos de antes e depois.
+    // Marca discreta sobre as fotos de antes e depois. A curta (ainda com
+    // nome e número do CRO) entra quando a foto é estreita, para caber numa linha.
     marcaFoto: `${nomeCompleto} · ${cro}`,
+    marcaFotoCurta: `${doutor.nome} · CRO-${doutor.cro.uf} ${doutor.cro.numero}`,
     whatsapp: {
       link: linkWhatsapp,
       exibicao: doutor.whatsapp.exibicao,

@@ -2,7 +2,15 @@
    Contato (grafite): chamada grande, botão magnético e as informações.
    ========================================================================== */
 
+/* Com o empilhamento ligado, o FAQ fica preso atrás do contato. Contato mais
+   rodapé ocupam pelo menos uma tela (100vh é a tela com as barras do navegador
+   recolhidas, a maior): no fim da página o contato chega ao topo e cobre o
+   FAQ inteiro. A altura do rodapé vem do JS (pilha.js); sem ela, nada muda.
+   A sobra fica dividida em cima e embaixo do conteúdo. */
 .contato {
+  display: grid;
+  align-content: center;
+  min-height: calc(100vh - var(--rodape-altura, 100vh));
   padding-bottom: clamp(4rem, 2rem + 6vw, 8rem);
 }
 

@@ -1,5 +1,7 @@
 // Funções pequenas usadas pelo plugin de montagem do HTML.
 
+// Valor que ainda não é para valer: quem escrever esta marca num dado de
+// src/dados/doutor.js tira o campo dos dados estruturados (hoje nenhum usa).
 export const PENDENTE = '[CONFIRMAR]';
 
 // Escapa um valor para uso seguro em texto ou atributo HTML.

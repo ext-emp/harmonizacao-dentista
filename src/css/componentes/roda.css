@@ -17,9 +17,12 @@
   --roda-selo: 1.875rem;
 }
 
+/* Os números de lado ficam a 60° do topo, a (raio + 1rem + meio selo) do
+   centro: com 52vw, saíam da tela em qualquer largura abaixo de ~830 px. O
+   limite deixa o selo inteiro, a pelo menos 1rem da borda. */
 @media (max-width: 63.999em) {
   .roda {
-    --roda-raio: 52vw;
+    --roda-raio: min(52vw, 57vw - 4.25rem);
     --roda-inicio: 40svh;
     --roda-haste: 7svh;
   }

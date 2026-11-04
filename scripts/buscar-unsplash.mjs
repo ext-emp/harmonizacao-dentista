@@ -13,9 +13,15 @@ const pasta = `capturas/unsplash/${slug}`;
 await mkdir(pasta, { recursive: true });
 
 const navegador = await chromium.launch({ channel: 'chrome' });
-const pagina = await navegador.newPage({ viewport: { width: 1400, height: 1000 }, locale: 'en-US' });
+// O Unsplash responde "Something went wrong" ao user-agent do Chrome headless.
+const pagina = await navegador.newPage({
+  viewport: { width: 1400, height: 1000 },
+  locale: 'en-US',
+  userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+});
 await pagina.goto(`https://unsplash.com/s/photos/${encodeURIComponent(slug)}?license=free`, { waitUntil: 'domcontentloaded', timeout: 60000 });
-await pagina.waitForTimeout(4000);
+await pagina.waitForSelector('img[src*="/photo-"]', { timeout: 30000 }).catch(() => {});
+await pagina.waitForTimeout(1500);
 for (let i = 0; i < 3; i++) {
   await pagina.mouse.wheel(0, 1500);
   await pagina.waitForTimeout(900);
@@ -29,7 +35,8 @@ const fotos = await pagina.evaluate((max) => {
     const img = a.querySelector('img[src*="images.unsplash.com"]');
     if (!img) continue;
     const href = a.getAttribute('href');
-    const id = href.split('/').pop().split('-').pop();
+    // O ID são os 11 últimos caracteres do slug (e pode ter hífen: "pxOQ-P97sA8").
+    const id = href.split('/').pop().slice(-11);
     if (vistos.has(id)) continue;
     vistos.add(id);
     const base = img.src.split('?')[0];

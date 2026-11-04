@@ -2,7 +2,7 @@
 // pode ser chamada no HTML com <!-- @gerar nomeDaFuncao -->.
 import { escapar, confirmado } from './util.js';
 
-// Serviços listados nos dados estruturados. [CONFIRMAR] lista final de tratamentos.
+// Serviços listados nos dados estruturados. FICTÍCIO: lista provisória de tratamentos.
 const SERVICOS = [
   'Lentes de contato dental',
   'Harmonização orofacial',
@@ -152,7 +152,7 @@ export function casos(c) {
       <div class="comparador__linha" aria-hidden="true">
         <span class="comparador__botao"><svg class="comparador__icone" viewBox="0 0 24 24" focusable="false"><use href="#olho" /></svg></span>
       </div>
-      <p class="comparador__marca" aria-hidden="true">${escapar(c.marcaFoto)}</p>
+      <p class="comparador__marca" aria-hidden="true"><span class="comparador__marca-longa">${escapar(c.marcaFoto)}</span><span class="comparador__marca-curta">${escapar(c.marcaFotoCurta)}</span></p>
       <div class="comparador__alca" data-comparador-alca aria-hidden="true"></div>
       <input class="comparador__controle" type="range" min="0" max="100" step="5" value="50" data-comparador-controle aria-label="Comparar antes e depois: caso ${n}, ${tratamento}" aria-valuetext="50% antes, 50% depois" />
     </div>

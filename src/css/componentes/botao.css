@@ -109,3 +109,16 @@
   background-position: 0% 100%;
   background-size: 100% 1px;
 }
+
+/* Área de toque de pelo menos 44 x 44 px em volta de links pequenos, sem
+   mudar o desenho: um ::before invisível, centrado no link (só cresce, nunca
+   encolhe o que já é maior). */
+.area-toque {
+  position: relative;
+}
+
+.area-toque::before {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc(50% - 1.375rem));
+}

@@ -1,0 +1,22 @@
+# Cache dos arquivos estáticos (o mesmo que vercel.json faz na Vercel).
+# - assets/: CSS e JS do Vite, com um código no nome que muda a cada build:
+#   guardados por 1 ano sem perguntar de novo.
+# - fonts/: não mudam; também 1 ano.
+# - img/: o nome não muda quando uma foto é trocada (fotos/ -> npm run imagens),
+#   então ficam 1 dia e, depois, são renovadas em segundo plano por até 7 dias.
+# - O HTML fica no padrão da hospedagem (sempre confere se há versão nova).
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"

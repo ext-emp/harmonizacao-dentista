@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Sobre: retrato grande à esquerda (colunas 1 a 5) e texto à direita.
-   No celular, o retrato vem primeiro.
+   Sobre: retrato grande à esquerda (colunas 1 a 5) e texto à direita, a
+   partir do tablet (48em). No celular, o retrato vem primeiro.
    ========================================================================== */
 
 .sobre .grade {
@@ -63,7 +63,9 @@
   border-bottom: 1px solid var(--tema-linha);
 }
 
-@media (min-width: 64em) {
+/* Do tablet em pé em diante: numa coluna só, o retrato 4:5 ocupava mais de
+   uma tela e o texto deixava metade da largura vazia. */
+@media (min-width: 48em) {
   .sobre__retrato {
     grid-column: 1 / span 5;
   }

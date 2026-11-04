@@ -2,7 +2,9 @@
      tilt 3D no hover; no toque, uma rotação leve presa ao scroll) e a lista
      numerada dos procedimentos (o texto desliza e uma imagem segue o cursor;
      no toque, a imagem aparece na própria linha quando ela passa pelo centro).
-     As imagens são naturezas-mortas provisórias, nunca resultados. -->
+     Os dois blocos usam fotos de banco (Unsplash), provisórias e só
+     ilustrativas: nunca resultados (docs/creditos-imagens.md). As imagens da
+     lista ainda são naturezas-mortas renderizadas. -->
 <section class="tratamentos secao" id="tratamentos" data-tema="claro" data-pilha aria-labelledby="tratamentos-titulo" tabindex="-1">
   <div class="grade tratamentos__cabecalho">
     <p class="tratamentos__rotulo rotulo texto-2">Tratamentos</p>
@@ -15,7 +17,7 @@
   </div>
 
   <div class="grade tratamentos__blocos">
-    <!-- [CONFIRMAR] textos clínicos dos dois blocos -->
+    <!-- FICTÍCIO: textos clínicos dos dois blocos, a confirmar com o doutor -->
     <article class="tratamento tratamento--rosto" data-tratamento data-toque-centro>
       <div class="tratamento__midia" data-tilt>
         <div class="tratamento__mascara mascara" data-revelar="imagem">
@@ -23,7 +25,7 @@
             <x-img
               src="tratamentos/rosto"
               alt=""
-              sizes="(min-width: 64em) 38vw, 90vw"
+              sizes="(min-width: 48em) 40vw, 92vw"
               class="tratamento__img"
               classe-picture="tratamento__picture"
             ></x-img>
@@ -36,7 +38,7 @@
         <p class="tratamento__area destaque">Harmonização orofacial</p>
         <p class="tratamento__descricao texto-2">
           Um olhar para o rosto inteiro, com ajustes discretos de proporção, contorno e qualidade da pele, planejados para
-          manter a sua expressão. <span class="pendente">[CONFIRMAR]</span>
+          manter a sua expressão.
         </p>
         <a class="tratamento__link link-linha" href="#resultados" data-cursor="ver">
           Ver resultados<span class="visualmente-oculto"> de harmonização orofacial</span>
@@ -51,7 +53,7 @@
             <x-img
               src="tratamentos/sorriso"
               alt=""
-              sizes="(min-width: 64em) 38vw, 90vw"
+              sizes="(min-width: 48em) 40vw, 92vw"
               class="tratamento__img"
               classe-picture="tratamento__picture"
             ></x-img>
@@ -64,7 +66,6 @@
         <p class="tratamento__area destaque">Lentes de contato dental</p>
         <p class="tratamento__descricao texto-2">
           Lâminas finas de cerâmica, desenhadas na cor, na forma e no tamanho que combinam com o seu rosto.
-          <span class="pendente">[CONFIRMAR]</span>
         </p>
         <a class="tratamento__link link-linha" href="#resultados" data-cursor="ver">
           Ver resultados<span class="visualmente-oculto"> de lentes de contato dental</span>
@@ -76,10 +77,9 @@
   <div class="grade procedimentos">
     <div class="procedimentos__cabecalho">
       <h3 class="procedimentos__titulo rotulo texto-2">Procedimentos</h3>
-      <p class="procedimentos__nota texto-2">Lista provisória <span class="pendente">[CONFIRMAR]</span></p>
     </div>
 
-    <!-- [CONFIRMAR] lista final de tratamentos. Imagem de cada linha:
+    <!-- FICTÍCIO: lista provisória de tratamentos (a final vem do doutor). Imagem de cada linha:
          fotos/procedimentos/<nome>.jpg (4:5). -->
     <ol class="procedimentos__lista" data-procedimentos data-revelar="lista">
       <li class="procedimento" data-procedimento data-toque-centro="linha">

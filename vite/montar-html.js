@@ -165,6 +165,11 @@ export default function montarHtml() {
     },
     async generateBundle() {
       const contexto = await carregarDados();
+      if (contexto.doutor.ficticio) {
+        this.warn(
+          'o site ainda tem dados e textos fictícios (CRO, endereço, horários, números, formação...): troque pelos reais antes de publicar. Lista em CONTEUDO-PENDENTE.md; depois, ficticio: false em src/dados/doutor.js.',
+        );
+      }
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robotsTxt(contexto) });
       const sitemap = sitemapXml(contexto);
       if (sitemap) this.emitFile({ type: 'asset', fileName: 'sitemap.xml', source: sitemap });

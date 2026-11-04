@@ -17,9 +17,15 @@ O site está completo e testado: todas as seções, as transições no estilo da
 - **Passo 3, feito.** Capturas em `capturas/final/` (seções, movimento reduzido, sem WebGL e a página inteira em quadros, nos dois tamanhos). Única sobreposição achada: as rodas, corrigida no passo 2. Console limpo.
 - **Passo 4, feito.** `README.md` criado e seguido num clone limpo (`npm install` e `npm run build` sem erro, nenhum `.map`). `CONTEUDO-PENDENTE.md` cobre todos os `[CONFIRMAR]` e ganhou a imagem de prévia do link.
 
-Para pedir um deles, escreva, por exemplo: **"Faça o passo 1 do PROXIMOS-PASSOS.md"**. Vale a ordem 1, 2, 3, 4, porque o passo 2 usa o relatório do passo 1. Os passos 3 e 4 não dependem dos outros.
+## Depois dos quatro passos (01 e 02/11/2026, nada commitado)
 
-Desempenho e SEO não entram aqui: o usuário trata depois (veja "Fora dos quatro passos").
+- **Uma roda só.** O texto do passo ficava fora do centro em telas com mais de 1920 px (a margem da grade era zerada); corrigido. A primeira consulta, que repetia a roda da experiência, foi unida a ela: seis etapas, do agendamento ao acompanhamento. No menu, "Consulta" virou "Experiência".
+- **SEO 100.** O build gera `robots.txt` e, com `site.url`, o `sitemap.xml`. Entraram meta robots, Twitter Card completo e os dados estruturados `WebSite` e `FAQPage` (lido do HTML do FAQ). Conferir com `scripts/verificar-seo.mjs`.
+- **Desempenho 97** no Lighthouse mobile, nas três rodadas (era 49 a 57). Os recálculos repetidos do ScrollTrigger na carga, os títulos divididos duas vezes, as medições em vaivém e a pérola 3D no meio da entrada do hero saíram. Detalhes em `docs/plano-transicoes.md`.
+- **Tablets.** Conferidos em iPhone SE, Pixel, iPad (768, 820 e 1024 em pé; 1024, 1180 e 1366 deitado) e 2560×1440 (`capturas/aparelhos/`). No iPad Pro em pé, o hero deixava metade da tela vazia: agora o retrato fica no alto. Sobre e Tratamentos ganharam duas colunas a partir de 48em.
+- **Sem `[CONFIRMAR]` na tela.** Os dados e textos que dependem do doutor estão fictícios (lista em `CONTEUDO-PENDENTE.md`), e o build avisa enquanto `ficticio: true` estiver em `doutor.js`.
+
+Para refazer um dos quatro passos, escreva, por exemplo: **"Faça o passo 1 do PROXIMOS-PASSOS.md"**. Vale a ordem 1, 2, 3, 4, porque o passo 2 usa o relatório do passo 1. Os passos 3 e 4 não dependem dos outros.
 
 ## Regras para todos os passos
 
@@ -77,19 +83,20 @@ URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs
 
 ```bash
 npm run build
-node scripts/testar-interacoes.mjs              # 45/45
-node scripts/testar-interacoes.mjs --reduzido   # 36/36
+node scripts/testar-interacoes.mjs              # 42/42
+node scripts/testar-interacoes.mjs --reduzido   # 35/35
 node scripts/testar-roda.mjs                    # inclui troca de sentido e teclado
 node scripts/testar-foco.mjs                    # inclui o menu do celular
 node scripts/testar-foco.mjs --reduzido
-node scripts/testar-tamanhos.mjs                # rodas em 11 tamanhos de tela
+node scripts/testar-tamanhos.mjs                # a roda em 16 tamanhos (celulares, iPad, 2560×1440)
 node scripts/testar-redimensionar.mjs           # lugar da leitura e giro do celular
 node scripts/contraste-fundo.mjs
 node scripts/verificar-imagens.mjs
 node scripts/capturar-viagem.mjs                # nenhuma sobreposição
+node scripts/verificar-seo.mjs                  # meta tags, JSON-LD, robots.txt e sitemap.xml
 ```
 
-- E uma vez com o build no ar (`npx vite preview --port 4173 --strictPort`): `URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs` (45/45).
+- E uma vez com o build no ar (`npx vite preview --port 4173 --strictPort`): `URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs` (42/42).
 
 **Pronto quando:** o build passa sem erro, todos esses testes passam e cada achado do relatório tem um destino (corrigido, ou descartado com o motivo).
 
@@ -102,22 +109,25 @@ node scripts/capturar-viagem.mjs                # nenhuma sobreposição
 ```bash
 # Uma captura por seção, em capturas/final/desktop e capturas/final/mobile.
 # Para movimento reduzido, repita com --reduzido no fim.
-node scripts/capturar.mjs --roteiro secoes --vp desktop,mobile --saida capturas/final --ancoras "#espaco,#manifesto,#tratamentos,#resultados,#sobre,#experiencia,#consulta,#faq,#contato"
+node scripts/capturar.mjs --roteiro secoes --vp desktop,mobile --saida capturas/final --ancoras "#espaco,#manifesto,#tratamentos,#resultados,#sobre,#experiencia,#faq,#contato"
 
 # Hero sem WebGL (a imagem estática da pérola)
 node scripts/capturar.mjs --vp desktop,mobile --sem-webgl --saida capturas/final
 
 # A página inteira em quadros (transições, galeria e rodas) e a folha de contato
-node scripts/capturar-jornada.mjs --vp desktop --ate 22400 --passo 900 --colunas 8
-node scripts/capturar-jornada.mjs --vp mobile  --ate 19900 --passo 844 --colunas 10
-node scripts/capturar-jornada.mjs --vp desktop --ate 14400 --passo 900 --reduzido
-node scripts/capturar-jornada.mjs --vp mobile  --ate 12700 --passo 844 --reduzido
+node scripts/capturar-jornada.mjs --vp desktop --ate 60000 --passo 900 --colunas 8
+node scripts/capturar-jornada.mjs --vp mobile  --ate 60000 --passo 844 --colunas 10
+node scripts/capturar-jornada.mjs --vp desktop --ate 60000 --passo 900 --reduzido
+node scripts/capturar-jornada.mjs --vp mobile  --ate 60000 --passo 844 --reduzido
+
+# Tablets e telas largas: LxAt é com toque (820x1180t = iPad Air em pé)
+node scripts/capturar-jornada.mjs --vp 820x1180t --ate 60000 --passo 1180 --saida capturas/aparelhos/820x1180t
 
 # Folha de contato de uma pasta de capturas (pasta, saída, colunas, escala)
 node scripts/folha-contato.mjs capturas/final/desktop capturas/final/folha-desktop.png 5 0.3
 ```
 
-Os valores de `--ate` são a rolagem máxima de hoje: 22351 px no desktop e 19859 px no celular; com movimento reduzido, 14307 e 12665 px. Eles mudam quando o conteúdo muda. Meça de novo com `document.documentElement.scrollHeight - innerHeight` no console do navegador.
+O `--ate 60000` passa do fim da página de propósito: o script para na rolagem máxima, seja qual for.
 
 O `capturar-jornada.mjs` sempre inclui a posição final (o rodapé) como último quadro, com pelo menos 3 s de espera, para o nome "Henrique Martins" sair inteiro. A espera dos outros quadros muda com `--espera` (padrão: 750 ms).
 
@@ -149,7 +159,7 @@ O `capturar-jornada.mjs` sempre inclui a posição final (o rodapé) como últim
 
 ## Fora dos quatro passos
 
-- **Desempenho e SEO** (o usuário trata depois). Lighthouse mobile no build local: Desempenho 49 (meta 80), Acessibilidade 100, Boas práticas 100, SEO 92 (meta 95). As causas medidas estão em `docs/plano-transicoes.md`. Para medir de novo, com o build no ar na porta 4173:
+- **Desempenho e SEO** (feitos em 02/11/2026). Lighthouse mobile no build local, três rodadas: Desempenho 97 (era 49; meta 80), Acessibilidade 100, Boas práticas 100, SEO 100 (era 92; meta 95). O que pesava e o que mudou está em `docs/plano-transicoes.md`. Para medir de novo, com o build no ar na porta 4173:
 
   ```bash
   npx -y lighthouse@13.6.0 http://localhost:4173/ --output=json --output=html --output-path=capturas/lighthouse/mobile --chrome-flags="--headless=new"

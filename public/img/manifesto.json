@@ -11,7 +11,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8d8c8"
+    "cor": "#080808"
   },
   "atendimento/atendimento-02": {
     "largura": 960,
@@ -25,7 +25,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#d8c8b8"
+    "cor": "#b8b8b8"
   },
   "atendimento/atendimento-03": {
     "largura": 960,
@@ -39,7 +39,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#282828"
+    "cor": "#e8e8e8"
   },
   "atendimento/atendimento-04": {
     "largura": 960,
@@ -53,7 +53,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#b8a898"
   },
   "casos/caso-01-antes": {
     "largura": 1080,
@@ -224,37 +224,24 @@
     "cor": "#f8e8e8"
   },
   "espaco/espaco-01": {
-    "largura": 2400,
-    "altura": 1600,
+    "largura": 2880,
+    "altura": 1920,
     "larguras": [
       640,
       1024,
       1600,
-      2400
+      2400,
+      2880
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#a89888"
+    "cor": "#a8a8a8"
   },
   "espaco/espaco-02": {
-    "largura": 1600,
-    "altura": 2000,
-    "larguras": [
-      640,
-      1024,
-      1600
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#a89888"
-  },
-  "espaco/espaco-03": {
     "largura": 2400,
-    "altura": 1600,
+    "altura": 3000,
     "larguras": [
       640,
       1024,
@@ -265,21 +252,38 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8c8"
+    "cor": "#886848"
   },
-  "espaco/espaco-04": {
-    "largura": 1600,
-    "altura": 2000,
+  "espaco/espaco-03": {
+    "largura": 2880,
+    "altura": 1920,
     "larguras": [
       640,
       1024,
-      1600
+      1600,
+      2400,
+      2880
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#a89888"
+    "cor": "#d8d8d8"
+  },
+  "espaco/espaco-04": {
+    "largura": 2400,
+    "altura": 3000,
+    "larguras": [
+      640,
+      1024,
+      1600,
+      2400
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#a88868"
   },
   "espaco/espaco-05": {
     "largura": 2880,
@@ -295,13 +299,16 @@
       "avif",
       "webp"
     ],
-    "cor": "#281818"
+    "cor": "#181818"
   },
   "hero/doutor-capa": {
-    "largura": 480,
-    "altura": 480,
+    "largura": 1600,
+    "altura": 2000,
     "larguras": [
-      480
+      480,
+      800,
+      1200,
+      1600
     ],
     "formatos": [
       "avif",
@@ -415,7 +422,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#282828"
+    "cor": "#e8d8c8"
   },
   "tratamentos/rosto": {
     "largura": 1600,
@@ -430,7 +437,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#d8c8b8"
+    "cor": "#e8c8a8"
   },
   "tratamentos/sorriso": {
     "largura": 1600,
@@ -445,6 +452,6 @@
       "avif",
       "webp"
     ],
-    "cor": "#282828"
+    "cor": "#d8b898"
   }
 }

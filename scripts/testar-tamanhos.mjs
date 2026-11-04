@@ -4,8 +4,8 @@
 // iPhone no Safari), tablets e telas mais largas que a grade (2560x1440).
 // Em cada passo, confere que nenhum texto do palco (rótulo, contador,
 // título, nota, nome e texto do passo) é cruzado pela linha do círculo nem
-// fica no caminho dos números quando a roda gira, que nada sai da tela e que
-// o texto do passo fica centralizado sob a roda. Onde a roda não cabe
+// fica no caminho dos números quando a roda gira, que nada sai da tela (nem os
+// números dos lados) e que o texto do passo fica centralizado sob a roda. Onde a roda não cabe
 // (celular deitado, tela muito baixa), confere que virou a lista, sem sobra.
 // Precisa do servidor de desenvolvimento (window.__rodas só existe no dev).
 // Uso: node scripts/testar-tamanhos.mjs [LxA ou LxAt (com toque) ...] [--capturas pasta]
@@ -76,6 +76,12 @@ function medirPalco(id) {
       if (perto < anel[1] && longe > anel[0]) achados.add(`${nome} no caminho dos números`);
       if (b.bottom > innerHeight || b.top < 0) achados.add(`${nome} fora da tela`);
     }
+  }
+  // Números da roda: inteiros na tela (os de baixo do círculo podem passar do pé).
+  for (const selo of s.querySelectorAll('.roda__selo')) {
+    const b = selo.getBoundingClientRect();
+    if (b.top > innerHeight || b.bottom < 0) continue;
+    if (b.left < 0 || b.right > innerWidth) achados.add(`número ${selo.textContent.trim()} cortado na borda`);
   }
   if (ativo) {
     const caixa = ativo.getBoundingClientRect();

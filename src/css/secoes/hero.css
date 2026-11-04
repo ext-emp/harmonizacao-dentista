@@ -1,8 +1,14 @@
 /* ==========================================================================
-   Hero. Celular: retrato no alto, texto embaixo. Desktop: texto nas colunas
-   1 a 7 e o retrato nas colunas 8 a 12, apoiado na base. Tudo no fluxo do
-   grid: o texto nunca passa por cima da pessoa. A pérola tem CSS próprio
-   (componentes/perola.css).
+   Hero. Celular e tablet em pé: retrato no alto, texto embaixo. Tela larga
+   e deitada: texto nas colunas 1 a 7 e o retrato nas colunas 8 a 12, apoiado
+   na base. (Num iPad Pro em pé, com 1024 px, o layout deitado deixava metade
+   da tela vazia em cima.) Tudo no fluxo do grid: o texto nunca passa por
+   cima da pessoa. A pérola tem CSS próprio (componentes/perola.css), com a
+   mesma condição.
+   Telas baixas: no celular em pé com até 760 px de altura (iPhone SE, ou
+   qualquer celular com as barras do navegador), o retrato encolhe para o
+   botão caber na primeira tela; no celular deitado, o layout é o da tela
+   larga (retrato ao lado do texto), com o título limitado pela altura.
    ========================================================================== */
 
 .hero {
@@ -69,7 +75,8 @@
   right: var(--sangria);
 }
 
-/* Marca de provisório (some quando a foto definitiva entrar). */
+/* Marca de provisório (some quando a foto definitiva entrar). Numa linha só,
+   mesmo com o retrato estreito das telas baixas. */
 .hero__provisorio {
   position: absolute;
   z-index: 2;
@@ -80,6 +87,7 @@
   background: var(--cor-porcelana);
   color: var(--cor-texto-2-claro);
   font-size: 0.625rem;
+  white-space: nowrap;
 }
 
 /* ---- Texto ------------------------------------------------------------- */
@@ -173,8 +181,23 @@
   }
 }
 
-/* ---- Desktop ----------------------------------------------------------- */
-@media (min-width: 64em) {
+/* ---- Celular em pé e baixo ---------------------------------------------- */
+@media (orientation: portrait) and (max-height: 47.5em) {
+  .hero__composicao {
+    width: min(74vw, 20svh);
+  }
+
+  .hero__rotulo {
+    margin-top: var(--esp-3);
+  }
+
+  .hero__acoes {
+    margin-top: var(--esp-5);
+  }
+}
+
+/* ---- Tela larga e deitada (e celular deitado) --------------------------- */
+@media (min-width: 64em) and (orientation: landscape), (min-width: 40em) and (orientation: landscape) and (max-height: 31.25em) {
   .hero__grade {
     grid-template-rows: 1fr auto auto auto auto;
   }
@@ -237,6 +260,21 @@
 
   .hero__rolar-texto {
     writing-mode: horizontal-tb;
+  }
+}
+
+/* Celular deitado: o título do tamanho da largura não caberia na altura. O
+   texto passa da primeira tela, então o retrato fica no alto (e não apoiado
+   no pé do hero, fora da tela), com a altura da tela. */
+@media (max-width: 63.999em) and (orientation: landscape) and (max-height: 31.25em) {
+  .hero__titulo.titulo-display {
+    font-size: min(var(--fs-display), 19svh);
+  }
+
+  .hero__composicao {
+    align-self: start;
+    width: min(100%, calc((100svh - var(--altura-header) - var(--esp-5)) * 0.8));
+    margin-bottom: 0;
   }
 }
 

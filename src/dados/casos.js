@@ -17,7 +17,7 @@
 // ---------------------------------------------------------------------------
 
 export const casos = [
-  // [CONFIRMAR] casos, tratamentos e fotos: os seis abaixo são provisórios.
+  // FICTÍCIO: casos, tratamentos e fotos. Os seis abaixo são provisórios.
   { id: 'caso-01', tratamento: 'Lentes de contato dental', provisorio: true, autorizacaoPorEscrito: false },
   { id: 'caso-02', tratamento: 'Harmonização orofacial', provisorio: true, autorizacaoPorEscrito: false },
   { id: 'caso-03', tratamento: 'Preenchimento labial', provisorio: true, autorizacaoPorEscrito: false },

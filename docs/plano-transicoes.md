@@ -58,12 +58,12 @@ O resumo sai com `node scripts/resumo-lighthouse.mjs capturas/lighthouse/mobile.
 
 | Categoria | 31/10/2026 | 02/11/2026 (três rodadas) | Meta do briefing |
 | --- | --- | --- | --- |
-| Desempenho | 49 | 90 a 96 | 80 ou mais |
+| Desempenho | 49 | 97 | 80 ou mais |
 | Acessibilidade | 100 | 100 | 95 ou mais |
 | Boas práticas | 100 | 100 | |
 | SEO | 92 | 100 | 95 ou mais |
 
-02/11/2026: LCP 2,5 a 2,6 s (era 4,2 a 4,9 s), TBT 100 a 260 ms (era 1.700 a 2.510 ms), FCP 0,8 a 1,5 s, CLS 0,001.
+02/11/2026 (build final, três rodadas iguais): LCP 2,3 s (era 4,2 a 4,9 s), TBT 40 ms (era 1.700 a 2.510 ms), FCP 0,8 s, CLS 0,004.
 
 O que pesava (perfil de CPU com a CPU 4x mais lenta, como no Lighthouse, num build sem minificação) e o que mudou:
 - Recálculos repetidos do ScrollTrigger na carga: os automáticos do DOMContentLoaded e do load, mais os pedidos do código (fontes no `main.js` e no `revelar.js`, load e cada leva de imagens). Cada um mede a página inteira: de 50 a 200 ms com a tela travada no celular. Agora há um só, quando as fontes chegam; depois disso, só se a altura da página mudar (`main.js`).

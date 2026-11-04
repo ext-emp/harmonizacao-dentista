@@ -7,6 +7,8 @@
 .comparador {
   --posicao: 50%;
   --respiro: 0.75rem;
+  /* Largura da foto para a marca escolher a versão (longa ou curta). */
+  container: comparador / inline-size;
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
@@ -59,9 +61,10 @@
   pointer-events: none;
 }
 
+/* 12 px no mínimo: texto sobre foto, lido no celular. */
 .comparador__rotulo {
   bottom: var(--respiro);
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: var(--ls-rotulo);
   text-transform: uppercase;
@@ -75,14 +78,43 @@
   right: var(--respiro);
 }
 
-/* Marca exigida pelo CFO: nome e CRO sobre cada foto. */
+/* Marca exigida pelo CFO: nome e CRO sobre cada foto, numa linha só. Em
+   foto estreita, entra a versão curta (sem "Dr." e "nº"), que mantém o nome
+   e o número do CRO. */
 .comparador__marca {
   top: var(--respiro);
   left: var(--respiro);
   max-width: calc(100% - 2 * var(--respiro));
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.comparador__marca-curta {
+  display: none;
+}
+
+@container comparador (max-width: 18rem) {
+  .comparador__marca-longa {
+    display: none;
+  }
+
+  .comparador__marca-curta {
+    display: inline;
+  }
+}
+
+/* Foto muito estreita (celular de 320 px): menos respiro em volta, para a
+   versão curta ainda caber em 12 px. */
+@container comparador (max-width: 15rem) {
+  .comparador__marca {
+    top: 0.5rem;
+    left: 0.5rem;
+    max-width: calc(100% - 1rem);
+    padding-inline: 0.5rem;
+    letter-spacing: 0;
+  }
 }
 
 /* ---- Linha e botão ----------------------------------------------------- */

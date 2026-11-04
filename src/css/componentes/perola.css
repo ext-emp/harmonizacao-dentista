@@ -22,7 +22,9 @@
   --perola-pouso-y: 24svh;
 }
 
-@media (min-width: 64em) {
+/* Mesma condição do layout do hero em tela larga e deitada, que também vale
+   para o celular deitado (hero.css). */
+@media (min-width: 64em) and (orientation: landscape), (min-width: 40em) and (orientation: landscape) and (max-height: 31.25em) {
   :root {
     /* O limite pela altura (27svh) mantém a pérola longe do título em telas
        largas e baixas (1920 × 1080). */
@@ -49,8 +51,15 @@
   pointer-events: none;
 }
 
-/* Desktop: nas colunas 5 e 6, ao lado do subtítulo e do botão. */
-@media (min-width: 64em) {
+/* Celular em pé e baixo: o botão sobe (hero.css) e a pérola acompanha. */
+@media (orientation: portrait) and (max-height: 47.5em) {
+  .perola-lugar {
+    margin-top: var(--esp-5);
+  }
+}
+
+/* Tela larga e deitada: nas colunas 5 e 6, ao lado do subtítulo e do botão. */
+@media (min-width: 64em) and (orientation: landscape), (min-width: 40em) and (orientation: landscape) and (max-height: 31.25em) {
   .perola-lugar {
     grid-column: 5 / span 2;
     grid-row: 4 / span 2;

@@ -58,6 +58,17 @@ for (let n = 1; n <= 6; n++) {
 }
 PLACAS.push({ saida: 'public/og-imagem.jpg', query: 'tipo=og', largura: 1200, altura: 630 });
 
+// Desde 02/11/2026 estes originais são fotos de banco ou o retrato do hero
+// (docs/creditos-imagens.md). O render deles vai para capturas/renders/, para
+// não apagar a foto.
+const SUBSTITUIDAS = [
+  'fotos/tratamentos/',
+  'fotos/sobre/',
+  'fotos/atendimento/',
+  'fotos/espaco/',
+];
+const destino = (saida) => (SUBSTITUIDAS.some((p) => saida.startsWith(p)) ? path.join('capturas', 'renders', saida) : saida);
+
 const servidor = await createServer({ server: { port: 5197, strictPort: false }, logLevel: 'error' });
 await servidor.listen();
 const base = servidor.resolvedUrls.local[0];
@@ -82,7 +93,7 @@ try {
     await pagina.waitForFunction(() => window.__render, null, { timeout: 120000 });
     const dados = await pagina.evaluate(() => window.__render);
     if (!dados.startsWith('data:')) throw new Error(`${n.saida}: ${dados}`);
-    await salvarJpg(Buffer.from(dados.split(',')[1], 'base64'), n.saida);
+    await salvarJpg(Buffer.from(dados.split(',')[1], 'base64'), destino(n.saida));
     await pagina.close();
   }
 
@@ -94,7 +105,7 @@ try {
     await pagina.waitForFunction(() => window.__render, null, { timeout: 180000 });
     const dados = await pagina.evaluate(() => window.__render);
     if (!dados.startsWith('data:')) throw new Error(`${a.saida}: ${dados}`);
-    await salvarJpg(Buffer.from(dados.split(',')[1], 'base64'), a.saida);
+    await salvarJpg(Buffer.from(dados.split(',')[1], 'base64'), destino(a.saida));
     await pagina.close();
   }
 

@@ -1,6 +1,10 @@
 <!-- Sobre o doutor: retrato grande (máscara abrindo e parallax), texto curto
-     e formação. [CONFIRMAR] texto, formação e retrato (fotos/sobre/retrato.jpg,
-     4:5). Não inventar cursos: cada linha da formação espera o dado real. -->
+     e formação. FICTÍCIO: a formação (cursos e anos) e o segundo parágrafo;
+     o retrato é provisório: o mesmo PNG de banco do hero
+     (fotos/hero/doutor-capa.png) sobre um fundo de linho, em
+     fotos/sobre/retrato.jpg (4:5). Não é o doutor: não pode ir ao ar (ver
+     docs/creditos-imagens.md). Trocar pelos dados reais: nada de curso sem
+     comprovação. -->
 <section class="sobre secao" id="sobre" data-tema="claro" data-pilha aria-labelledby="sobre-titulo" tabindex="-1">
   <div class="grade">
     <figure class="sobre__retrato">
@@ -9,7 +13,7 @@
           <x-img
             src="sobre/retrato"
             alt="Imagem provisória no lugar do retrato do Dr. Henrique Martins"
-            sizes="(min-width: 64em) 40vw, 90vw"
+            sizes="(min-width: 48em) 40vw, 90vw"
             class="sobre__img"
             classe-picture="sobre__picture"
           ></x-img>
@@ -30,16 +34,16 @@
         </p>
         <p class="texto-2">
           No consultório, o tempo é para ouvir, examinar e explicar. As decisões são tomadas junto com o paciente,
-          depois de entender o que ele deseja e o que deve ficar como está. <span class="pendente">[CONFIRMAR]</span>
+          depois de entender o que ele deseja e o que deve ficar como está.
         </p>
       </div>
 
       <div class="sobre__formacao" data-revelar="subir">
         <h3 class="sobre__formacao-titulo rotulo texto-2">Formação</h3>
         <ul class="sobre__lista">
-          <li>Graduação em Odontologia <span class="pendente">[CONFIRMAR] instituição e ano</span></li>
-          <li>Cursos em harmonização orofacial <span class="pendente">[CONFIRMAR] nomes, instituições e anos</span></li>
-          <li>Cursos em lentes de contato dental <span class="pendente">[CONFIRMAR] nomes, instituições e anos</span></li>
+          <li>Graduação em Odontologia <span class="texto-2">2013</span></li>
+          <li>Aperfeiçoamento em harmonização orofacial <span class="texto-2">2018</span></li>
+          <li>Formação em lentes de contato dental <span class="texto-2">2020</span></li>
         </ul>
       </div>
     </div>

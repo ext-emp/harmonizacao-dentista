@@ -21,11 +21,19 @@ const VEU_MAXIMO = 0.32;
 
 // Primeiro todas as leituras, depois as escritas: alternar as duas faria o
 // navegador refazer o layout da página a cada painel.
-function medirAlturas(paineis) {
+// A altura do rodapé também vai para o CSS (--rodape-altura, no <html>): o
+// contato precisa ocupar uma tela menos o rodapé para chegar ao topo no fim da
+// página e cobrir inteiro o painel preso antes dele (contato.css).
+function medirAlturas(paineis, rodape) {
   const alturas = paineis.map((painel) => `${painel.offsetHeight}px`);
+  // Com 1 px a menos: a rolagem para em pixel inteiro e a página pode ter
+  // altura fracionada; assim o contato passa do topo, nunca fica a 0,4 px dele.
+  const alturaRodape = rodape ? `${Math.floor(rodape.getBoundingClientRect().height) - 1}px` : '';
   paineis.forEach((painel, i) => {
     if (painel.style.getPropertyValue('--pilha-altura') !== alturas[i]) painel.style.setProperty('--pilha-altura', alturas[i]);
   });
+  const raiz = document.documentElement.style;
+  if (alturaRodape && raiz.getPropertyValue('--rodape-altura') !== alturaRodape) raiz.setProperty('--rodape-altura', alturaRodape);
 }
 
 // Seção que cobre o painel: o próximo elemento da página.
@@ -52,14 +60,20 @@ function ligarVeu(painel) {
 
 // Entrada em caixa: a seção sobe como um retângulo menor, com cantos
 // redondos, que abre até ocupar a tela (presa ao scroll, linear).
+// Aberta de vez, fica sem recorte nenhum: um recorte de 0% numa borda em
+// posição fracionada deixa um fio claro de 1 px (o painel de trás aparece no
+// antisserrilhado). Ao voltar a rolagem, o scrub devolve o recorte animado.
 function entradaEmCaixa(secao) {
+  const soltar = (self) => {
+    if (self.progress === 1) gsap.set(secao, { clipPath: 'none' });
+  };
   gsap.fromTo(
     secao,
     { clipPath: 'inset(0% 7% 0% 7% round 1.25rem)' },
     {
       clipPath: 'inset(0% 0% 0% 0% round 0rem)',
       ease: 'none',
-      scrollTrigger: { trigger: secao, start: 'top bottom', end: 'top 15%', scrub: true },
+      scrollTrigger: { trigger: secao, start: 'top bottom', end: 'top 15%', scrub: true, onLeave: soltar, onRefresh: soltar },
     },
   );
 }
@@ -97,7 +111,8 @@ export function iniciarPilha() {
   const paineis = gsap.utils.toArray('[data-pilha]');
   if (!paineis.length) return;
   paineis.forEach((painel) => painel.classList.add('pilha--ativa'));
-  medirAlturas(paineis);
+  const rodape = document.querySelector('.rodape');
+  medirAlturas(paineis, rodape);
 
   // As alturas mudam com fontes, imagens e o resize: medidas antes de cada
   // refresh. Os stickies ficam desligados durante a medição (síncrona: não
@@ -105,7 +120,7 @@ export function iniciarPilha() {
   const html = document.documentElement;
   ScrollTrigger.addEventListener('refreshInit', () => {
     html.classList.add('pilha-medindo');
-    medirAlturas(paineis);
+    medirAlturas(paineis, rodape);
   });
   ScrollTrigger.addEventListener('refresh', () => html.classList.remove('pilha-medindo'));
 
@@ -114,6 +129,6 @@ export function iniciarPilha() {
   cuidarDoFoco();
   // Atualiza se algum painel mudar de altura (FAQ abrindo, por exemplo). A
   // variável só muda o "top" do sticky, não o tamanho: não realimenta o observador.
-  const observador = new ResizeObserver(() => medirAlturas(paineis));
+  const observador = new ResizeObserver(() => medirAlturas(paineis, rodape));
   paineis.forEach((painel) => observador.observe(painel));
 }

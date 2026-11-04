@@ -1,6 +1,7 @@
 <!-- Contato: chamada final grande com o botão magnético do WhatsApp (mensagem
      pré-preenchida, em src/dados/doutor.js), endereço com link para o mapa,
-     horários e Instagram. Todos os dados vêm de doutor.js. -->
+     horários, o número do WhatsApp (também um link para a conversa) e
+     Instagram. Todos os dados vêm de doutor.js. -->
 <section class="contato secao" id="contato" data-tema="escuro" data-pilha-entrada="caixa" aria-labelledby="contato-titulo" tabindex="-1">
   <div class="grade">
     <p class="contato__rotulo rotulo texto-2">Contato</p>
@@ -31,7 +32,7 @@
           {{ endereco.linha1 }}<br />
           {{ endereco.linha2 }}
         </address>
-        <a class="contato__link link-linha" href="{{ endereco.mapa }}" target="_blank" rel="noopener" data-toque-centro>
+        <a class="contato__link link-linha area-toque" href="{{ endereco.mapa }}" target="_blank" rel="noopener" data-toque-centro>
           Abrir no mapa<span class="visualmente-oculto"> (abre em nova aba)</span>
         </a>
       </div>
@@ -45,9 +46,13 @@
 
       <div class="contato__info">
         <h3 class="contato__info-titulo rotulo texto-2">WhatsApp</h3>
-        <p>{{ whatsapp.exibicao }}</p>
+        <p>
+          <a class="link-linha area-toque" href="{{ whatsapp.link }}" target="_blank" rel="noopener" data-toque-centro>
+            {{ whatsapp.exibicao }}<span class="visualmente-oculto"> no WhatsApp (abre em nova aba)</span>
+          </a>
+        </p>
         <h3 class="contato__info-titulo contato__info-titulo--segundo rotulo texto-2">Instagram</h3>
-        <a class="contato__link link-linha" href="{{ instagram.url }}" target="_blank" rel="noopener" data-toque-centro>
+        <a class="contato__link link-linha area-toque" href="{{ instagram.url }}" target="_blank" rel="noopener" data-toque-centro>
           {{ instagram.arroba }}<span class="visualmente-oculto"> (abre em nova aba)</span>
         </a>
       </div>

@@ -44,7 +44,9 @@
   gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
 }
 
-@media (min-width: 64em) {
+/* Do tablet em pé em diante (48em), os dois lado a lado: numa coluna só, cada
+   imagem 4:5 ocupava mais de uma tela. */
+@media (min-width: 48em) {
   .tratamento--rosto {
     grid-column: 1 / span 5;
   }
@@ -137,10 +139,6 @@
   padding-bottom: var(--esp-5);
 }
 
-.procedimentos__nota {
-  font-size: var(--fs-pequeno);
-}
-
 .procedimentos__lista {
   grid-column: 1 / -1;
   border-top: 1px solid var(--tema-linha);
@@ -151,7 +149,9 @@
   --miniatura: 3.5rem;
   position: relative;
   display: grid;
-  grid-template-columns: 2.25rem 1fr var(--miniatura);
+  /* minmax(0, 1fr): a coluna do nome encolhe abaixo da palavra mais longa
+     ("Bioestimulador"); o nome quebra com hífen em vez de estourar a linha. */
+  grid-template-columns: 2.25rem minmax(0, 1fr) var(--miniatura);
   align-items: baseline;
   column-gap: var(--esp-4);
   padding-block: clamp(1.4rem, 1.1rem + 1.2vw, 2.4rem);
@@ -177,11 +177,16 @@
   transition: color var(--dur-media) var(--ease-suave);
 }
 
+/* Abaixo de ~380 px a fonte acompanha a largura, para a palavra mais longa
+   ("Bioestimulador", "Harmonização") caber inteira na coluna. O hífen e a
+   quebra forçada ficam só de reserva (o Chrome no Windows não hifeniza). */
 .procedimento__nome {
   font-family: var(--fonte-titulo);
-  font-size: var(--fs-titulo-2);
+  font-size: min(var(--fs-titulo-2), 9.25vw);
   line-height: 1;
   letter-spacing: -0.02em;
+  overflow-wrap: break-word;
+  hyphens: auto;
   transition: translate var(--dur-media) var(--ease-saida);
 }
 
@@ -243,7 +248,7 @@
 @media (min-width: 48em) {
   .procedimento {
     --miniatura: 4.5rem;
-    grid-template-columns: 4rem 1fr var(--miniatura);
+    grid-template-columns: 4rem minmax(0, 1fr) var(--miniatura);
   }
 }
 
@@ -252,7 +257,7 @@
 @media (hover: hover) and (pointer: fine) {
   .procedimento {
     --deslize: 1.75rem;
-    grid-template-columns: 4rem 1fr auto;
+    grid-template-columns: 4rem minmax(0, 1fr) auto;
   }
 
   .procedimento__midia {

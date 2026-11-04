@@ -6,7 +6,10 @@
    medida com a Instrument Serif (scripts/medidas/rodape.js).
    ========================================================================== */
 
+/* Em cima, respiro entre o contato e o nome (com a entrelinha curta, as
+   letras grandes passam do alto da linha). */
 .rodape {
+  padding-top: var(--esp-6);
   padding-bottom: var(--esp-5);
   overflow: clip;
 }

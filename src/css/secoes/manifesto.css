@@ -115,36 +115,88 @@
 }
 
 /* Os números sobem num painel grafite por cima da foto (o texto pequeno não
-   pode ficar sobre a imagem). */
+   pode ficar sobre a imagem). O respiro de baixo da seção passa para o
+   painel: no .manifesto ele seria transparente e a foto de fundo reapareceria
+   numa faixa sob os números. Ele também evita que o último número seja o
+   primeiro a ser coberto quando a seção seguinte sobe. */
+.espaco--animado .manifesto {
+  padding-bottom: 0;
+}
+
 .espaco--animado .manifesto__base {
   position: relative;
   z-index: 2;
-  padding-top: var(--secao-y);
+  padding-block: var(--secao-y);
   background: var(--cor-grafite);
 }
 
-/* Posições no grid de 12 colunas, alternando os lados. */
-.espaco--animado .manifesto__foto--1 {
-  grid-column: 7 / span 5;
-}
-
-.espaco--animado .manifesto__foto--2 {
-  grid-column: 1 / span 5;
-  margin-top: 12svh;
-}
-
+/* Posições no grid de 12 colunas, alternando os lados.
+   Celular e tablet em pé: o parágrafo ocupa a largura toda, então as fotos
+   ficam pequenas, encostadas nas bordas (passando um pouco para a margem) e
+   bem espaçadas: cobrem só o começo ou o fim das linhas, uma de cada vez. */
+.espaco--animado .manifesto__foto--1,
 .espaco--animado .manifesto__foto--3 {
-  grid-column: 8 / span 5;
+  grid-column: 9 / span 4;
+  margin-right: calc(-0.5 * var(--grade-margem));
 }
 
+.espaco--animado .manifesto__foto--2,
 .espaco--animado .manifesto__foto--4 {
-  grid-column: 2 / span 4;
-  margin-top: 6svh;
+  grid-column: 1 / span 4;
+  margin-left: calc(-0.5 * var(--grade-margem));
+}
+
+@media (min-width: 48em) {
+  .espaco--animado .manifesto__fotos {
+    row-gap: 38svh;
+  }
+
+  .espaco--animado .manifesto__foto--1,
+  .espaco--animado .manifesto__foto--3 {
+    grid-column: 10 / span 3;
+  }
+
+  .espaco--animado .manifesto__foto--2,
+  .espaco--animado .manifesto__foto--4 {
+    grid-column: 1 / span 3;
+  }
+}
+
+/* Uma foto por linha da grade (sem isso, a 2 e a 3 dividiam a mesma linha e
+   passavam juntas sobre o texto). */
+/* No celular o parágrafo ocupa mais da altura da tela: mais espaço entre as
+   fotos, que sobem em ritmos diferentes e se alcançam. */
+@media (max-width: 47.999em) {
+  .espaco--animado .manifesto__fotos {
+    row-gap: 52svh;
+  }
+}
+
+@media (max-width: 63.999em) {
+  .espaco--animado .manifesto__foto--1 {
+    grid-row: 1;
+  }
+
+  .espaco--animado .manifesto__foto--2 {
+    grid-row: 2;
+  }
+
+  .espaco--animado .manifesto__foto--3 {
+    grid-row: 3;
+  }
+
+  .espaco--animado .manifesto__foto--4 {
+    grid-row: 4;
+  }
 }
 
 @media (min-width: 64em) {
   .espaco--animado .manifesto__fotos {
     row-gap: 10svh;
+  }
+
+  .espaco--animado .manifesto__foto {
+    margin-inline: 0;
   }
 
   .espaco--animado .manifesto__foto--1 {
@@ -187,12 +239,14 @@
   border-top: 1px solid var(--tema-linha);
 }
 
+/* Algarismos proporcionais: com os tabulares, o "1" estreito da Instrument
+   Serif deixava um buraco ("1 2"). */
 .numero__valor {
   font-family: var(--fonte-titulo);
   font-size: var(--fs-titulo-1);
   line-height: 1;
   letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: proportional-nums;
 }
 
 .numero__rotulo {
@@ -200,15 +254,6 @@
   padding-bottom: 0.5em;
   font-size: var(--fs-pequeno);
   color: var(--tema-texto-2);
-}
-
-.numero__rotulo .pendente {
-  margin-top: var(--esp-2);
-}
-
-.manifesto__provisorio {
-  grid-column: 1 / -1;
-  margin-top: var(--esp-6);
 }
 
 @media (min-width: 64em) {
@@ -223,13 +268,12 @@
     row-gap: var(--esp-4);
     padding-top: var(--esp-6);
   }
-
-  .manifesto__provisorio {
-    grid-column: 3 / -1;
-  }
 }
 
 /* ---- Contagem em "rolos" de dígitos (montados pelo JS) ----------------- */
+/* Cada rolo tem a largura do dígito final (contador.js): os dígitos mais
+   largos passam um pouco para o lado enquanto giram, sem corte. No fim, o JS
+   troca os rolos pelo número em texto simples. */
 .contador {
   display: inline-flex;
 }
@@ -238,6 +282,20 @@
   display: inline-block;
   height: 1em;
   overflow: hidden;
+}
+
+@supports (overflow: clip) {
+  .contador__digito {
+    overflow-x: visible;
+    overflow-y: clip;
+  }
+}
+
+/* Texto de medida (sai logo depois de medido). */
+.contador__medida {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
 }
 
 .contador__tira {

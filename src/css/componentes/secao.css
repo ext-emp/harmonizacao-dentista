@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Partes comuns das seções: respiro vertical, marca de conteúdo pendente,
+   Partes comuns das seções: respiro vertical, etiqueta de foto provisória,
    estados iniciais das revelações e molduras de parallax.
    ========================================================================== */
 
@@ -8,25 +8,10 @@
   padding-block: var(--secao-y);
 }
 
-/* ---- Conteúdo pendente ------------------------------------------------ */
-/* Tudo que depende do doutor aparece com esta etiqueta tracejada, fácil de
-   achar na revisão (e no código: busque por [CONFIRMAR]). */
-.pendente {
-  display: inline-block;
-  padding: 0.15em 0.55em 0.1em;
-  border: 1px dashed currentColor;
-  border-radius: 0.3rem;
-  font-family: var(--fonte-texto);
-  font-size: 0.6875rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.4;
-  letter-spacing: 0.06em;
-  text-transform: none;
-  white-space: nowrap;
-  vertical-align: 0.2em;
-  color: var(--tema-texto-2);
-}
+/* ---- Conteúdo provisório ---------------------------------------------- */
+/* O que depende do doutor não tem marca na tela: os dados e textos
+   fictícios estão listados em CONTEUDO-PENDENTE.md (no código, busque por
+   FICTÍCIO). */
 
 /* Etiqueta "provisório" sobre fotos que ainda vão ser trocadas. */
 .etiqueta-provisoria {

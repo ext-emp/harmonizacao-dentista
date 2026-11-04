@@ -2,10 +2,12 @@
      (que virou fundo). O parágrafo fica parado no centro da tela e as palavras
      acendem conforme o scroll, enquanto fotos do atendimento sobem por cima.
      Depois, os números com contagem animada.
-     As fotos do atendimento nunca mostram paciente nem procedimento em
-     andamento (Resolução CFO 196/2019). [CONFIRMAR] fotos reais.
-     [CONFIRMAR] os números: as três categorias são sugestões; troque o "00"
-     pelo valor real (a contagem lê o número escrito aqui) ou apague o item. -->
+     As fotos do atendimento nunca mostram procedimento em andamento (o
+     "durante", Resolução CFO 196/2019): conversa, avaliação, planejamento e
+     instrumentos. As de agora são fotos de banco (Unsplash), provisórias
+     (docs/creditos-imagens.md); paciente real só com autorização por escrito.
+     FICTÍCIO: os números. As três categorias são sugestões; troque pelo
+     valor real (a contagem lê o número escrito aqui) ou apague o item. -->
 <section class="manifesto" id="manifesto" aria-labelledby="manifesto-titulo" tabindex="-1" data-manifesto-secao>
   <div class="manifesto__cena" data-manifesto-cena>
     <div class="manifesto__palco" data-fixa>
@@ -22,16 +24,16 @@
     <!-- Fotos do atendimento (decorativas): sobem por cima do parágrafo. -->
     <ul class="manifesto__fotos grade" aria-hidden="true">
       <li class="manifesto__foto manifesto__foto--1" data-flutua="0.9">
-        <x-img src="atendimento/atendimento-01" alt="" sizes="(min-width: 64em) 22vw, 40vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
+        <x-img src="atendimento/atendimento-01" alt="" sizes="(min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
       </li>
       <li class="manifesto__foto manifesto__foto--2" data-flutua="1.15">
-        <x-img src="atendimento/atendimento-02" alt="" sizes="(min-width: 64em) 18vw, 36vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
+        <x-img src="atendimento/atendimento-02" alt="" sizes="(min-width: 64em) 14vw, (min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
       </li>
       <li class="manifesto__foto manifesto__foto--3" data-flutua="0.8">
-        <x-img src="atendimento/atendimento-03" alt="" sizes="(min-width: 64em) 20vw, 40vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
+        <x-img src="atendimento/atendimento-03" alt="" sizes="(min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
       </li>
       <li class="manifesto__foto manifesto__foto--4" data-flutua="1.05">
-        <x-img src="atendimento/atendimento-04" alt="" sizes="(min-width: 64em) 16vw, 34vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
+        <x-img src="atendimento/atendimento-04" alt="" sizes="(min-width: 64em) 14vw, (min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
       </li>
     </ul>
   </div>
@@ -39,18 +41,17 @@
   <div class="grade manifesto__base">
     <ul class="numeros" data-numeros data-revelar="lista">
       <li class="numero">
-        <span class="numero__valor" data-contar>00</span>
-        <span class="numero__rotulo">anos de profissão <span class="pendente">[CONFIRMAR]</span></span>
+        <span class="numero__valor" data-contar>12</span>
+        <span class="numero__rotulo">anos de profissão</span>
       </li>
       <li class="numero">
-        <span class="numero__valor" data-contar>00</span>
-        <span class="numero__rotulo">anos de dedicação à harmonização orofacial <span class="pendente">[CONFIRMAR]</span></span>
+        <span class="numero__valor" data-contar>07</span>
+        <span class="numero__rotulo">anos de dedicação à harmonização orofacial</span>
       </li>
       <li class="numero">
-        <span class="numero__valor" data-contar>00</span>
-        <span class="numero__rotulo">cursos de formação complementar <span class="pendente">[CONFIRMAR]</span></span>
+        <span class="numero__valor" data-contar>15</span>
+        <span class="numero__rotulo">cursos de formação complementar</span>
       </li>
     </ul>
-    <p class="manifesto__provisorio texto-2"><span class="pendente">Fotos do atendimento provisórias [CONFIRMAR]</span></p>
   </div>
 </section>

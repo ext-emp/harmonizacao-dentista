@@ -19,12 +19,19 @@ export function iniciarHeader() {
 
   const menuAberto = () => header.classList.contains('header--menu-aberto');
 
+  // Sem fundo só no topo da página. Lido da rolagem da janela e conferido de
+  // novo no fim de cada refresh: durante o refresh (ao abrir uma pergunta do
+  // FAQ, por exemplo) o gatilho chega a ver a rolagem em 0, e o header ficava
+  // transparente no meio da página.
+  const marcarTopo = () => header.classList.toggle('header--topo', window.scrollY < TOLERANCIA);
+  ScrollTrigger.addEventListener('refresh', marcarTopo);
+
   ScrollTrigger.create({
     start: 0,
     end: 'max',
     onUpdate(self) {
       const y = self.scroll();
-      header.classList.toggle('header--topo', y < TOLERANCIA);
+      marcarTopo();
 
       // Menu aberto ou foco do teclado no header: fica sempre visível.
       if (menuAberto() || header.contains(document.activeElement)) {

@@ -15,12 +15,12 @@ Cirurgião-dentista em Novo Hamburgo/RS. Focos: harmonização orofacial com nat
 - `src/dados/doutor.js`: nome, CRO, WhatsApp e mensagem, endereço e mapa, Instagram, horários. Único lugar desses dados.
 - `src/dados/casos.js`: lista única dos antes e depois.
 - `fotos/`: originais com nomes padronizados. `npm run imagens` gera AVIF/WebP com srcset em `public/img/`.
-- Origem de cada imagem provisória: `docs/creditos-imagens.md`. Desde 02/11/2026, a pedido do usuário, várias provisórias são fotos de banco do Unsplash (espaço, manifesto, blocos de tratamento) e o Sobre usa o retrato de banco do hero: só como provisórias, com etiqueta na tela e crédito registrado, nunca como resultado e nunca do "durante".
+- Origem de cada imagem provisória: `docs/creditos-imagens.md`. Desde 02/11/2026, a pedido do usuário, várias provisórias são fotos de banco do Unsplash (espaço, manifesto, blocos de tratamento e, desde 09/11/2026, a lista de procedimentos) e o Sobre usa o retrato de banco do hero: só como provisórias, com etiqueta na tela e crédito registrado, nunca como resultado e nunca do "durante".
 
 ## Regras do CFO (Resolução CFO 196/2019), obrigatórias
 
 - Site em nome do Dr. Henrique, pessoa física. Nome e CRO no rodapé.
-- Antes e depois só de casos dele, com nome e CRO sobre a imagem e autorização por escrito do paciente. Nada de fotos do "durante". Banco de imagens nunca como resultado.
+- Antes e depois só de casos dele, com nome e CRO sobre a imagem e autorização por escrito do paciente. Nada de fotos do "durante". Banco de imagens nunca como resultado. **Única exceção, só na demonstração (pedido do usuário, 10/11/2026):** os seis casos de `casos.js` hoje são fotos de banco do Unsplash, marcados `provisorio: true`; o build para se o site for declarado real (`ficticio: false`) com eles ainda lá. Não fabricar "antes" editando uma foto de "depois".
 - Proibido: preços, promoções, promessa ou garantia de resultado, superlativos ("o melhor", "referência", "nº 1"), comparação com outros profissionais.
 - "Cirurgião-dentista", nunca "especialista", até a especialidade ser confirmada no CFO.
 - Sem depoimentos de pacientes até confirmação com o CRO-RS.

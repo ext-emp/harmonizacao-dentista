@@ -124,6 +124,17 @@ export function casos(c) {
   const pad = (n) => String(n).padStart(2, '0');
   const tamanhos = '(min-width: 64em) 31vw, 82vw';
 
+  // Caso provisório = foto de banco só para a demonstração (docs/creditos-imagens.md).
+  // Vale enquanto o site for fictício; com ficticio: false (site real), o build para.
+  const provisorios = c.casos.filter((caso) => caso.provisorio).map((caso) => caso.id);
+  if (provisorios.length && c.doutor?.ficticio === false) {
+    throw new Error(
+      `[casos] ${provisorios.join(', ')}: ainda são provisórios (foto de banco), mas o site já está marcado como real (ficticio: false). ` +
+        'Foto de banco nunca pode ir ao ar como resultado do doutor (Resolução CFO 196/2019): troque pelos casos dele, ' +
+        'com autorização por escrito do paciente, e marque provisorio: false e autorizacaoPorEscrito: true em src/dados/casos.js.',
+    );
+  }
+
   return c.casos
     .map((caso, i) => {
       if (!caso.provisorio && caso.autorizacaoPorEscrito !== true) {

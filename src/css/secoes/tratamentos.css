@@ -32,7 +32,17 @@
 }
 
 /* ---- Blocos ------------------------------------------------------------ */
+/* --tratamento-foto é a altura da foto (4:5).
+   Celular: foto em cima e texto embaixo, os dois cabendo juntos numa tela. O
+   texto é o nome (--fs-titulo-1) e mais uns 16,5rem: número, área,
+   descrição, link e o vão até a foto.
+   Do tablet em pé em diante (48em): cada bloco numa linha, a foto grande
+   (até a altura da tela, menos o header) e o texto ao lado dela, no meio da
+   altura; o Sorriso espelha o Rosto, em zigue-zague (pedido do usuário,
+   10/11/2026; antes, os dois blocos lado a lado com fotos pequenas). */
 .tratamentos__blocos {
+  --tratamento-texto: calc(var(--fs-titulo-1) * 0.98 + 16.5rem);
+  --tratamento-foto: clamp(15rem, 100svh - var(--tratamento-texto) - 2 * var(--esp-6), 36rem);
   row-gap: clamp(4.5rem, 3rem + 5vw, 8rem);
 }
 
@@ -44,21 +54,46 @@
   gap: clamp(1.5rem, 1rem + 1.5vw, 2.5rem);
 }
 
-/* Do tablet em pé em diante (48em), os dois lado a lado: numa coluna só, cada
-   imagem 4:5 ocupava mais de uma tela. */
 @media (min-width: 48em) {
-  .tratamento--rosto {
-    grid-column: 1 / span 5;
+  /* container-type: a largura útil do grid (unidade cqi) limita a foto sem
+     depender da largura do bloco, que se ajusta ao conteúdo. */
+  .tratamentos__blocos {
+    --tratamento-foto: clamp(20rem, 100svh - var(--altura-header) - 2 * var(--esp-6), 56rem);
+    container-type: inline-size;
+    row-gap: clamp(5rem, 3rem + 6vw, 10rem);
   }
 
-  /* O segundo bloco desce: os dois formam uma escada, não uma grade. */
+  /* Foto e texto juntos, a um vão fixo, e o conjunto no centro da tela, com
+     a sobra dividida pelos dois lados (pedido do usuário, 10/11/2026; antes,
+     a foto encostava na margem e a sobra ficava toda do outro lado). O bloco
+     tem só a largura do conjunto: o link, o cursor "Ver" e o tilt valem só
+     sobre ele. A foto ocupa no máximo metade da largura útil (50cqi). */
+  .tratamento {
+    --tratamento-midia-max: 50cqi;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: clamp(2.5rem, 1rem + 6vw, 9rem);
+  }
+
   .tratamento--sorriso {
-    grid-column: 8 / span 5;
-    margin-top: clamp(8rem, 2rem + 12vw, 17rem);
+    flex-direction: row-reverse;
+  }
+
+  .tratamento__midia {
+    flex: none;
+  }
+
+  /* Na largura do próprio texto (a descrição para em 38ch): sem sobra do
+     lado de fora, que tiraria o conjunto do centro. */
+  .tratamento__texto {
+    flex: 0 1 auto;
+    max-width: 34rem;
   }
 }
 
 .tratamento__midia {
+  width: min(var(--tratamento-midia-max, 100%), var(--tratamento-foto) * 0.8);
   transform-style: preserve-3d;
   will-change: transform;
 }

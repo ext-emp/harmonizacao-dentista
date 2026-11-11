@@ -30,7 +30,6 @@ const ALVOS = [
   // enquanto o manifesto passa); sem movimento, a galeria é uma faixa e a
   // primeira foto é a que aparece.
   REDUZIDO ? { nome: 'espaco-galeria', seletor: '.espaco__foto:first-child' } : { nome: 'espaco-fundo', seletor: '.espaco__foto--fundo' },
-  { nome: 'manifesto-foto', seletor: '.manifesto__foto--1' },
 ];
 
 const VIEWPORTS = {

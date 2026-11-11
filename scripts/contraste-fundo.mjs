@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Contraste WCAG do texto que fica sobre a foto de fundo (manifesto dentro do
-// "O espaço"): esconde o texto e as fotos que flutuam, fotografa o fundo
+// "O espaço"): esconde o texto, fotografa o fundo
 // atrás de cada linha e compara a cor do texto com o pixel mais claro dali
 // (percentil 98, para ignorar o ruído da granulação). Pior caso de verdade.
 // Uso: node scripts/contraste-fundo.mjs [--vp desktop,mobile]
@@ -49,15 +49,16 @@ for (const nome of VPS) {
   await pagina.waitForTimeout(3500);
 
   for (const [etapa, ancora] of [
-    ['parágrafo no centro', '.manifesto__cena'],
+    ['parágrafo no centro', '.manifesto__texto'],
     ['números', '.manifesto__base'],
   ]) {
-    // Leva o trecho até a tela (o palco do parágrafo fica fixo no meio).
+    // Leva o trecho até a tela: o parágrafo no meio dela (lado a lado, é onde
+    // o palco para; em sequência, ele passa por ali rolando com a página).
     await pagina.evaluate((s) => {
       const html = document.documentElement;
       html.classList.add('pilha-medindo');
-      const el = document.querySelector(s);
-      const y = el.getBoundingClientRect().top + scrollY + (s === '.manifesto__cena' ? innerHeight * 0.6 : -innerHeight * 0.25);
+      const r = document.querySelector(s).getBoundingClientRect();
+      const y = r.top + scrollY + (s === '.manifesto__texto' ? -(innerHeight - r.height) / 2 : -innerHeight * 0.25);
       html.classList.remove('pilha-medindo');
       window.__lenis ? window.__lenis.scrollTo(y, { immediate: true, force: true }) : scrollTo(0, y);
     }, ancora);
@@ -66,7 +67,8 @@ for (const nome of VPS) {
     // Cores e caixas das linhas de cada texto; depois esconde tudo para fotografar o fundo.
     const medidas = await pagina.evaluate((textos) => {
       // A seção seguinte sobe por cima do espaço: o que fica abaixo da borda
-      // dela está coberto e não conta.
+      // dela está coberto e não conta (1 px de folga: a borda fracionária,
+      // arredondada no recorte, entraria como uma faixa do fundo claro).
       const borda = Math.min(
         innerHeight,
         ...[...document.querySelectorAll('main > section:not(.espaco)')].map((s) => s.getBoundingClientRect().top).filter((t) => t > 0),
@@ -75,7 +77,7 @@ for (const nome of VPS) {
         const r = document.createRange();
         r.selectNodeContents(el);
         return [...r.getClientRects()]
-          .map((c) => ({ x: Math.max(0, c.left), y: Math.max(0, c.top), w: Math.min(innerWidth, c.right) - Math.max(0, c.left), h: Math.min(borda, c.bottom) - Math.max(0, c.top) }))
+          .map((c) => ({ x: Math.max(0, c.left), y: Math.max(0, c.top), w: Math.min(innerWidth, c.right) - Math.max(0, c.left), h: Math.min(Math.floor(borda) - 1, c.bottom) - Math.max(0, c.top) }))
           .filter((c) => c.w > 4 && c.h > 4);
       };
       const saida = textos.map((t) => {
@@ -92,7 +94,7 @@ for (const nome of VPS) {
         return { ...t, cor, caixas: els.flatMap(linhas) };
       });
       const estilo = document.createElement('style');
-      estilo.textContent = '.manifesto *{color:transparent!important;border-color:transparent!important}.manifesto__fotos,.pendente{visibility:hidden!important}';
+      estilo.textContent = '.manifesto *{color:transparent!important;border-color:transparent!important}.pendente{visibility:hidden!important}';
       document.head.append(estilo);
       return saida;
     }, TEXTOS);

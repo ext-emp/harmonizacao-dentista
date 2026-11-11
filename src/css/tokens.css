@@ -35,6 +35,13 @@
      do apagado normal, para passar de 3:1 mesmo sobre a parte mais clara da
      foto (a poltrona). Ainda 3:1 abaixo do aceso: a diferença continua clara. */
   --cor-manifesto-apagado-foto: #99928a;
+  /* Hero no celular: véus sobre a foto do consultório. "Foto" escurece a foto
+     inteira; "topo" dá contraste ao header transparente; "texto" é o mínimo
+     atrás do rótulo (texto 2 escuro sobre o jaleco branco: 4,5:1 a partir de
+     0,85). */
+  --cor-hero-veu-foto: rgb(22 21 19 / 0.28);
+  --cor-hero-veu-topo: rgb(22 21 19 / 0.55);
+  --cor-hero-veu-texto: rgb(22 21 19 / 0.88);
 
   /* ---- Tema (claro por padrão; [data-tema="escuro"] troca) --------------- */
   --tema-fundo: var(--cor-porcelana);

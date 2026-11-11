@@ -1,19 +1,29 @@
 <!-- Hero: título em serifa revelado linha a linha, subtítulo com os dois
-     focos e a cidade, botão principal e indicação de scroll. À direita, o
-     retrato do doutor recortado (sem fundo). A pérola fica no pé do hero, no
-     espaço livre entre o texto e o retrato; com o scroll, o "O espaço" sobe
-     por cima do hero e a pérola pousa na abertura dele
-     (src/js/modulos/perola-viagem.js).
-     Texto, retrato e pérola ficam em áreas separadas do grid: um nunca cobre o outro. -->
-<section class="hero" id="inicio" data-tema="claro" data-pilha aria-labelledby="hero-titulo" tabindex="-1" data-hero>
+     focos e a cidade, botão principal e o retrato do doutor recortado (sem
+     fundo). Com o scroll, o "O espaço" sobe por cima do hero e a pérola pousa
+     na abertura dele (src/js/modulos/perola-viagem.js).
+     Na tela larga: hero claro, retrato à direita, indicação de scroll e a
+     pérola no espaço livre entre o texto e o retrato. Texto, retrato e pérola
+     ficam em áreas separadas do grid: um nunca cobre o outro.
+     No celular e no tablet em pé, o hero é escuro (data-tema-celular): foto
+     do consultório de fundo, o retrato por cima, a pérola ao lado da cabeça e
+     o texto claro embaixo, sobre um véu escuro que cobre o jaleco. O rosto
+     fica sempre acima do texto. -->
+<section class="hero" id="inicio" data-tema="claro" data-tema-celular="escuro" data-pilha aria-labelledby="hero-titulo" tabindex="-1" data-hero>
+  <!-- Fundo do celular (só no CSS do celular, então a tela larga não baixa a
+       imagem): fotos/hero/fundo-celular.jpg é um recorte em pé de
+       fotos/espaco/espaco-01.jpg, com um leve desfoque. PROVISÓRIO: com a foto
+       do doutor no consultório, ela vira o fundo e o retrato recortado sai. -->
+  <div class="hero__fundo" aria-hidden="true"></div>
   <div class="hero__grade grade">
     <!-- PROVISÓRIO: fotos/hero/doutor-capa.png é uma foto de banco (Unsplash)
          de um modelo, com o fundo recortado aqui (docs/creditos-imagens.md).
-         Não é o doutor: não pode ir ao ar como retrato dele.
+         Não é o doutor: não pode ir ao ar como retrato dele (e não tem marca
+         na tela: está na lista do CONTEUDO-PENDENTE.md).
          Ao trocar pela foto dele recortada (PNG transparente, 4:5, 1600 × 2000):
-         troque o alt por "Retrato do Dr. Henrique Martins" e apague a marca
-         "Retrato provisório". A classe hero__composicao--sangria encosta a foto
-         na borda direita da tela, para fotos cortadas no ombro. Esta foto não
+         troque o alt por "Retrato do Dr. Henrique Martins". A classe
+         hero__composicao--sangria encosta a foto na borda direita da tela,
+         para fotos cortadas no ombro. Esta foto não
          usa a classe: a pessoa cabe inteira na largura. -->
     <div class="hero__composicao" data-hero-composicao>
       <div class="hero__retrato" data-hero-retrato>
@@ -27,10 +37,12 @@
           fetchpriority="high"
         ></x-img>
       </div>
-      <p class="hero__provisorio rotulo" data-provisorio>Retrato provisório</p>
     </div>
 
-    <p class="hero__rotulo rotulo" data-hero-entra>{{ nomeCompleto }} · {{ doutor.profissao }}</p>
+    <!-- Véu escuro atrás do texto, só no celular: garante o contraste sobre o jaleco. -->
+    <div class="hero__veu" aria-hidden="true"></div>
+
+    <p class="hero__rotulo rotulo" data-hero-entra><span class="hero__rotulo-parte">{{ nomeCompleto }}</span><span class="hero__rotulo-ponto"> · </span><span class="hero__rotulo-parte">{{ doutor.profissao }}</span></p>
 
     <h1 class="hero__titulo titulo-display" id="hero-titulo" data-hero-titulo data-linhas>
       <span class="hero__linha">O luxo de</span>

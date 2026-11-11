@@ -6,7 +6,7 @@
 // não conta.
 // Precisa do servidor de desenvolvimento (window.__perola só existe no dev).
 // Uso: node scripts/capturar-viagem.mjs [--vp desktop,mobile,ipad-em-pe,...] [--saida capturas/viagem]
-// (sem --vp, todos: desktop em três tamanhos, quatro celulares e três iPads)
+// (sem --vp, todos: desktop em três tamanhos, cinco celulares e três iPads)
 // ---------------------------------------------------------------------------
 import { chromium } from 'playwright';
 import { mkdir } from 'node:fs/promises';
@@ -26,6 +26,8 @@ const VIEWPORTS = {
   'desktop-1920': { viewport: { width: 1920, height: 1080 } },
   'desktop-1280': { viewport: { width: 1280, height: 720 } },
   mobile: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+  // iPhone no Safari, com as barras do navegador.
+  'mobile-safari': { viewport: { width: 390, height: 664 }, isMobile: true, hasTouch: true },
   'mobile-360': { viewport: { width: 360, height: 740 }, isMobile: true, hasTouch: true },
   // Telas baixas: retrato menor em pé; deitado, retrato ao lado do texto (hero.css).
   'mobile-baixo': { viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true },
@@ -80,11 +82,18 @@ const examinar = () => {
   const [px, py] = getComputedStyle(img).objectPosition.split(' ').map((v) => parseFloat(v) / 100);
   const x0 = ri.left + (ri.width - largura) * px;
   const y0 = ri.top + (ri.height - altura) * py;
-  // Pessoa entre 0,8% e 99,4% da largura e de 6% da altura até a base
-  // (scripts/limites-alfa.mjs em fotos/hero/doutor-capa.png, retrato de
-  // 03/11/2026). Medir de novo quando a foto mudar.
-  const pessoa = doHero({ left: x0 + largura * 0.008, right: x0 + largura * 0.994, top: y0 + altura * 0.06, bottom: y0 + altura });
-  if (pessoa) alvos.push({ nome: 'retrato', c: pessoa });
+  // A pessoa em duas caixas: a cabeça, de 6% a 42,5% da altura e de 29,7% a
+  // 65,3% da largura, e o corpo, dali até a base, de 0,8% a 99,4% (no
+  // celular a pérola começa ao lado da cabeça, fora da pessoa mas dentro da
+  // caixa dela inteira). Medido no alfa de fotos/hero/doutor-capa.png
+  // (retrato de 03/11/2026, faixas de 2,5% da altura; o total sai de
+  // scripts/limites-alfa.mjs). Medir de novo quando a foto mudar.
+  const caixaDoRetrato = (x, xFim, y, yFim) =>
+    doHero({ left: x0 + largura * x, right: x0 + largura * xFim, top: y0 + altura * y, bottom: y0 + altura * yFim });
+  const cabeca = caixaDoRetrato(0.297, 0.653, 0.06, 0.425);
+  const corpo = caixaDoRetrato(0.008, 0.994, 0.425, 1);
+  if (cabeca) alvos.push({ nome: 'retrato (cabeça)', c: cabeca });
+  if (corpo) alvos.push({ nome: 'retrato (corpo)', c: corpo });
 
   const encosta = (a, b, folga = 4) =>
     a.left < b.right + folga && a.right > b.left - folga && a.top < b.bottom + folga && a.bottom > b.top - folga;

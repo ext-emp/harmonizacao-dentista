@@ -1,60 +1,4 @@
 {
-  "atendimento/atendimento-01": {
-    "largura": 960,
-    "altura": 1200,
-    "larguras": [
-      320,
-      640,
-      960
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#080808"
-  },
-  "atendimento/atendimento-02": {
-    "largura": 960,
-    "altura": 1200,
-    "larguras": [
-      320,
-      640,
-      960
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#b8b8b8"
-  },
-  "atendimento/atendimento-03": {
-    "largura": 960,
-    "altura": 1200,
-    "larguras": [
-      320,
-      640,
-      960
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#e8e8e8"
-  },
-  "atendimento/atendimento-04": {
-    "largura": 960,
-    "altura": 1200,
-    "larguras": [
-      320,
-      640,
-      960
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#b8a898"
-  },
   "casos/caso-01-antes": {
     "largura": 1080,
     "altura": 1080,
@@ -67,7 +11,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#d8a8a8"
   },
   "casos/caso-01-depois": {
     "largura": 1080,
@@ -81,7 +25,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#080808"
   },
   "casos/caso-02-antes": {
     "largura": 1080,
@@ -95,7 +39,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#182828"
   },
   "casos/caso-02-depois": {
     "largura": 1080,
@@ -109,7 +53,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#182828"
   },
   "casos/caso-03-antes": {
     "largura": 1080,
@@ -123,7 +67,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#181818"
   },
   "casos/caso-03-depois": {
     "largura": 1080,
@@ -137,7 +81,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#181818"
   },
   "casos/caso-04-antes": {
     "largura": 1080,
@@ -151,7 +95,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#883858"
   },
   "casos/caso-04-depois": {
     "largura": 1080,
@@ -165,7 +109,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#883858"
   },
   "casos/caso-05-antes": {
     "largura": 1080,
@@ -179,7 +123,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#987868"
   },
   "casos/caso-05-depois": {
     "largura": 1080,
@@ -193,7 +137,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#987868"
   },
   "casos/caso-06-antes": {
     "largura": 1080,
@@ -207,7 +151,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#d8d8c8"
   },
   "casos/caso-06-depois": {
     "largura": 1080,
@@ -221,7 +165,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#d8d8c8"
   },
   "espaco/espaco-01": {
     "largura": 2880,
@@ -316,6 +260,21 @@
     ],
     "cor": "transparent"
   },
+  "hero/fundo-celular": {
+    "largura": 1600,
+    "altura": 2133,
+    "larguras": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formatos": [
+      "avif",
+      "webp"
+    ],
+    "cor": "#a8a898"
+  },
   "hero/perola": {
     "largura": 1600,
     "altura": 1600,
@@ -342,7 +301,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#483818"
   },
   "procedimentos/clareamento-dental": {
     "largura": 640,
@@ -355,7 +314,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#f8f8f8"
   },
   "procedimentos/harmonizacao-facial": {
     "largura": 640,
@@ -368,7 +327,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8d8c8"
+    "cor": "#a8a898"
   },
   "procedimentos/lentes-de-contato-dental": {
     "largura": 640,
@@ -381,7 +340,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8e8d8"
+    "cor": "#f8f8f8"
   },
   "procedimentos/preenchimento-labial": {
     "largura": 640,
@@ -394,7 +353,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#f8e8e8"
+    "cor": "#e8c8b8"
   },
   "procedimentos/toxina-botulinica": {
     "largura": 640,
@@ -407,7 +366,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8d8d8"
+    "cor": "#b8c8c8"
   },
   "sobre/retrato": {
     "largura": 1600,

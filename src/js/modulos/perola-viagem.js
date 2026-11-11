@@ -7,13 +7,17 @@
 // Para depois do pouso ela andar com o scroll nativo (sem atraso no toque), a
 // pérola passa a morar no ponto de pouso; antes de pousar, um deslocamento a
 // leva até o lugar dela no hero. Tudo preso ao scroll, nos dois sentidos.
+// No celular (fora do layout largo) a pérola começa no alto, ao lado da
+// cabeça do retrato: ela espera parada até a borda do "O espaço" passar por
+// ela e só então desliza até o pouso, já por cima da seção escura. Assim
+// nunca passa na frente do rosto.
 // As posições vêm do CSS (.perola-lugar e .perola-pouso); aqui só se mede e
 // interpola. Com movimento reduzido (ou sem JavaScript), a pérola fica parada
 // no hero, no HTML original.
 // ---------------------------------------------------------------------------
 import { gsap, ScrollTrigger } from '../core/gsap.js';
 import { ease } from '../core/tokens.js';
-import { reduzMovimento } from '../core/ambiente.js';
+import { layoutLargo, reduzMovimento } from '../core/ambiente.js';
 
 // Fração do giro de um rolamento de verdade (distância / raio). Em 1, a
 // pérola giraria como uma bola no chão; menos que isso deixa o giro calmo.
@@ -84,13 +88,15 @@ export function iniciarViagemDaPerola() {
 
     const noHero = centroRelativo(lugar, hero);
     const noDestino = centroRelativo(pouso, destino);
+    const heroPreso = hero.classList.contains('pilha--ativa');
+    const heroSobra = Math.max(0, hero.offsetHeight - window.innerHeight);
     m = {
       inicio: gatilho.start,
       fim: gatilho.end,
       // O hero preso pela pilha só começa a ficar parado quando o pé dele
       // chega ao pé da tela (hero mais alto que a tela, em celulares baixos).
-      heroPreso: hero.classList.contains('pilha--ativa'),
-      heroSobra: Math.max(0, hero.offsetHeight - window.innerHeight),
+      heroPreso,
+      heroSobra,
       lugarX: noHero.x + noHero.esquerda,
       lugarY: noHero.y,
       pousoX: noDestino.x + noDestino.esquerda,
@@ -98,6 +104,13 @@ export function iniciarViagemDaPerola() {
       escalaInicio: quadro / caixa,
       escalaPouso: quadroPouso / caixa,
       raio: (caixa * PEROLA_NO_QUADRO) / 2,
+      // Celular: rolagem em que a borda do "O espaço" (na tela em fim - r)
+      // passa pelo alto da pérola (no hero preso, em lugarY - heroSobra).
+      esperaABorda: !layoutLargo.matches,
+      decola: Math.min(
+        Math.max(gatilho.end - (noHero.y - (heroPreso ? heroSobra : 0)) + (quadro * PEROLA_NO_QUADRO) / 2, gatilho.start),
+        gatilho.end - 1,
+      ),
     };
   }
 
@@ -113,19 +126,28 @@ export function iniciarViagemDaPerola() {
     const topoHero = m.heroPreso ? -Math.min(r, m.heroSobra) : -r;
     const partidaY = topoHero + m.lugarY;
     const chegadaY = m.fim - r + m.pousoY;
-    // Na vertical, a pérola espera no lugar dela até o pouso chegar e então
-    // sobe junto com ele: assim nunca fica para trás, por cima da frase.
-    const telaY = minimoSuave(partidaY, chegadaY, SUAVIZACAO);
+    let telaY;
+    let avanco = w;
+    if (m.esperaABorda) {
+      // Celular: parada até a borda passar por ela; depois, do lugar ao
+      // pouso, nas duas direções juntas.
+      avanco = curva(limitar((r - m.decola) / Math.max(1, m.fim - m.decola)));
+      telaY = partidaY + (chegadaY - partidaY) * avanco;
+    } else {
+      // Na vertical, a pérola espera no lugar dela até o pouso chegar e então
+      // sobe junto com ele: assim nunca fica para trás, por cima da frase.
+      telaY = minimoSuave(partidaY, chegadaY, SUAVIZACAO);
+    }
     // A pérola mora no pouso: o deslocamento é o que falta para ela estar ali.
-    const x = (m.lugarX - m.pousoX) * (1 - w);
+    const x = (m.lugarX - m.pousoX) * (1 - avanco);
     const y = telaY - chegadaY;
-    const escala = m.escalaInicio + (m.escalaPouso - m.escalaInicio) * w;
+    const escala = m.escalaInicio + (m.escalaPouso - m.escalaInicio) * avanco;
     definirX(x);
     definirY(y);
     definirEscalaX(escala);
     definirEscalaY(escala);
     // Rola pelo caminho feito na tela: para o lado gira em y; subindo, em x.
-    const andouX = (m.pousoX - m.lugarX) * w;
+    const andouX = (m.pousoX - m.lugarX) * avanco;
     const andouY = telaY - partidaY;
     giro = { x: (andouY / m.raio) * ROLAMENTO, y: (andouX / m.raio) * ROLAMENTO, progresso: p };
     perola3d?.definirGiro(giro);

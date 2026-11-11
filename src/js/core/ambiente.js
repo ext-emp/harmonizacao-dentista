@@ -7,5 +7,11 @@ export const temMouse = window.matchMedia('(hover: hover) and (pointer: fine)').
 // Sem scroll suave, parallax ou animações longas.
 export const reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Layout da tela larga (tela larga e deitada, e celular deitado): a mesma
+// condição do CSS do hero e da pérola. Fora dela, o hero é escuro.
+export const layoutLargo = window.matchMedia(
+  '(min-width: 64em) and (orientation: landscape), (min-width: 40em) and (orientation: landscape) and (max-height: 31.25em)',
+);
+
 // A rede de segurança do <head> desistiu das animações (script atrasou demais).
 export const semAnimacao = () => document.documentElement.classList.contains('sem-animacao');

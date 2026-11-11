@@ -2,9 +2,8 @@
      tilt 3D no hover; no toque, uma rotação leve presa ao scroll) e a lista
      numerada dos procedimentos (o texto desliza e uma imagem segue o cursor;
      no toque, a imagem aparece na própria linha quando ela passa pelo centro).
-     Os dois blocos usam fotos de banco (Unsplash), provisórias e só
-     ilustrativas: nunca resultados (docs/creditos-imagens.md). As imagens da
-     lista ainda são naturezas-mortas renderizadas. -->
+     Os dois blocos e a lista usam fotos de banco (Unsplash), provisórias e só
+     ilustrativas: nunca resultados nem o "durante" (docs/creditos-imagens.md). -->
 <section class="tratamentos secao" id="tratamentos" data-tema="claro" data-pilha aria-labelledby="tratamentos-titulo" tabindex="-1">
   <div class="grade tratamentos__cabecalho">
     <p class="tratamentos__rotulo rotulo texto-2">Tratamentos</p>
@@ -25,7 +24,7 @@
             <x-img
               src="tratamentos/rosto"
               alt=""
-              sizes="(min-width: 48em) 40vw, 92vw"
+              sizes="(min-width: 48em) min(46vw, 45rem), 92vw"
               class="tratamento__img"
               classe-picture="tratamento__picture"
             ></x-img>
@@ -53,7 +52,7 @@
             <x-img
               src="tratamentos/sorriso"
               alt=""
-              sizes="(min-width: 48em) 40vw, 92vw"
+              sizes="(min-width: 48em) min(46vw, 45rem), 92vw"
               class="tratamento__img"
               classe-picture="tratamento__picture"
             ></x-img>
@@ -80,7 +79,8 @@
     </div>
 
     <!-- FICTÍCIO: lista provisória de tratamentos (a final vem do doutor). Imagem de cada linha:
-         fotos/procedimentos/<nome>.jpg (4:5). -->
+         fotos/procedimentos/<nome>.jpg (4:5), hoje uma foto de banco ilustrativa do tipo de
+         tratamento (sem paciente sendo tratado e sem antes e depois). -->
     <ol class="procedimentos__lista" data-procedimentos data-revelar="lista">
       <li class="procedimento" data-procedimento data-toque-centro="linha">
         <span class="procedimento__numero rotulo" aria-hidden="true">01</span>

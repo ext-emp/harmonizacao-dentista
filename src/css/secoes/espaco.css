@@ -28,6 +28,26 @@
   }
 }
 
+/* Fio claro no topo. No celular e no tablet em pé o hero também é escuro
+   (hero.css): sem o fio, a borda do "O espaço" subindo por cima dele não
+   aparecia, e parecia um corte no meio do título. Na tela larga o hero é
+   claro e a borda já se vê. */
+.espaco::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 1px;
+  background: var(--cor-linha-escura);
+  pointer-events: none;
+}
+
+@media (min-width: 64em) and (orientation: landscape), (min-width: 40em) and (orientation: landscape) and (max-height: 31.25em) {
+  .espaco::before {
+    display: none;
+  }
+}
+
 /* ---- Abertura ----------------------------------------------------------- */
 .espaco__abertura {
   position: relative;
@@ -115,12 +135,6 @@
   display: none;
 }
 
-.espaco__provisorio {
-  position: absolute;
-  top: var(--esp-4);
-  right: var(--grade-margem);
-}
-
 /* ---- Galeria animada (só com JavaScript e movimento liberado) ----------- */
 .espaco--animado .espaco__palco {
   position: sticky;
@@ -184,11 +198,4 @@
   display: block;
   background: var(--cor-veu-fundo);
   opacity: 0;
-}
-
-.espaco--animado .espaco__provisorio {
-  top: auto;
-  bottom: var(--esp-6);
-  right: auto;
-  left: var(--grade-margem);
 }

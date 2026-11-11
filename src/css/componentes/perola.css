@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Pérola 3D. Começa no pé do hero, no espaço livre entre o texto e o
-   retrato. Enquanto o "O espaço" sobe por cima do hero, ela fica onde está,
+   Pérola 3D. Começa no hero: no celular, ao lado da cabeça do retrato; na
+   tela larga, no espaço livre entre o texto e o retrato. Enquanto o
+   "O espaço" sobe por cima do hero, ela fica onde está,
    depois sobe com ele e pousa acima da frase de abertura
    (src/js/modulos/perola-viagem.js).
      .perola-lugar   ponto de partida (uma área do grid do hero)
@@ -13,9 +14,8 @@
    ========================================================================== */
 
 :root {
-  /* Celular: a pérola cabe entre o botão (uns 216 px) e o "Rolar". Em telas
-     estreitas o quadro encolhe para não encostar no botão. */
-  --perola-quadro: clamp(4rem, (100vw - 18.8rem) / 0.65, 7rem);
+  /* Celular: ao lado da cabeça, no canto de cima à direita do retrato. */
+  --perola-quadro: clamp(5.5rem, 26vw, 9rem);
   /* Na abertura do "O espaço" ela chega um pouco maior. */
   --perola-quadro-pouso: 9rem;
   /* Altura do centro do pouso na abertura (fração da tela). */
@@ -34,28 +34,21 @@
 }
 
 /* ---- Partida (no hero) ------------------------------------------------ */
-/* Celular: na linha do botão, logo à esquerda do "Rolar". A margem põe a
-   borda da pérola (não a do quadro) a uns 14 px do "Rolar". */
+/* Celular: na mesma área do grid do retrato (hero.css), encostada à direita
+   e no alto. Ali a foto só tem fundo: a cabeça fica no meio e os ombros
+   começam a uns 42% da altura do retrato. O centro da pérola fica a 18% da
+   altura dele (--retrato-l vem do hero). */
 .perola-lugar {
   position: relative;
+  z-index: 3;
   grid-column: 1 / -1;
-  grid-row: 6;
+  grid-row: 2;
   justify-self: end;
   align-self: start;
   width: var(--perola-quadro);
-  /* Mesma margem e altura do botão (.hero__acoes): o centro da pérola fica
-     na linha dele. */
-  height: 3.375rem;
-  margin-top: var(--esp-6);
-  margin-right: calc(1.95rem - var(--perola-quadro) * 0.175);
+  height: var(--perola-quadro);
+  margin-top: max(0px, var(--retrato-l) * 0.225 - var(--perola-quadro) / 2);
   pointer-events: none;
-}
-
-/* Celular em pé e baixo: o botão sobe (hero.css) e a pérola acompanha. */
-@media (orientation: portrait) and (max-height: 47.5em) {
-  .perola-lugar {
-    margin-top: var(--esp-5);
-  }
 }
 
 /* Tela larga e deitada: nas colunas 5 e 6, ao lado do subtítulo e do botão. */

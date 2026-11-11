@@ -1,19 +1,39 @@
 /* ==========================================================================
-   Hero. Celular e tablet em pé: retrato no alto, texto embaixo. Tela larga
-   e deitada: texto nas colunas 1 a 7 e o retrato nas colunas 8 a 12, apoiado
-   na base. (Num iPad Pro em pé, com 1024 px, o layout deitado deixava metade
-   da tela vazia em cima.) Tudo no fluxo do grid: o texto nunca passa por
-   cima da pessoa. A pérola tem CSS próprio (componentes/perola.css), com a
-   mesma condição.
-   Telas baixas: no celular em pé com até 760 px de altura (iPhone SE, ou
-   qualquer celular com as barras do navegador), o retrato encolhe para o
-   botão caber na primeira tela; no celular deitado, o layout é o da tela
-   larga (retrato ao lado do texto), com o título limitado pela altura.
+   Hero. Celular e tablet em pé: hero escuro, com a foto do consultório de
+   fundo, o retrato por cima e o texto claro embaixo, sobre um véu que cobre
+   o jaleco. O rosto fica sempre acima do texto: o retrato está no fluxo do
+   grid, logo acima do rótulo, e só a parte de baixo dele (do pescoço para
+   baixo) passa por trás do véu. A sobra de altura fica acima do retrato.
+   Tela larga e deitada: hero claro, texto nas colunas 1 a 7 e o retrato nas
+   colunas 8 a 12, apoiado na base, sem nada por cima da pessoa. (Num iPad
+   Pro em pé, com 1024 px, o layout deitado deixava metade da tela vazia em
+   cima.) A pérola tem CSS próprio (componentes/perola.css), com a mesma
+   condição.
+   O botão cabe sempre na primeira tela: o retrato encolhe pela altura
+   (--retrato-l). No celular deitado, o layout é o da tela larga (retrato ao
+   lado do texto), com o título limitado pela altura.
    ========================================================================== */
 
 .hero {
   /* Quanto o retrato passa da borda do grid para encostar na borda da tela. */
   --sangria: calc(var(--grade-margem) + max(0px, (100vw - var(--grade-max)) / 2));
+  /* Celular: altura do texto, do rótulo ao pé do hero (medida com
+     scripts/testar-hero.mjs: duas linhas de título mais o resto, que cresce
+     um pouco com a largura), e largura do retrato. O retrato tem 1,25 × a
+     largura de altura e só 0,62 dessa altura (0,775 × a largura) fica acima
+     do rótulo: o resto passa por trás do véu. */
+  --hero-titulo: var(--fs-display);
+  --hero-texto: calc(var(--hero-titulo) * 1.8 + 14.75rem + 6.3vw + var(--hero-texto-extra, 0rem));
+  --retrato-l: clamp(9rem, (100svh - var(--altura-header) - var(--hero-texto)) / 0.775, min(104vw, 44rem));
+  /* Celular: tema escuro. O atributo data-tema-celular avisa o header.js. */
+  --tema-fundo: var(--cor-grafite);
+  --tema-superficie: var(--cor-grafite-2);
+  --tema-texto: var(--cor-porcelana);
+  --tema-texto-2: var(--cor-texto-2-escuro);
+  --tema-linha: var(--cor-linha-escura);
+  --tema-foco: var(--cor-champagne);
+  --tema-botao-fundo: var(--cor-porcelana);
+  --tema-botao-texto: var(--cor-grafite);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -22,9 +42,31 @@
   overflow-x: clip;
 }
 
+/* Foto do consultório, desfocada, com dois véus: um leve na foto inteira e
+   um no alto, para o header transparente. Só no celular (na tela larga a
+   imagem nem é baixada). */
+.hero__fundo {
+  position: absolute;
+  inset: 0;
+  background-color: var(--cor-grafite);
+  background-image:
+    linear-gradient(to bottom, var(--cor-hero-veu-topo), transparent 9.5rem),
+    linear-gradient(var(--cor-hero-veu-foto), var(--cor-hero-veu-foto)),
+    url('/img/hero/fundo-celular-1200.webp');
+  background-image:
+    linear-gradient(to bottom, var(--cor-hero-veu-topo), transparent 9.5rem),
+    linear-gradient(var(--cor-hero-veu-foto), var(--cor-hero-veu-foto)),
+    image-set(url('/img/hero/fundo-celular-1200.avif') type('image/avif'), url('/img/hero/fundo-celular-1200.webp') type('image/webp'));
+  background-position: 0 0, 0 0, 30% 50%;
+  background-size: auto, auto, cover;
+  background-repeat: no-repeat;
+}
+
 .hero__grade {
+  position: relative;
+  z-index: 1;
   flex: 1;
-  grid-template-rows: auto 1fr auto auto auto auto;
+  grid-template-rows: 1fr auto auto auto auto auto;
   padding-bottom: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
 }
 
@@ -32,11 +74,12 @@
 .hero__composicao {
   position: relative;
   grid-column: 1 / -1;
-  grid-row: 1;
+  grid-row: 2;
   justify-self: center;
-  width: min(74vw, 33.6svh);
+  width: var(--retrato-l);
   aspect-ratio: 4 / 5;
-  margin-top: 1svh;
+  /* Do pescoço para baixo, o retrato passa por trás do rótulo e do véu. */
+  margin-bottom: calc(var(--retrato-l) * -0.475);
 }
 
 /* Foto cortada no ombro: o retrato encosta na borda direita da tela, para
@@ -62,7 +105,7 @@
 .hero__retrato-img {
   object-fit: contain;
   object-position: 50% 100%;
-  /* No celular o retrato fica solto acima do texto: a base some em degradê. */
+  /* No celular a base some em degradê, por trás do véu. */
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
   mask-image: linear-gradient(to bottom, #000 70%, transparent 99%);
 }
@@ -71,32 +114,45 @@
   object-position: 100% 100%;
 }
 
-.hero__composicao--sangria .hero__provisorio {
-  right: var(--sangria);
-}
-
-/* Marca de provisório (some quando a foto definitiva entrar). Numa linha só,
-   mesmo com o retrato estreito das telas baixas. */
-.hero__provisorio {
-  position: absolute;
+/* ---- Véu atrás do texto (celular) --------------------------------------- */
+/* Começa transparente na altura do queixo e chega a --cor-hero-veu-texto no
+   topo do rótulo; daí para baixo, grafite. Vai de borda a borda da tela e
+   até o pé do hero. */
+.hero__veu {
+  --rampa: calc(var(--retrato-l) * 0.2125);
+  position: relative;
   z-index: 2;
-  top: 0;
-  right: 0;
-  padding: 0.35rem 0.7rem;
-  border-radius: var(--raio-pilula);
-  background: var(--cor-porcelana);
-  color: var(--cor-texto-2-claro);
-  font-size: 0.625rem;
-  white-space: nowrap;
+  grid-column: 1 / -1;
+  grid-row: 3 / -1;
+  margin: calc(-1 * var(--rampa)) calc(-1 * var(--grade-margem)) calc(-1 * clamp(1.75rem, 1rem + 2.4vw, 3.25rem));
+  background: linear-gradient(to bottom, transparent, var(--cor-hero-veu-texto) var(--rampa), var(--cor-grafite) calc(var(--rampa) + 6rem));
+  pointer-events: none;
 }
 
 /* ---- Texto ------------------------------------------------------------- */
+.hero__rotulo,
+.hero__titulo,
+.hero__subtitulo,
+.hero__acoes {
+  position: relative;
+  z-index: 3;
+}
+
 .hero__rotulo {
   grid-column: 1 / -1;
   grid-row: 3;
-  margin-top: var(--esp-5);
   margin-bottom: clamp(1rem, 0.8rem + 1vw, 2rem);
   color: var(--tema-texto-2);
+}
+
+/* No celular, nome e profissão em duas linhas (numa só, a linha quebrava no
+   meio da profissão). */
+.hero__rotulo-parte {
+  display: block;
+}
+
+.hero__rotulo-ponto {
+  display: none;
 }
 
 .hero__titulo {
@@ -116,41 +172,39 @@
   color: var(--tema-texto-2);
 }
 
+/* No celular a cidade segue na mesma linha (a última linha do subtítulo é
+   curta), sem quebrar no meio. */
 .hero__cidade {
-  display: block;
-  margin-top: var(--esp-2);
   color: var(--tema-texto);
+  white-space: nowrap;
 }
 
+/* No celular, só o botão, centralizado. */
 .hero__acoes {
-  grid-column: 1 / span 10;
+  grid-column: 1 / -1;
   grid-row: 6;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: var(--esp-3) var(--esp-5);
-  margin-top: var(--esp-6);
+  margin-top: var(--esp-5);
 }
 
+/* "Atendimento pelo WhatsApp": só na tela larga, ao lado do botão. No
+   celular o "pelo WhatsApp" fica no nome do botão para leitores de tela. */
 .hero__nota {
+  display: none;
   font-size: var(--fs-pequeno);
 }
 
-/* Indicação de scroll: no celular, ao lado do botão. */
+/* Indicação de scroll: só na tela larga. */
 .hero__rolar {
-  grid-column: 11 / -1;
-  grid-row: 6;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   gap: var(--esp-3);
-  justify-self: end;
-  align-self: end;
   color: var(--tema-texto-2);
-}
-
-.hero__rolar-texto {
-  writing-mode: vertical-rl;
 }
 
 .hero__rolar-trilho {
@@ -182,22 +236,44 @@
 }
 
 /* ---- Celular em pé e baixo ---------------------------------------------- */
+/* (iPhone SE, ou qualquer celular com as barras do navegador.) O título
+   encolhe um pouco pela altura, para sobrar espaço para o retrato. */
 @media (orientation: portrait) and (max-height: 47.5em) {
-  .hero__composicao {
-    width: min(74vw, 20svh);
+  .hero {
+    --hero-titulo: min(var(--fs-display), 11svh);
   }
 
-  .hero__rotulo {
-    margin-top: var(--esp-3);
+  .hero__titulo.titulo-display {
+    font-size: var(--hero-titulo);
   }
+}
 
-  .hero__acoes {
-    margin-top: var(--esp-5);
+/* Celular estreito (até 384 px): o subtítulo ganha uma linha. */
+@media (max-width: 24em) {
+  .hero {
+    --hero-texto-extra: 1.7rem;
   }
 }
 
 /* ---- Tela larga e deitada (e celular deitado) --------------------------- */
 @media (min-width: 64em) and (orientation: landscape), (min-width: 40em) and (orientation: landscape) and (max-height: 31.25em) {
+  /* Tema claro (o do data-tema). */
+  .hero {
+    --tema-fundo: var(--cor-porcelana);
+    --tema-superficie: var(--cor-perola);
+    --tema-texto: var(--cor-grafite);
+    --tema-texto-2: var(--cor-texto-2-claro);
+    --tema-linha: var(--cor-linha-clara);
+    --tema-foco: var(--cor-grafite);
+    --tema-botao-fundo: var(--cor-grafite);
+    --tema-botao-texto: var(--cor-porcelana);
+  }
+
+  .hero__fundo,
+  .hero__veu {
+    display: none;
+  }
+
   .hero__grade {
     grid-template-rows: 1fr auto auto auto auto;
   }
@@ -209,7 +285,6 @@
     justify-self: end;
     align-self: end;
     width: min(100%, calc((100svh - var(--altura-header) - 3svh) * 0.8));
-    margin-top: 0;
     margin-bottom: calc(-1 * clamp(1.75rem, 1rem + 2.4vw, 3.25rem));
   }
 
@@ -222,14 +297,17 @@
     mask-image: none;
   }
 
-  .hero__provisorio {
-    top: 6%;
-  }
-
   .hero__rotulo {
     grid-column: 1 / span 7;
     grid-row: 2;
-    margin-top: 0;
+  }
+
+  .hero__rotulo-parte {
+    display: inline;
+  }
+
+  .hero__rotulo-ponto {
+    display: inline;
   }
 
   .hero__titulo {
@@ -247,19 +325,28 @@
     grid-row: 4;
   }
 
+  .hero__cidade {
+    display: block;
+    margin-top: var(--esp-2);
+  }
+
   .hero__acoes {
     grid-column: 1 / span 6;
     grid-row: 5;
+    justify-content: flex-start;
+    margin-top: var(--esp-6);
+  }
+
+  .hero__nota {
+    display: block;
   }
 
   .hero__rolar {
+    display: flex;
     grid-column: 7;
     grid-row: 4 / span 2;
     justify-self: center;
-  }
-
-  .hero__rolar-texto {
-    writing-mode: horizontal-tb;
+    align-self: end;
   }
 }
 

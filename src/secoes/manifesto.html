@@ -1,41 +1,20 @@
 <!-- Manifesto: vem dentro do "O espaço", por cima da última foto da galeria
-     (que virou fundo). O parágrafo fica parado no centro da tela e as palavras
-     acendem conforme o scroll, enquanto fotos do atendimento sobem por cima.
-     Depois, os números com contagem animada.
-     As fotos do atendimento nunca mostram procedimento em andamento (o
-     "durante", Resolução CFO 196/2019): conversa, avaliação, planejamento e
-     instrumentos. As de agora são fotos de banco (Unsplash), provisórias
-     (docs/creditos-imagens.md); paciente real só com autorização por escrito.
+     (que virou fundo). Só o parágrafo, numa tela dele: as palavras acendem
+     conforme o scroll. Sem fotos por cima nem ao lado (o usuário pediu para
+     tirar as fotos do atendimento em 10/11/2026). Depois, os números com
+     contagem animada.
      FICTÍCIO: os números. As três categorias são sugestões; troque pelo
      valor real (a contagem lê o número escrito aqui) ou apague o item. -->
 <section class="manifesto" id="manifesto" aria-labelledby="manifesto-titulo" tabindex="-1" data-manifesto-secao>
-  <div class="manifesto__cena" data-manifesto-cena>
-    <div class="manifesto__palco" data-fixa>
-      <div class="grade">
-        <h2 class="manifesto__rotulo rotulo texto-2" id="manifesto-titulo">Manifesto</h2>
-        <p class="manifesto__texto" data-manifesto>
-          Um bom resultado não chama atenção para si. Ele aparece no sorriso que sai sem esforço, no rosto descansado, na
-          conversa em que ninguém pergunta o que mudou. Por isso, cada plano começa pelo que já é <em>seu:</em> proporção,
-          expressão e tempo.
-        </p>
-      </div>
+  <div class="manifesto__palco">
+    <div class="grade">
+      <h2 class="manifesto__rotulo rotulo texto-2" id="manifesto-titulo">Manifesto</h2>
+      <p class="manifesto__texto" data-manifesto>
+        Um bom resultado não chama atenção para si. Ele aparece no sorriso que sai sem esforço, no rosto descansado, na
+        conversa em que ninguém pergunta o que mudou. Por isso, cada plano começa pelo que já é <em>seu:</em> proporção,
+        expressão e tempo.
+      </p>
     </div>
-
-    <!-- Fotos do atendimento (decorativas): sobem por cima do parágrafo. -->
-    <ul class="manifesto__fotos grade" aria-hidden="true">
-      <li class="manifesto__foto manifesto__foto--1" data-flutua="0.9">
-        <x-img src="atendimento/atendimento-01" alt="" sizes="(min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
-      </li>
-      <li class="manifesto__foto manifesto__foto--2" data-flutua="1.15">
-        <x-img src="atendimento/atendimento-02" alt="" sizes="(min-width: 64em) 14vw, (min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
-      </li>
-      <li class="manifesto__foto manifesto__foto--3" data-flutua="0.8">
-        <x-img src="atendimento/atendimento-03" alt="" sizes="(min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
-      </li>
-      <li class="manifesto__foto manifesto__foto--4" data-flutua="1.05">
-        <x-img src="atendimento/atendimento-04" alt="" sizes="(min-width: 64em) 14vw, (min-width: 48em) 23vw, 32vw" class="manifesto__img" classe-picture="manifesto__picture"></x-img>
-      </li>
-    </ul>
   </div>
 
   <div class="grade manifesto__base">

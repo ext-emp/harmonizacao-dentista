@@ -1,9 +1,10 @@
 /* ==========================================================================
-   Manifesto: dentro do "O espaço". Sem JavaScript, um bloco sobre o grafite:
-   o parágrafo, as fotos do atendimento em grade e os números.
-   Com movimento (.espaco--animado): fundo transparente sobre a última foto
-   da galeria; o parágrafo fica parado no centro da tela (sticky) e as fotos
-   sobem por cima dele, cada uma num ritmo.
+   Manifesto: dentro do "O espaço". Só o parágrafo e os números, sem fotos
+   (o usuário pediu para tirar as fotos do atendimento em 10/11/2026).
+   Sem JavaScript, um bloco sobre o grafite. Com movimento (.espaco--animado):
+   fundo transparente sobre a última foto da galeria; o parágrafo passa no
+   meio de uma tela só dele, rolando com a página, e as palavras acendem
+   (src/js/modulos/manifesto.js).
    ========================================================================== */
 
 .manifesto {
@@ -15,9 +16,13 @@
   padding-top: var(--esp-8);
 }
 
+/* Rótulo e parágrafo centralizados. No celular, sem palavra sozinha na
+   última linha ("pretty"); no desktop, com as linhas equilibradas ("balance",
+   que o Chrome só aplica até umas 6 linhas). */
 .manifesto__rotulo {
   grid-column: 1 / -1;
   margin-bottom: var(--esp-6);
+  text-align: center;
 }
 
 .manifesto__texto {
@@ -26,6 +31,8 @@
   font-size: var(--fs-manifesto);
   line-height: var(--lh-manifesto);
   letter-spacing: -0.015em;
+  text-align: center;
+  text-wrap: pretty;
 }
 
 .manifesto__texto em {
@@ -41,77 +48,29 @@
 }
 
 @media (min-width: 64em) {
-  .manifesto__rotulo {
-    grid-column: 1 / span 2;
-    grid-row: 1;
-    margin: 0;
-    padding-top: 0.9em;
-  }
-
   .manifesto__texto {
-    grid-column: 1 / span 11;
-    grid-row: 1;
-    text-indent: calc((100% + var(--grade-calha)) / 11 * 2);
+    grid-column: 2 / span 10;
+    text-wrap: balance;
   }
 }
 
-/* ---- Fotos do atendimento ---------------------------------------------- */
-.manifesto__fotos {
-  margin-top: var(--esp-8);
-  row-gap: var(--grade-calha);
-}
-
-.manifesto__foto {
-  position: relative;
-  grid-column: span 6;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background: var(--cor-grafite-2);
-}
-
-.manifesto__picture,
-.manifesto__img {
-  width: 100%;
-  height: 100%;
-}
-
-.manifesto__img {
-  object-fit: cover;
-}
-
-@media (min-width: 64em) {
-  .manifesto__foto {
-    grid-column: span 3;
-  }
-}
-
-/* ---- Com movimento: palco parado e fotos subindo por cima -------------- */
-.espaco--animado .manifesto__palco {
-  position: sticky;
-  top: 0;
-  display: grid;
-  align-content: center;
-  height: 100svh;
-  padding: 0;
-}
-
-.espaco--animado .manifesto__fotos {
-  position: relative;
-  z-index: 1;
-  align-items: start;
-  margin-top: -20svh;
-  row-gap: 16svh;
-  /* O parágrafo só sai depois que a última foto passou pelo topo. */
-  padding-bottom: 100svh;
-  pointer-events: none;
-}
-
-.espaco--animado .manifesto__foto {
-  will-change: transform;
-}
-
+/* ---- Com movimento ------------------------------------------------------ */
 .espaco--animado .manifesto__texto .palavra {
   color: var(--cor-manifesto-apagado-foto);
+}
+
+/* Centralizado, o rótulo cai sobre a parte clara da foto (o abajur): no
+   texto 2 ficava abaixo de 4,5:1 (scripts/contraste-fundo.mjs). */
+.espaco--animado .manifesto__rotulo {
+  color: var(--tema-texto);
+}
+
+/* O parágrafo passa no meio de uma tela só dele, rolando com a página. */
+.espaco--animado .manifesto__palco {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding: 0;
 }
 
 /* Os números sobem num painel grafite por cima da foto (o texto pequeno não
@@ -128,95 +87,6 @@
   z-index: 2;
   padding-block: var(--secao-y);
   background: var(--cor-grafite);
-}
-
-/* Posições no grid de 12 colunas, alternando os lados.
-   Celular e tablet em pé: o parágrafo ocupa a largura toda, então as fotos
-   ficam pequenas, encostadas nas bordas (passando um pouco para a margem) e
-   bem espaçadas: cobrem só o começo ou o fim das linhas, uma de cada vez. */
-.espaco--animado .manifesto__foto--1,
-.espaco--animado .manifesto__foto--3 {
-  grid-column: 9 / span 4;
-  margin-right: calc(-0.5 * var(--grade-margem));
-}
-
-.espaco--animado .manifesto__foto--2,
-.espaco--animado .manifesto__foto--4 {
-  grid-column: 1 / span 4;
-  margin-left: calc(-0.5 * var(--grade-margem));
-}
-
-@media (min-width: 48em) {
-  .espaco--animado .manifesto__fotos {
-    row-gap: 38svh;
-  }
-
-  .espaco--animado .manifesto__foto--1,
-  .espaco--animado .manifesto__foto--3 {
-    grid-column: 10 / span 3;
-  }
-
-  .espaco--animado .manifesto__foto--2,
-  .espaco--animado .manifesto__foto--4 {
-    grid-column: 1 / span 3;
-  }
-}
-
-/* Uma foto por linha da grade (sem isso, a 2 e a 3 dividiam a mesma linha e
-   passavam juntas sobre o texto). */
-/* No celular o parágrafo ocupa mais da altura da tela: mais espaço entre as
-   fotos, que sobem em ritmos diferentes e se alcançam. */
-@media (max-width: 47.999em) {
-  .espaco--animado .manifesto__fotos {
-    row-gap: 52svh;
-  }
-}
-
-@media (max-width: 63.999em) {
-  .espaco--animado .manifesto__foto--1 {
-    grid-row: 1;
-  }
-
-  .espaco--animado .manifesto__foto--2 {
-    grid-row: 2;
-  }
-
-  .espaco--animado .manifesto__foto--3 {
-    grid-row: 3;
-  }
-
-  .espaco--animado .manifesto__foto--4 {
-    grid-row: 4;
-  }
-}
-
-@media (min-width: 64em) {
-  .espaco--animado .manifesto__fotos {
-    row-gap: 10svh;
-  }
-
-  .espaco--animado .manifesto__foto {
-    margin-inline: 0;
-  }
-
-  .espaco--animado .manifesto__foto--1 {
-    grid-column: 9 / span 3;
-  }
-
-  .espaco--animado .manifesto__foto--2 {
-    grid-column: 2 / span 2;
-    margin-top: 26svh;
-  }
-
-  .espaco--animado .manifesto__foto--3 {
-    grid-column: 7 / span 3;
-    grid-row: 2;
-  }
-
-  .espaco--animado .manifesto__foto--4 {
-    grid-column: 3 / span 2;
-    grid-row: 3;
-  }
 }
 
 /* ---- Números ------------------------------------------------------------ */

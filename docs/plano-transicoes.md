@@ -28,8 +28,9 @@ Pedido do usuário (31/10/2026):
   manifesto aninhado (`@incluir`), por cima do palco já em tela cheia (fundo = espaco-05 + véu).
   A última foto é um quadro de 100vw × 100svh recortado no tamanho do cartão; o recorte abre até a
   tela cheia, a imagem vai de 1,1 a 1 e o véu aparece.
-- Manifesto: parágrafo parado no centro com as palavras acendendo; quatro fotos do atendimento sobem
-  em ritmos diferentes (`data-flutua`). Os números ficam num painel grafite sobre a foto (texto pequeno
+- Manifesto: só o parágrafo, numa tela dele, rolando com a página; as palavras acendem com o scroll.
+  As quatro fotos do atendimento que subiam ao lado ou depois dele saíram em 10/11/2026, a pedido do
+  usuário. Os números ficam num painel grafite sobre a foto (texto pequeno
   não pode ficar direto sobre a imagem). Palavra apagada sobre a foto: `--cor-manifesto-apagado-foto`.
 - Pérola: o elemento que viaja mora no pouso (abertura do espaço), reparentado por JS; antes do pouso,
   um deslocamento o leva até o lugar no hero. Sem JS ou com movimento reduzido: fica no hero.
@@ -38,7 +39,8 @@ Pedido do usuário (31/10/2026):
   passo, com `scrollTo` animado). Toque: snap direcional do ScrollTrigger. Movimento reduzido/sem JS:
   lista simples. Em 01/11/2026 a consulta, que tinha uma roda igual, foi unida à experiência (uma roda só).
 - Imagens provisórias novas: fotos/espaco/espaco-01..05 (ambientes renderizados, ferramentas/ambientes.js)
-  e fotos/atendimento/atendimento-01..04 (detalhes sem paciente; CFO proíbe foto do "durante").
+  e fotos/atendimento/atendimento-01..04 (detalhes sem paciente; CFO proíbe foto do "durante"; fora do
+  site desde 10/11/2026).
 
 ## Verificação (31/10/2026)
 - `npm run build` sem erros.

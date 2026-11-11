@@ -31,11 +31,7 @@ const NATUREZAS = [
   { saida: 'fotos/procedimentos/bioestimulador-de-colageno.jpg', cena: 'camadas', fundo: 'porcelana', largura: 800, altura: 1000 },
   { saida: 'fotos/procedimentos/clareamento-dental.jpg', cena: 'esfera', fundo: 'perola', largura: 800, altura: 1000 },
   { saida: 'fotos/sobre/retrato.jpg', cena: 'pedestal', fundo: 'grafite', largura: 1600, altura: 2000 },
-  // Atendimento: detalhes que flutuam sobre o fundo do manifesto (sem paciente).
-  { saida: 'fotos/atendimento/atendimento-01.jpg', cena: 'espelho', fundo: 'linho', largura: 1000, altura: 1250 },
-  { saida: 'fotos/atendimento/atendimento-02.jpg', cena: 'xicara', fundo: 'areia', largura: 1000, altura: 1250 },
-  { saida: 'fotos/atendimento/atendimento-03.jpg', cena: 'lamina', fundo: 'grafite', largura: 1000, altura: 1250, exposicao: 1.35 },
-  { saida: 'fotos/atendimento/atendimento-04.jpg', cena: 'caderno', fundo: 'porcelana', largura: 1000, altura: 1250 },
+  // As fotos do atendimento (manifesto) saíram do site em 10/11/2026.
 ];
 
 // Ambientes da galeria "O espaço" (ferramentas/ambientes.html). A última
@@ -59,13 +55,15 @@ for (let n = 1; n <= 6; n++) {
 PLACAS.push({ saida: 'public/og-imagem.jpg', query: 'tipo=og', largura: 1200, altura: 630 });
 
 // Desde 02/11/2026 estes originais são fotos de banco ou o retrato do hero
-// (docs/creditos-imagens.md). O render deles vai para capturas/renders/, para
-// não apagar a foto.
+// (docs/creditos-imagens.md); os dos procedimentos, desde 09/11/2026, e os dos
+// casos de antes e depois, desde 10/11/2026. O render deles vai para
+// capturas/renders/, para não apagar a foto.
 const SUBSTITUIDAS = [
   'fotos/tratamentos/',
+  'fotos/procedimentos/',
   'fotos/sobre/',
-  'fotos/atendimento/',
   'fotos/espaco/',
+  'fotos/casos/',
 ];
 const destino = (saida) => (SUBSTITUIDAS.some((p) => saida.startsWith(p)) ? path.join('capturas', 'renders', saida) : saida);
 

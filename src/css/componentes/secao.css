@@ -1,6 +1,6 @@
 /* ==========================================================================
-   Partes comuns das seções: respiro vertical, etiqueta de foto provisória,
-   estados iniciais das revelações e molduras de parallax.
+   Partes comuns das seções: respiro vertical, estados iniciais das
+   revelações e molduras de parallax.
    ========================================================================== */
 
 .secao {
@@ -9,18 +9,9 @@
 }
 
 /* ---- Conteúdo provisório ---------------------------------------------- */
-/* O que depende do doutor não tem marca na tela: os dados e textos
-   fictícios estão listados em CONTEUDO-PENDENTE.md (no código, busque por
-   FICTÍCIO). */
-
-/* Etiqueta "provisório" sobre fotos que ainda vão ser trocadas. */
-.etiqueta-provisoria {
-  padding: 0.35rem 0.7rem;
-  border-radius: var(--raio-pilula);
-  background: var(--cor-porcelana);
-  color: var(--cor-texto-2-claro);
-  font-size: 0.625rem;
-}
+/* O que depende do doutor não tem marca na tela, nem as fotos provisórias:
+   os dados, textos e fotos a trocar estão listados em CONTEUDO-PENDENTE.md
+   (no código, busque por FICTÍCIO e PROVISÓRIO). */
 
 /* ---- Molduras de imagem ----------------------------------------------- */
 /* A máscara recorta; dentro dela, a moldura de parallax é um pouco maior

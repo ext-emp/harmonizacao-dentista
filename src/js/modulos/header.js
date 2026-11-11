@@ -1,6 +1,7 @@
 // Header: some ao rolar para baixo, volta ao rolar para cima, ganha fundo
 // fora do topo e troca de cor sobre as seções escuras.
 import { ScrollTrigger } from '../core/gsap.js';
+import { layoutLargo } from '../core/ambiente.js';
 
 const TOLERANCIA = 8; // px de rolagem antes de mudar de estado
 
@@ -54,10 +55,13 @@ export function iniciarHeader() {
   header.addEventListener('focusin', () => definirOculto(false));
 
   // Seções escuras sob o header: guardo quais estão ativas para não piscar
-  // na passagem de uma seção escura para outra.
+  // na passagem de uma seção escura para outra. O hero é escuro só fora do
+  // layout largo (data-tema-celular): ao girar a tela, a cor é refeita.
   const ativas = new Set();
+  const escura = (secao) => secao.dataset.tema === 'escuro' || (secao.dataset.temaCelular === 'escuro' && !layoutLargo.matches);
+  const pintar = () => header.classList.toggle('header--escuro', [...ativas].some(escura));
   const meio = () => header.offsetHeight / 2;
-  document.querySelectorAll('[data-tema="escuro"]').forEach((secao) => {
+  document.querySelectorAll('[data-tema="escuro"], [data-tema-celular="escuro"]').forEach((secao) => {
     ScrollTrigger.create({
       trigger: secao,
       start: () => `top ${meio()}`,
@@ -65,8 +69,9 @@ export function iniciarHeader() {
       onToggle(self) {
         if (self.isActive) ativas.add(secao);
         else ativas.delete(secao);
-        header.classList.toggle('header--escuro', ativas.size > 0);
+        pintar();
       },
     });
   });
+  layoutLargo.addEventListener('change', pintar);
 }

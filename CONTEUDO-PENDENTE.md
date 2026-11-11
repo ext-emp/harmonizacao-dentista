@@ -51,8 +51,9 @@ Depois de trocar tudo, mude `ficticio` para `false`.
 - Nada de fotos do "durante". Antes e depois com o mesmo enquadramento e a mesma luz.
 - O nome e o CRO entram sozinhos sobre cada foto (vêm de `doutor.js`).
 - Em `src/dados/casos.js`, cada caso real fica com `provisorio: false` e `autorizacaoPorEscrito: true`. Sem a autorização marcada, o build para com um aviso.
-- A seção traz a nota "Imagens divulgadas com autorização dos pacientes."
-- As imagens de agora são neutras de propósito ("Caso 01 · foto provisória" escrito na própria imagem): nada que pareça resultado pode entrar sem ser caso dele.
+- A seção traz a nota "Imagens divulgadas com autorização dos pacientes." **Hoje ela não é verdadeira:** as fotos são de banco (ver abaixo). Só pode ficar no ar com casos reais autorizados.
+- **As fotos de agora são de banco do Unsplash, só para a demonstração** (o usuário mandou preencher com qualquer foto livre, em 10/11/2026). O caso 01 é um par de antes e depois de verdade, de uma paciente de outra clínica (um consultório do Texas); nos casos 02 a 06 a mesma foto aparece nos dois lados, porque não existe par livre desses tratamentos. Os seis estão `provisorio: true`.
+- **Trava no build:** com `provisorio: true`, o site só passa enquanto `ficticio: true` em `src/dados/doutor.js`. No dia em que `ficticio` virar `false`, o `npm run build` **para** (`vite/geradores.js`) até os seis casos serem trocados pelos do doutor. Foto de banco nunca vai ao ar como resultado dele.
 - Depoimentos de pacientes continuam fora do site até o doutor confirmar com o CRO-RS.
 
 ## Fotos
@@ -61,21 +62,21 @@ Formato dos originais: JPG (ou PNG, quando precisa de fundo transparente), o mai
 
 | Pasta e nome do arquivo | Onde aparece | Tamanho mínimo | Proporção |
 | --- | --- | --- | --- |
-| `fotos/hero/doutor-capa.png` | Hero, à direita do título | 1600 × 2000 px, **PNG com fundo transparente** (só a pessoa recortada, sem sombra no chão) | 4:5, retrato da cintura para cima, cabeça a uns 6% a 12% do topo. **A imagem de agora é uma foto de banco (Unsplash) de um modelo, com o fundo recortado: não é o doutor e não pode ir ao ar** |
+| `fotos/hero/doutor-capa.png` | Hero: à direita do título na tela larga; no celular, por cima da foto do consultório, com o texto sobre o jaleco | 1600 × 2000 px, **PNG com fundo transparente** (só a pessoa recortada, sem sombra no chão) | 4:5, retrato da cintura para cima, cabeça a uns 6% a 12% do topo e queixo até uns 45%. **A imagem de agora é uma foto de banco (Unsplash) de um modelo, com o fundo recortado: não é o doutor e não pode ir ao ar** |
+| `fotos/hero/fundo-celular.jpg` | Hero no celular e no tablet em pé, atrás do retrato | 1600 × 2133 px | 3:4, em pé, com desfoque leve e tons claros (fica sob um véu escuro). Hoje é um recorte da `espaco-01`. O ideal: uma foto do doutor no próprio consultório, e aí o retrato recortado sai do celular |
 | `fotos/hero/perola.png` | Hero | 1600 × 1600 px, fundo transparente | 1:1. Gerada pelo próprio site (`npm run perola`), não precisa de foto |
 | `fotos/espaco/espaco-01.jpg` e `espaco-03.jpg` | O espaço, fotos deitadas da galeria | 2400 × 1600 px | 3:2 |
 | `fotos/espaco/espaco-02.jpg` e `espaco-04.jpg` | O espaço, fotos em pé da galeria | 1600 × 2000 px | 4:5 |
 | `fotos/espaco/espaco-05.jpg` | Última foto da galeria: abre até a tela cheia e vira o fundo do manifesto | 2880 × 1920 px | 3:2, com o assunto no centro (no celular a tela corta as laterais) e tons calmos, porque o texto fica por cima, sob um véu grafite |
-| `fotos/atendimento/atendimento-01.jpg` … `atendimento-04.jpg` | Manifesto, as quatro fotos que sobem sobre o fundo | 1000 × 1250 px | 4:5. Conversa, avaliação, planejamento e instrumentos, **nunca do "durante"**. Paciente real só com autorização por escrito |
 | `fotos/tratamentos/rosto.jpg` | Tratamentos, bloco Rosto | 1600 × 2000 px | 4:5 |
 | `fotos/tratamentos/sorriso.jpg` | Tratamentos, bloco Sorriso | 1600 × 2000 px | 4:5 |
-| `fotos/procedimentos/<nome>.jpg` (um por procedimento, mesmo nome da linha) | Lista de procedimentos | 640 × 800 px | 4:5 |
+| `fotos/procedimentos/<nome>.jpg` (um por procedimento, mesmo nome da linha) | Lista de procedimentos | 640 × 800 px | 4:5. Ilustra o tipo de tratamento: nada de paciente sendo tratado (o "durante") nem antes e depois |
 | `fotos/sobre/retrato.jpg` | Sobre | 1600 × 2000 px | 4:5 |
 | `fotos/casos/<id>-antes.jpg` e `fotos/casos/<id>-depois.jpg` (o `id` vem de `casos.js`) | Resultados | 1080 × 1080 px | 1:1, o mesmo enquadramento nas duas |
 | `public/og-imagem.jpg` (vai direto, sem `npm run imagens`) | Prévia do link no WhatsApp, Instagram e Facebook | 1200 × 630 px, exatos | 1,91:1. Hoje é provisória (monograma, nome e a pérola sobre fundo liso): trocar por uma foto real do consultório ou do doutor, sem paciente, com o nome por cima se quiser |
 
-Desde 02/11/2026, as fotos do espaço, do manifesto e dos blocos Rosto e Sorriso são fotos de banco do Unsplash (licença livre para uso comercial), e o Sobre usa o mesmo retrato de banco do hero. Autor e link de cada uma estão em `docs/creditos-imagens.md`. Continuam provisórias: são de outras clínicas e de modelos, e a licença não cobre o uso da imagem das pessoas como se fossem pacientes ou o próprio consultório.
+Desde 02/11/2026, as fotos do espaço e dos blocos Rosto e Sorriso são fotos de banco do Unsplash (licença livre para uso comercial), assim como, desde 09/11/2026, as da lista de procedimentos, e desde 10/11/2026, as dos casos de antes e depois, e o Sobre usa o mesmo retrato de banco do hero. Autor e link de cada uma estão em `docs/creditos-imagens.md`. Continuam provisórias: são de outras clínicas e de modelos, e a licença não cobre o uso da imagem das pessoas como se fossem pacientes ou o próprio consultório.
 
-As fotos provisórias continuam com uma etiqueta discreta na tela ("Retrato provisório" no hero e no Sobre, "Fotos provisórias" na galeria do "O espaço"). Ao trocar uma delas, apague a etiqueta da seção e ajuste o texto alternativo (`alt`), que hoje diz "Imagem provisória…" ou "Foto provisória…".
+**Nenhuma foto provisória tem marca na tela** (o usuário pediu para tirar todas em 10/11/2026): o retrato do hero e do Sobre, a galeria do "O espaço" e as fotos dos casos de antes e depois. Na tela, a foto de banco passa pelo retrato do doutor, as fotos de outras clínicas pelo consultório dele e as de modelos e de uma paciente do Texas pelos resultados dele, então todas precisam ser trocadas antes de o site ir ao ar. A lista é esta seção e a de `docs/creditos-imagens.md`. Ao trocar qualquer foto provisória, ajuste o texto alternativo (`alt`), que hoje diz "Imagem provisória…" ou "Foto provisória…".
 
-Depois de trocar a `espaco-05.jpg`, rode `node scripts/contraste-fundo.mjs` com o site aberto em `npm run dev`: ele mede o contraste do manifesto e dos números sobre a foto. Quando o retrato do hero mudar, meça onde a pessoa fica na imagem com `node scripts/limites-alfa.mjs fotos/hero/doutor-capa.png`, atualize esses limites em `scripts/capturar-viagem.mjs` e rode o script: ele confere, quadro a quadro, que a pérola não passa por cima da pessoa nem do texto.
+Depois de trocar a `espaco-05.jpg`, rode `node scripts/contraste-fundo.mjs` com o site aberto em `npm run dev`: ele mede o contraste do manifesto e dos números sobre a foto. Quando o retrato do hero mudar, meça onde a pessoa fica na imagem com `node scripts/limites-alfa.mjs fotos/hero/doutor-capa.png`, atualize esses limites em `scripts/capturar-viagem.mjs` (a cabeça e o corpo) e rode o script: ele confere, quadro a quadro, que a pérola não passa por cima da pessoa nem do texto. Rode também `node scripts/testar-hero.mjs`: em vários celulares e tablets, ele confere que o botão cabe na primeira tela, que o texto não cobre o rosto (a caixa do rosto fica no começo da função `medir`) e o contraste do texto sobre o jaleco.

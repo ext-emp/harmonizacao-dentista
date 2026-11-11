@@ -16,12 +16,6 @@
   aspect-ratio: 4 / 5;
 }
 
-.sobre__provisorio {
-  position: absolute;
-  top: var(--esp-4);
-  left: var(--esp-4);
-}
-
 .sobre__texto {
   grid-column: 1 / -1;
   display: grid;

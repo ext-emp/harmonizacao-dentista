@@ -161,6 +161,42 @@
   color: var(--cor-porcelana);
 }
 
+/* "Role para o lado", à esquerda das setas, com a seta dando um empurrão
+   leve para a direita (pedido do usuário, 13/11/2026). Na tela larga, com os
+   três cards à vista, sai. */
+.carrossel__dica {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  margin-right: auto;
+  font-size: var(--fs-pequeno);
+  font-weight: 600;
+  color: var(--tema-texto);
+}
+
+.carrossel__dica svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .carrossel__dica svg {
+    animation: hm-dica 1.8s var(--ease-suave) infinite;
+  }
+}
+
+@keyframes hm-dica {
+  0%,
+  60%,
+  100% {
+    transform: translateX(0);
+  }
+
+  30% {
+    transform: translateX(0.375rem);
+  }
+}
+
 @media (min-width: 64em) {
   .resultados__nota {
     grid-column: 1 / span 6;
@@ -169,9 +205,14 @@
   .carrossel__controles {
     grid-column: 8 / -1;
   }
+
+  .carrossel__dica {
+    display: none;
+  }
 }
 
-/* Sem JavaScript, o carrossel é só o scroll nativo: as setas saem. */
-html:not(.js) .carrossel__controles {
+/* Sem JavaScript, o carrossel é só o scroll nativo: as setas saem (o aviso
+   fica, o dedo continua passando os cards). */
+html:not(.js) .carrossel__seta {
   display: none;
 }

@@ -28,8 +28,13 @@ function revelarBlocos() {
   });
 
   gsap.utils.toArray('[data-revelar="lista"]').forEach((lista) => {
+    // data-revelar-ordem="tela": quando o CSS reordena os filhos (atalhos do
+    // contato no celular), eles entram na ordem em que aparecem, de cima para
+    // baixo e da esquerda para a direita, e não na ordem do HTML.
+    const itens = [...lista.children];
+    if (lista.dataset.revelarOrdem === 'tela') itens.sort((a, b) => a.offsetTop - b.offsetTop || a.offsetLeft - b.offsetLeft);
     gsap.fromTo(
-      lista.children,
+      itens,
       { opacity: 0, y: 24 },
       {
         opacity: 1,
@@ -93,8 +98,9 @@ function revelarTextos() {
       charsClass: 'letra',
       autoSplit: true,
       onSplit: (self) =>
+        // 120%: abaixo da folga da máscara (.letra-mask, base.css).
         gsap.from(self.chars, {
-          yPercent: 105,
+          yPercent: 120,
           duration: dur.longa,
           ease: ease.saida,
           stagger: sequencia * 0.5,

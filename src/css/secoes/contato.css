@@ -65,11 +65,6 @@
   height: 0.5rem;
 }
 
-.contato__nota {
-  max-width: 26ch;
-  font-size: var(--fs-pequeno);
-}
-
 .contato__infos {
   display: grid;
   gap: var(--esp-7);
@@ -87,10 +82,6 @@
 
 .contato__info-titulo {
   margin-bottom: var(--esp-2);
-}
-
-.contato__info-titulo--segundo {
-  margin-top: var(--esp-5);
 }
 
 .contato__endereco {
@@ -118,15 +109,270 @@
   color: var(--tema-texto-2);
 }
 
+/* Peças só do celular: o nome no topo, os ícones e as setas dos atalhos. */
+.contato__assinatura,
+.contato__icone,
+.contato__seta {
+  display: none;
+}
+
+/* Três colunas: endereço, horários, e WhatsApp com o Instagram embaixo. No
+   HTML os horários vêm por último (ordem do celular); aqui voltam para o
+   meio. A distância entre o WhatsApp e o Instagram é o espaço entre linhas
+   (antes eles moravam no mesmo bloco, com a mesma distância). */
 @media (min-width: 48em) {
   .contato__infos {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: var(--grade-calha);
+    grid-template-rows: auto 1fr;
+    gap: var(--esp-6) var(--grade-calha);
+  }
+
+  .contato__info--endereco {
+    grid-area: 1 / 1 / span 2;
+  }
+
+  .contato__info--horarios {
+    grid-area: 1 / 2 / span 2;
+  }
+
+  .contato__info--whatsapp {
+    grid-area: 1 / 3;
+  }
+
+  .contato__info--instagram {
+    grid-area: 2 / 3;
   }
 }
 
 @media (min-width: 64em) {
   .contato__titulo {
     max-width: none;
+  }
+}
+
+/* ---- Celular: o fim da página abre com o nome ---------------------------
+   No computador o nome gigante fecha a página (a tela mostra contato e
+   rodapé juntos). No celular ele ficaria sozinho no fim: aqui ele abre o
+   contato, centralizado, e o rodapé fica só com a assinatura. Endereço,
+   WhatsApp e Instagram viram atalhos de toque: o cartão inteiro é o link. */
+@media (max-width: 47.999em) {
+  .contato {
+    padding-bottom: var(--esp-8);
+    text-align: center;
+  }
+
+  .contato__rotulo {
+    display: none;
+  }
+
+  .contato__assinatura {
+    grid-column: 1 / -1;
+    display: grid;
+    justify-items: center;
+    container-type: inline-size;
+  }
+
+  /* Um nome por linha (cada um num span). O corpo acompanha a largura da
+     coluna, para "Henrique" caber em qualquer celular. Entra letra por letra
+     (data-revelar="letras", revelar.js), como o nome gigante do rodapé. */
+  .contato__nome {
+    font-family: var(--fonte-titulo);
+    font-size: min(5.25rem, 24cqi);
+    line-height: 0.86;
+    letter-spacing: var(--ls-display);
+    white-space: nowrap;
+  }
+
+  .contato__nome > span {
+    display: block;
+  }
+
+  .contato__registro {
+    margin-top: 1.375rem;
+    text-wrap: balance;
+  }
+
+  /* Filete champanhe entre o nome e a chamada (entra junto com o registro). */
+  .contato__registro::after {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    margin: 2.5rem auto 0;
+    background: var(--cor-champagne);
+  }
+
+  .contato__titulo {
+    max-width: none;
+    margin-top: 2.5rem;
+    font-size: 2.125rem;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  /* O botão ocupa a largura toda. */
+  .contato__acao {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: var(--esp-6);
+  }
+
+  .contato__acao .botao--grande {
+    justify-content: center;
+  }
+
+  .contato__infos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--esp-3);
+    margin-top: var(--esp-7);
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* O WhatsApp é o primeiro atalho (no HTML, o endereço vem antes). */
+  .contato__info--whatsapp {
+    order: -1;
+  }
+
+  .contato__atalho {
+    position: relative;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 1.25rem;
+    grid-template-areas:
+      'icone rotulo seta'
+      'icone valor  seta';
+    align-content: center;
+    align-items: center;
+    gap: var(--esp-1) var(--esp-4);
+    min-height: 5rem;
+    padding: 0.875rem 1.125rem;
+    border: 1px solid var(--tema-linha);
+    border-radius: 1.125rem;
+    background: var(--tema-superficie);
+    text-align: left;
+    transition: border-color var(--dur-media) var(--ease-suave);
+  }
+
+  .contato__icone {
+    grid-area: icone;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--tema-linha);
+    border-radius: 50%;
+    color: var(--cor-champagne);
+  }
+
+  .contato__icone svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .contato__seta {
+    grid-area: seta;
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .contato__atalho .contato__info-titulo {
+    grid-area: rotulo;
+    margin: 0;
+  }
+
+  .contato__atalho .contato__valor,
+  .contato__atalho .contato__endereco {
+    grid-area: valor;
+    margin: 0;
+  }
+
+  .contato__endereco {
+    line-height: 1.45;
+  }
+
+  .contato__bairro {
+    color: var(--tema-texto-2);
+  }
+
+  /* No endereço, o rótulo do cartão é a própria ação ("Abrir no mapa"); o
+     título "Endereço" continua para o leitor de tela. */
+  .contato__info--endereco .contato__info-titulo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .contato__info--endereco .contato__link {
+    grid-area: rotulo;
+    margin: 0;
+    font-size: var(--fs-rotulo);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: var(--ls-rotulo);
+    text-transform: uppercase;
+    color: var(--tema-texto-2);
+  }
+
+  /* O cartão inteiro é o link: o ::before da área de toque (botao.css) passa
+     a medir o cartão, que vira a referência de posição no lugar do link. */
+  .contato__atalho .area-toque {
+    position: static;
+  }
+
+  .contato__atalho .area-toque::before {
+    inset: 0;
+  }
+
+  /* No toque (.is-active, toque.js) e no hover, a borda acende. */
+  .contato__atalho:has(.is-active) {
+    border-color: var(--cor-champagne);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .contato__atalho:hover {
+      border-color: var(--cor-champagne);
+    }
+  }
+
+  /* Foco no cartão inteiro, não só no texto do link. */
+  @supports selector(:has(*)) {
+    .contato__atalho:has(:focus-visible) {
+      outline: 2px solid var(--tema-foco);
+      outline-offset: 3px;
+    }
+
+    .contato__atalho :focus-visible {
+      outline: none;
+    }
+  }
+
+  /* Horários compactos e centralizados, depois dos atalhos. */
+  .contato__info--horarios {
+    justify-items: center;
+    margin-top: var(--esp-5);
+  }
+
+  .contato__info--horarios .contato__info-titulo {
+    margin-bottom: var(--esp-1);
+  }
+
+  .contato__horarios {
+    justify-items: center;
+    gap: 0;
+    max-width: none;
+  }
+
+  .contato__horarios li {
+    display: block;
+  }
+
+  .contato__horarios li span:last-child::before {
+    content: '· ';
+    content: '· ' / '';
   }
 }

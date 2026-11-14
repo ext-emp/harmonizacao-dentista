@@ -1,9 +1,20 @@
 <!-- Contato: chamada final grande com o botão magnético do WhatsApp (mensagem
      pré-preenchida, em src/dados/doutor.js), endereço com link para o mapa,
-     horários, o número do WhatsApp (também um link para a conversa) e
-     Instagram. Todos os dados vêm de doutor.js. -->
+     WhatsApp (também um link para a conversa), Instagram e horários. Todos
+     os dados vêm de doutor.js.
+     No celular (contato.css), o fim da página abre com o nome do doutor e o
+     endereço, o WhatsApp e o Instagram viram atalhos de toque (o cartão
+     inteiro é o link). No computador, o nome fica gigante no rodapé. -->
 <section class="contato secao" id="contato" data-tema="escuro" data-pilha-entrada="caixa" aria-labelledby="contato-titulo" tabindex="-1">
   <div class="grade">
+    <!-- Só no celular. Repete a assinatura do rodapé, por isso fica fora do
+         leitor de tela. O nome entra letra por letra, como o nome gigante do
+         rodapé no computador. -->
+    <div class="contato__assinatura" aria-hidden="true">
+      <p class="contato__nome" data-revelar="letras"><span>{{ nomeEmLinhas.primeira }}</span> <span>{{ nomeEmLinhas.segunda }}</span></p>
+      <p class="contato__registro rotulo texto-2" data-revelar="subir">{{ doutor.profissao }} · {{ cro }}</p>
+    </div>
+
     <p class="contato__rotulo rotulo texto-2">Contato</p>
     <h2 class="contato__titulo titulo-1" id="contato-titulo" data-revelar="linhas" data-linhas>
       Comece por uma <em>conversa.</em>
@@ -22,39 +33,51 @@
         <span class="botao__rolo"><span class="botao__texto">Agendar avaliação</span></span>
         <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
       </a>
-      <p class="contato__nota texto-2">Pelo WhatsApp. A mensagem já vai escrita, é só enviar.</p>
     </div>
 
-    <div class="contato__infos" data-revelar="lista">
-      <div class="contato__info">
+    <!-- Ordem do HTML: endereço, WhatsApp, Instagram, horários. No computador
+         o CSS põe os horários na coluna do meio e WhatsApp e Instagram na
+         terceira; como os horários não têm link, o foco continua da esquerda
+         para a direita. No celular, o WhatsApp sobe para o primeiro atalho. -->
+    <div class="contato__infos" data-revelar="lista" data-revelar-ordem="tela">
+      <div class="contato__info contato__info--endereco contato__atalho">
+        <span class="contato__icone" aria-hidden="true"><svg focusable="false"><use href="#pino" /></svg></span>
         <h3 class="contato__info-titulo rotulo texto-2">Endereço</h3>
         <address class="contato__endereco">
           {{ endereco.linha1 }}<br />
-          {{ endereco.linha2 }}
+          <span class="contato__bairro">{{ endereco.linha2 }}</span>
         </address>
         <a class="contato__link link-linha area-toque" href="{{ endereco.mapa }}" target="_blank" rel="noopener" data-toque-centro>
           Abrir no mapa<span class="visualmente-oculto"> (abre em nova aba)</span>
         </a>
+        <svg class="contato__seta" aria-hidden="true" focusable="false"><use href="#seta" /></svg>
       </div>
 
-      <div class="contato__info">
-        <h3 class="contato__info-titulo rotulo texto-2">Horários</h3>
-        <ul class="contato__horarios">
-          <!-- @gerar horarios -->
-        </ul>
-      </div>
-
-      <div class="contato__info">
+      <div class="contato__info contato__info--whatsapp contato__atalho">
+        <span class="contato__icone" aria-hidden="true"><svg focusable="false"><use href="#conversa" /></svg></span>
         <h3 class="contato__info-titulo rotulo texto-2">WhatsApp</h3>
-        <p>
+        <p class="contato__valor">
           <a class="link-linha area-toque" href="{{ whatsapp.link }}" target="_blank" rel="noopener" data-toque-centro>
             {{ whatsapp.exibicao }}<span class="visualmente-oculto"> no WhatsApp (abre em nova aba)</span>
           </a>
         </p>
-        <h3 class="contato__info-titulo contato__info-titulo--segundo rotulo texto-2">Instagram</h3>
-        <a class="contato__link link-linha area-toque" href="{{ instagram.url }}" target="_blank" rel="noopener" data-toque-centro>
+        <svg class="contato__seta" aria-hidden="true" focusable="false"><use href="#seta" /></svg>
+      </div>
+
+      <div class="contato__info contato__info--instagram contato__atalho">
+        <span class="contato__icone" aria-hidden="true"><svg focusable="false"><use href="#camera" /></svg></span>
+        <h3 class="contato__info-titulo rotulo texto-2">Instagram</h3>
+        <a class="contato__link contato__valor link-linha area-toque" href="{{ instagram.url }}" target="_blank" rel="noopener" data-toque-centro>
           {{ instagram.arroba }}<span class="visualmente-oculto"> (abre em nova aba)</span>
         </a>
+        <svg class="contato__seta" aria-hidden="true" focusable="false"><use href="#seta" /></svg>
+      </div>
+
+      <div class="contato__info contato__info--horarios">
+        <h3 class="contato__info-titulo rotulo texto-2">Horários</h3>
+        <ul class="contato__horarios">
+          <!-- @gerar horarios -->
+        </ul>
       </div>
     </div>
   </div>

@@ -23,8 +23,12 @@
     </ul>
 
     <div class="grade carrossel__rodape">
-      <p class="resultados__nota texto-2">Imagens divulgadas com autorização dos pacientes.</p>
       <div class="carrossel__controles" data-carrossel-controles>
+        <!-- Aviso para o dedo (abaixo de 64em, onde os cards não cabem todos). -->
+        <p class="carrossel__dica" aria-hidden="true">
+          Role para o lado
+          <svg viewBox="0 0 24 24" focusable="false"><use href="#seta" /></svg>
+        </p>
         <button class="carrossel__seta carrossel__seta--anterior" type="button" data-carrossel-anterior data-toque-centro aria-label="Caso anterior">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#seta" /></svg>
         </button>

@@ -26,14 +26,18 @@
       <h2 class="sobre__titulo titulo-2" id="sobre-titulo" data-revelar="linhas" data-linhas>{{ nomeCompleto }}</h2>
       <p class="sobre__registro rotulo texto-2">{{ doutor.profissao }} · {{ cro }}</p>
 
+      <!-- Os &shy; são hifens opcionais: no celular o texto é justificado e
+           eles evitam buracos entre as palavras (só aparecem se a palavra
+           quebrar; na tela larga, a hifenização fica desligada). -->
       <div class="sobre__paragrafos" data-revelar="subir">
-        <p class="destaque">
-          {{ doutor.nome }} é cirurgião-dentista em Novo Hamburgo. Dedica-se à harmonização orofacial e às lentes de
-          contato dental, com atenção ao que torna cada rosto único.
+        <p class="texto-2">
+          {{ doutor.nome }} é cirurgião-dentista em Novo Hamburgo. Dedica-se à har&shy;mo&shy;ni&shy;za&shy;ção
+          oro&shy;fa&shy;cial e às lentes de contato dental, com atenção ao que torna cada rosto único.
         </p>
         <p class="texto-2">
-          No consultório, o tempo é para ouvir, examinar e explicar. As decisões são tomadas junto com o paciente,
-          depois de entender o que ele deseja e o que deve ficar como está.
+          No con&shy;sul&shy;tó&shy;rio, o tempo é para ouvir, exa&shy;mi&shy;nar e ex&shy;pli&shy;car. As
+          de&shy;ci&shy;sões são tomadas junto com o pa&shy;ci&shy;en&shy;te, depois de en&shy;ten&shy;der o que ele
+          deseja e o que deve ficar como está.
         </p>
       </div>
 

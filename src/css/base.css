@@ -173,6 +173,18 @@ p {
   margin: -0.1em -0.08em -0.16em;
 }
 
+/* Máscara de cada letra (nomes do rodapé e do contato, data-revelar="letras"):
+   com a entrelinha curta, a caixa da letra termina antes da perna do "q"
+   (medido na Instrument Serif: 0,14em além da caixa com entrelinha 0,82;
+   0,12em com 0,86), que era cortada. A folga embaixo não muda o desenho: a
+   margem negativa devolve o espaço. Não passa disso para as letras, subindo,
+   não cruzarem a linha do rodapé. No alto, o "H" e o pingo do "i" já cabem.
+   A letra parte de 120% da própria altura (revelar.js), abaixo da folga. */
+.letra-mask {
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
+}
+
 /* Depois de dividido, o elemento vira coluna flex: assim as margens negativas
    das máscaras vizinhas não se fundem e a entrelinha fica igual à original. */
 [data-linhas]:has(> .linha-mask) {

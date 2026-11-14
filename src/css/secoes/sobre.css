@@ -57,9 +57,39 @@
   border-bottom: 1px solid var(--tema-linha);
 }
 
+/* Celular (pedido do usuário, 13/11/2026): títulos centralizados e os
+   parágrafos justificados, com hifenização para não abrir buracos entre as
+   palavras numa coluna estreita. */
+@media (max-width: 47.999em) {
+  .sobre__texto {
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* text-wrap: wrap no lugar do pretty (base.css), que evita os hifens e
+     abre buracos no texto justificado (mesmo caso do FAQ). */
+  .sobre__paragrafos {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .sobre__paragrafos p {
+    text-wrap: wrap;
+  }
+
+  .sobre__lista li {
+    justify-content: center;
+  }
+}
+
 /* Do tablet em pé em diante: numa coluna só, o retrato 4:5 ocupava mais de
    uma tela e o texto deixava metade da largura vazia. */
 @media (min-width: 48em) {
+  /* Alinhado à esquerda: sem hifenizar (ignora os &shy; do HTML). */
+  .sobre__paragrafos {
+    hyphens: none;
+  }
+
   .sobre__retrato {
     grid-column: 1 / span 5;
   }

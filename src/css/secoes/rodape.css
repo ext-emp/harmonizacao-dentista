@@ -52,3 +52,65 @@
 .rodape__topo {
   margin-left: auto;
 }
+
+/* Seta do "Voltar ao início": só no celular. */
+.rodape__seta {
+  display: none;
+}
+
+/* ---- Celular ------------------------------------------------------------
+   O nome gigante sai: no celular ele abre o contato (contato.css). Fica a
+   assinatura centralizada, em duas linhas (nome e profissão; CRO), e embaixo
+   o ano e o "Voltar ao início". */
+@media (max-width: 47.999em) {
+  .rodape {
+    padding-top: 0;
+    padding-bottom: var(--esp-6);
+  }
+
+  .rodape__nome {
+    display: none;
+  }
+
+  .rodape__base {
+    justify-content: center;
+    gap: var(--esp-3) var(--esp-4);
+    margin-top: 0;
+    padding-top: var(--esp-5);
+    text-align: center;
+  }
+
+  .rodape__assinatura {
+    flex: 0 0 100%;
+    color: var(--tema-texto-2);
+  }
+
+  .rodape__trecho {
+    display: block;
+  }
+
+  .rodape__separador {
+    display: none;
+  }
+
+  .rodape__ano::after {
+    content: '·';
+    content: '·' / '';
+    margin-left: var(--esp-4);
+  }
+
+  .rodape__topo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-left: 0;
+    font-weight: 600;
+  }
+
+  .rodape__seta {
+    display: block;
+    width: 0.875rem;
+    height: 0.875rem;
+    transform: rotate(-90deg);
+  }
+}

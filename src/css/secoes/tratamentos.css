@@ -329,3 +329,28 @@
     clip-path: inset(0% 0% 0% 0%);
   }
 }
+
+/* ---- Celular (pedidos do usuário, 13 e 14/11/2026) ----------------------- */
+/* Cabeçalho, foto e texto dos blocos centralizados. A lista de procedimentos
+   fica alinhada como no computador (nome à esquerda, área à direita, que dá
+   lugar à miniatura na linha ativa), só sem os números. Fica depois do bloco
+   do mouse para valer também numa janela estreita. */
+@media (max-width: 47.999em) {
+  .tratamentos__cabecalho,
+  .tratamento__texto {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .tratamento__midia {
+    justify-self: center;
+  }
+
+  .procedimento {
+    grid-template-columns: minmax(0, 1fr) var(--miniatura);
+  }
+
+  .procedimento__numero {
+    display: none;
+  }
+}

@@ -68,6 +68,8 @@ function lerFaq(html) {
   const texto = (trecho = '') =>
     trecho
       .replace(/<[^>]+>/g, '')
+      // Hifens opcionais das respostas (só servem ao texto justificado).
+      .replace(/&shy;|­/g, '')
       .replace(/\s+/g, ' ')
       .replace(/&quot;/g, '"')
       .replace(/&#39;/g, "'")

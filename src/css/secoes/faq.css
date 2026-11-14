@@ -100,10 +100,13 @@
   overflow: hidden;
 }
 
+/* Alinhada à esquerda: sem hifenizar (ignora os &shy; do HTML, que servem ao
+   texto justificado do celular). */
 .faq__resposta p {
   max-width: 52ch;
   padding-bottom: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
   color: var(--tema-texto-2);
+  hyphens: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -127,4 +130,22 @@
 
 .faq__item.is-active .faq__pergunta-texto {
   translate: 0.5rem 0;
+}
+
+/* Celular (pedidos do usuário, 13 e 14/11/2026): só o cabeçalho no centro;
+   as perguntas ficam à esquerda. As respostas são justificadas, com
+   hifenização para não abrir buracos entre as palavras na coluna estreita.
+   text-wrap: wrap no lugar do pretty (base.css): o pretty evita quebrar nos
+   hifens e, justificado, abria buracos de até 3 espaços numa linha. */
+@media (max-width: 47.999em) {
+  .faq__cabecalho {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .faq__resposta p {
+    text-align: justify;
+    text-wrap: wrap;
+    hyphens: auto;
+  }
 }

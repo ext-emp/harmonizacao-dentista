@@ -11,6 +11,7 @@ function enderecoEmLinha(e) {
 
 export function montarContexto(doutor) {
   const nomeCompleto = `${doutor.tratamento} ${doutor.nome}`;
+  const [primeiroNome, ...outrosNomes] = doutor.nome.split(' ');
   const cro = `CRO-${doutor.cro.uf} nº ${doutor.cro.numero}`;
   const texto = encodeURIComponent(doutor.whatsapp.mensagem);
   const numero = String(doutor.whatsapp.numero || '').replace(/\D/g, '');
@@ -23,9 +24,12 @@ export function montarContexto(doutor) {
   return {
     doutor,
     nomeCompleto,
+    // Nome em duas linhas, no topo do contato no celular.
+    nomeEmLinhas: { primeira: primeiroNome, segunda: outrosNomes.join(' ') },
+    // nomeCompleto, doutor.profissao e cro formam a assinatura do rodapé,
+    // exigida pelo CFO (montada em src/secoes/rodape.html, em dois trechos
+    // para quebrar certo no celular).
     cro,
-    // Assinatura do rodapé, exigida pelo CFO.
-    assinatura: `${nomeCompleto} · ${doutor.profissao} · ${cro}`,
     // Marca discreta sobre as fotos de antes e depois. A curta (ainda com
     // nome e número do CRO) entra quando a foto é estreita, para caber numa linha.
     marcaFoto: `${nomeCompleto} · ${cro}`,

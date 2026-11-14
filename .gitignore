@@ -16,3 +16,6 @@ Thumbs.db
 *.log
 .env
 .env.*
+
+# Configuração pessoal do Claude Code (não vai para o repositório)
+.claude/settings.local.json

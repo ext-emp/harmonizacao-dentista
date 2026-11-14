@@ -1,6 +1,6 @@
 /* ==========================================================================
    O espaço (grafite). Três partes:
-     .espaco__abertura  a frase, com a pérola pousada acima dela
+     .espaco__abertura  o rótulo e a frase, no meio da tela
      .espaco__palco     a galeria. Sem JavaScript (ou com movimento reduzido),
                         uma faixa com scroll lateral nativo. Com movimento
                         (.espaco--animado, ligado pelo JS), o palco fica fixo
@@ -21,10 +21,14 @@
   overflow-x: clip;
 }
 
+/* Celular: os cartões da galeria animada são grandes e em pé, todos do mesmo
+   tamanho (a foto é recortada no centro), e o da última foto também. */
 @media (max-width: 63.999em) {
   .espaco {
-    --fundo-largura: 80vw;
-    --fundo-altura: calc(80vw / 1.5);
+    --cartao-largura: 84vw;
+    --cartao-altura: min(62svh, 84vw * 1.35);
+    --fundo-largura: var(--cartao-largura);
+    --fundo-altura: var(--cartao-altura);
   }
 }
 
@@ -51,12 +55,10 @@
 /* ---- Abertura ----------------------------------------------------------- */
 .espaco__abertura {
   position: relative;
-  align-content: start;
+  align-content: center;
   justify-items: center;
   min-height: 100svh;
-  /* O texto começa logo abaixo da pérola pousada (perola.css). */
-  padding-top: calc(var(--perola-pouso-y) + var(--perola-quadro-pouso) * 0.4 + var(--esp-6));
-  padding-bottom: var(--esp-9);
+  padding-block: var(--esp-9);
   text-align: center;
 }
 
@@ -145,6 +147,17 @@
   overflow: hidden;
 }
 
+/* Celular e tablet em pé (classe ligada pelo espaco.js): o palco fica atrás
+   da abertura, que tem uma tela de altura. Ele já chega fixo quando a frase
+   está no meio da tela, e as fotos entram pela direita assim que ela sobe. */
+.espaco--sobreposto .espaco__abertura {
+  margin-bottom: -100svh;
+}
+
+.espaco--sobreposto .espaco__palco {
+  pointer-events: none;
+}
+
 .espaco--animado .espaco__trilho {
   width: max-content;
   height: 100%;
@@ -165,14 +178,11 @@
 }
 
 @media (max-width: 63.999em) {
-  .espaco--animado .espaco__foto--deitada {
-    width: 80vw;
-    height: auto;
-  }
-
+  .espaco--animado .espaco__foto--deitada,
   .espaco--animado .espaco__foto--em-pe {
-    width: 52vw;
-    height: auto;
+    width: var(--cartao-largura);
+    height: var(--cartao-altura);
+    aspect-ratio: auto;
   }
 }
 

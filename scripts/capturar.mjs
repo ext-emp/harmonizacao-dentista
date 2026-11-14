@@ -60,7 +60,7 @@ async function rolarAte(pagina, vp, alvo) {
 }
 
 const ROTEIROS = {
-  // Etapa 1: preloader, hero (imagem estática e 3D), header e menu.
+  // Etapa 1: preloader, hero, header e menu.
   async etapa1(pagina, vp, salvar) {
     await espera(350);
     await salvar('01-preloader-inicio');
@@ -71,16 +71,6 @@ const ROTEIROS = {
     await salvar('03-hero-revelando');
     await espera(1900);
     await salvar('04-hero');
-    // Espera o 3D aparecer (ou desistir, se não houver WebGL).
-    const tem3d = await pagina
-      .waitForFunction(() => {
-        const c = document.querySelector('.perola-palco__canvas');
-        return c && parseFloat(getComputedStyle(c).opacity) > 0.99;
-      }, null, { timeout: 12000 })
-      .then(() => true)
-      .catch(() => false);
-    await espera(400);
-    await salvar(tem3d ? '05-hero-3d' : '05-hero-sem-3d');
     if (!vp.isMobile) {
       await pagina.mouse.move(vp.width * 0.85, vp.height * 0.2, { steps: 12 });
       await espera(900);

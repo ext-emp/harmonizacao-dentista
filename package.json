@@ -8,8 +8,7 @@
     "dev": "vite",
     "build": "node scripts/otimizar-imagens.mjs && vite build",
     "preview": "vite preview",
-    "imagens": "node scripts/otimizar-imagens.mjs",
-    "perola": "node scripts/capturar-perola.mjs && node scripts/otimizar-imagens.mjs"
+    "imagens": "node scripts/otimizar-imagens.mjs"
   },
   "dependencies": {
     "gsap": "^3.15.0",

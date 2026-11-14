@@ -4,7 +4,7 @@
 //   <!-- @incluir secoes/hero.html -->   insere o arquivo src/secoes/hero.html
 //   <!-- @gerar horarios -->             insere o HTML gerado em vite/geradores.js
 //   {{ whatsapp.link }}                  troca pelo valor (escapado) do contexto
-//   <x-img src="hero/perola" ...></x-img> vira <picture> com AVIF/WebP e srcset
+//   <x-img src="hero/doutor-capa" ...></x-img> vira <picture> com AVIF/WebP e srcset
 //
 // O resultado é HTML estático completo: o conteúdo funciona sem JavaScript.
 // O plugin também serve (no dev) e grava (no build) o robots.txt e o

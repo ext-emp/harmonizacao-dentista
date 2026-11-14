@@ -2,8 +2,8 @@
 // A roda (seções com data-roda) em vários tamanhos de tela, inclusive a
 // altura de verdade de um celular com as barras do navegador (390x664 é um
 // iPhone no Safari), tablets e telas mais largas que a grade (2560x1440).
-// Em cada passo, confere que nenhum texto do palco (rótulo, contador,
-// título, nota, nome e texto do passo) é cruzado pela linha do círculo nem
+// Em cada passo, confere que nenhum texto do palco (rótulo, título, nota,
+// nome e texto do passo) é cruzado pela linha do círculo nem
 // fica no caminho dos números quando a roda gira, que nada sai da tela (nem os
 // números dos lados) e que o texto do passo fica centralizado sob a roda. Onde a roda não cabe
 // (celular deitado, tela muito baixa), confere que virou a lista, sem sobra.
@@ -57,7 +57,6 @@ function medirPalco(id) {
   const ativo = s.querySelector('.roda__item.esta-ativo');
   const textos = {
     rotulo: s.querySelector('.roda__rotulo'),
-    contador: s.querySelector('.roda__contador'),
     titulo: s.querySelector('.roda__titulo-secao'),
     nota: s.querySelector('.roda__nota'),
     nome: ativo?.querySelector('.roda__nome'),

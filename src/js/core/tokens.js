@@ -19,16 +19,11 @@ function duracao(nome, reserva) {
 CustomEase.create('hm-saida', curva('--ease-saida', '0.22,1,0.36,1'));
 CustomEase.create('hm-cortina', curva('--ease-cortina', '0.76,0,0.24,1'));
 CustomEase.create('hm-suave', curva('--ease-suave', '0.33,0,0.15,1'));
-CustomEase.create('hm-queda', curva('--ease-queda', '0.33,0.33,0.55,1'));
-CustomEase.create('hm-deslize', curva('--ease-deslize', '0.45,0,0.55,1'));
 
 export const ease = {
   saida: 'hm-saida',
   cortina: 'hm-cortina',
   suave: 'hm-suave',
-  // Forma do trajeto da pérola (preso ao scroll).
-  queda: 'hm-queda',
-  deslize: 'hm-deslize',
 };
 
 export const dur = {

@@ -103,11 +103,6 @@
   --ease-cortina: cubic-bezier(0.76, 0, 0.24, 1);
   /* Suave: hovers e microinterações. */
   --ease-suave: cubic-bezier(0.33, 0, 0.15, 1);
-  /* Trajeto da pérola (preso ao scroll): estas curvas dão a forma do
-     caminho, não o ritmo. A queda começa no ritmo da página e termina
-     pousada; o deslize começa e termina parado, sem trecho brusco. */
-  --ease-queda: cubic-bezier(0.33, 0.33, 0.55, 1);
-  --ease-deslize: cubic-bezier(0.45, 0, 0.55, 1);
 
   --dur-rapida: 0.35s;
   --dur-media: 0.7s;
@@ -115,11 +110,9 @@
   --dur-lenta: 1.1s;
   --dur-longa: 1.6s;
   --atraso-sequencia: 0.08s;   /* intervalo entre itens em sequência */
-  /* Animações presas ao scroll (scrub) são lineares: quem dá o ritmo é a mão.
-     A exceção é o trajeto da pérola, desenhado com as curvas de trajeto acima. */
+  /* Animações presas ao scroll (scrub) são lineares: quem dá o ritmo é a mão. */
 
   /* ---- Camadas --------------------------------------------------------- */
-  --z-hero-3d: 0;
   --z-header: 50;
   --z-menu: 60;
   --z-grao: 80;

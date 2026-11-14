@@ -7,8 +7,7 @@
    Tela larga e deitada: hero claro, texto nas colunas 1 a 7 e o retrato nas
    colunas 8 a 12, apoiado na base, sem nada por cima da pessoa. (Num iPad
    Pro em pé, com 1024 px, o layout deitado deixava metade da tela vazia em
-   cima.) A pérola tem CSS próprio (componentes/perola.css), com a mesma
-   condição.
+   cima.)
    O botão cabe sempre na primeira tela: o retrato encolhe pela altura
    (--retrato-l). No celular deitado, o layout é o da tela larga (retrato ao
    lado do texto), com o título limitado pela altura.
@@ -23,7 +22,7 @@
      largura de altura e só 0,62 dessa altura (0,775 × a largura) fica acima
      do rótulo: o resto passa por trás do véu. */
   --hero-titulo: var(--fs-display);
-  --hero-texto: calc(var(--hero-titulo) * 1.8 + 14.75rem + 6.3vw + var(--hero-texto-extra, 0rem));
+  --hero-texto: calc(var(--hero-titulo) * 1.8 + 13.5rem + 6.3vw + var(--hero-texto-extra, 0rem));
   --retrato-l: clamp(9rem, (100svh - var(--altura-header) - var(--hero-texto)) / 0.775, min(104vw, 44rem));
   /* Celular: tema escuro. O atributo data-tema-celular avisa o header.js. */
   --tema-fundo: var(--cor-grafite);
@@ -66,6 +65,8 @@
   position: relative;
   z-index: 1;
   flex: 1;
+  /* A largura do grid (100cqi) dá o corpo do rótulo no celular. */
+  container-type: inline-size;
   grid-template-rows: 1fr auto auto auto auto auto;
   padding-bottom: clamp(1.75rem, 1rem + 2.4vw, 3.25rem);
 }
@@ -138,26 +139,27 @@
   z-index: 3;
 }
 
+/* No celular, rótulo, título e subtítulo centralizados (o botão já é). O
+   rótulo, nome e profissão, fica numa linha só: o corpo encolhe o quanto a
+   largura pedir (até o --fs-rotulo). --rotulo-proporcao é a largura da
+   linha dividida pelo corpo da fonte, medida com este espaçamento (27,45),
+   com uma folga: 12 px a partir de uns 390 px de tela, 10 px em 320 px. */
 .hero__rotulo {
+  --rotulo-proporcao: 28;
   grid-column: 1 / -1;
   grid-row: 3;
   margin-bottom: clamp(1rem, 0.8rem + 1vw, 2rem);
+  font-size: min(var(--fs-rotulo), 100cqi / var(--rotulo-proporcao));
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  text-align: center;
   color: var(--tema-texto-2);
-}
-
-/* No celular, nome e profissão em duas linhas (numa só, a linha quebrava no
-   meio da profissão). */
-.hero__rotulo-parte {
-  display: block;
-}
-
-.hero__rotulo-ponto {
-  display: none;
 }
 
 .hero__titulo {
   grid-column: 1 / -1;
   grid-row: 4;
+  text-align: center;
 }
 
 .hero__linha {
@@ -167,16 +169,18 @@
 .hero__subtitulo {
   grid-column: 1 / -1;
   grid-row: 5;
+  justify-self: center;
   max-width: 31ch;
   margin-top: clamp(1.25rem, 0.9rem + 1.6vw, 2.5rem);
+  text-align: center;
   color: var(--tema-texto-2);
 }
 
-/* No celular a cidade segue na mesma linha (a última linha do subtítulo é
-   curta), sem quebrar no meio. */
+/* A cidade só aparece na tela larga (no celular, o usuário pediu para tirar
+   em 13/11/2026; ela continua no contato). */
 .hero__cidade {
+  display: none;
   color: var(--tema-texto);
-  white-space: nowrap;
 }
 
 /* No celular, só o botão, centralizado. */
@@ -248,8 +252,8 @@
   }
 }
 
-/* Celular estreito (até 384 px): o subtítulo ganha uma linha. */
-@media (max-width: 24em) {
+/* Celular estreito (até 331 px): o subtítulo ganha uma linha. */
+@media (max-width: 20.6875em) {
   .hero {
     --hero-texto-extra: 1.7rem;
   }
@@ -300,19 +304,16 @@
   .hero__rotulo {
     grid-column: 1 / span 7;
     grid-row: 2;
-  }
-
-  .hero__rotulo-parte {
-    display: inline;
-  }
-
-  .hero__rotulo-ponto {
-    display: inline;
+    font-size: var(--fs-rotulo);
+    letter-spacing: var(--ls-rotulo);
+    white-space: normal;
+    text-align: start;
   }
 
   .hero__titulo {
     grid-column: 1 / span 7;
     grid-row: 3;
+    text-align: start;
   }
 
   /* A segunda linha entra recuada uma coluna, em escada. */
@@ -323,6 +324,8 @@
   .hero__subtitulo {
     grid-column: 1 / span 4;
     grid-row: 4;
+    justify-self: start;
+    text-align: start;
   }
 
   .hero__cidade {

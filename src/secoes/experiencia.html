@@ -1,7 +1,9 @@
 <!-- A experiência: as etapas, do primeiro contato ao retorno, na roda da LAVA
      dental. Com movimento, o palco fica fixo e cada gesto de rolagem gira a
      roda um passo: o número seguinte chega ao topo e o texto dele aparece
-     embaixo (src/js/modulos/roda.js). O contador "01 / 06" acompanha.
+     embaixo (src/js/modulos/roda.js). Rótulo, título e nota ficam juntos e
+     centralizados acima da roda (sem contador, a pedido do usuário em
+     13/11/2026).
      Sem JavaScript ou com movimento reduzido, é uma lista numerada.
      Em 01/11/2026 a primeira consulta, que tinha uma roda igual a esta, foi
      unida a esta seção (a pedido do usuário).
@@ -11,10 +13,6 @@
   <div class="roda__palco" data-roda-palco data-fixa>
     <div class="roda__cabecalho grade">
       <p class="roda__rotulo rotulo texto-2">A experiência</p>
-      <p class="roda__contador" aria-hidden="true">
-        <span class="roda__atual"><span data-roda-atual>01</span></span>
-        <span class="roda__total">/ 06</span>
-      </p>
       <h2 class="roda__titulo-secao titulo-2" id="experiencia-titulo" data-revelar="linhas" data-linhas>
         Do primeiro contato <em>ao retorno.</em>
       </h2>

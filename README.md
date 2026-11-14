@@ -2,7 +2,7 @@
 
 Site one-page do Dr. Henrique Martins, cirurgião-dentista em Novo Hamburgo/RS: harmonização orofacial e lentes de contato dental. É um site estático (a pasta `dist/`), sem formulário, cookie nem rastreamento.
 
-- **Stack:** Vite + JavaScript puro (módulos ES), GSAP (ScrollTrigger e SplitText), Lenis (scroll suave) e Three.js (a pérola 3D do hero). As imagens são geradas com `sharp`, e os testes rodam no Chrome com Playwright.
+- **Stack:** Vite + JavaScript puro (módulos ES), GSAP (ScrollTrigger e SplitText), Lenis (scroll suave). As imagens são geradas com `sharp`, e os testes rodam no Chrome com Playwright.
 - **Conteúdo no HTML:** o texto fica em `index.html` e `src/secoes/*.html`. No build, um plugin (`vite/`) monta as seções, preenche os dados do doutor e gera o `<picture>` de cada imagem. A página funciona sem JavaScript e com movimento reduzido.
 - **Regras:** o site segue a Resolução CFO 196/2019 (sem preço, promessa, superlativo, "especialista" nem depoimento; antes e depois só com nome, CRO e autorização por escrito). As regras completas e as convenções estão em `.kiro/steering/projeto.md`, e o briefing, em `docs/briefing.md`.
 
@@ -25,13 +25,12 @@ npm run preview   # serve o dist/ em http://localhost:4173/
 | `src/css/` | `tokens.css` (cores, tipografia, espaçamentos, grid, easings e durações), `base.css`, `componentes/` e `secoes/` |
 | `src/js/core/` | Peças comuns: GSAP, scroll (Lenis), tokens, fontes e detecção de aparelho |
 | `src/js/modulos/` | Um módulo por efeito ou seção (header, menu, pilha de seções, galeria, rodas, slider, FAQ…) |
-| `src/js/3d/` | A pérola em Three.js e o ruído que a deforma |
 | `src/dados/` | `doutor.js` (dados de contato e registro) e `casos.js` (antes e depois) |
 | `vite/` | O plugin que monta o HTML: inclusões, dados, dados estruturados e imagens |
 | `fotos/` | Originais das imagens, com nomes padronizados |
 | `public/` | Arquivos servidos como estão: fontes, favicons, imagem do Open Graph e `img/` (gerada a partir de `fotos/`) |
 | `scripts/` | Geração de imagens, testes e capturas de tela (Playwright) |
-| `ferramentas/` | Páginas que renderizam a pérola e as imagens provisórias |
+| `ferramentas/` | Páginas que renderizam as imagens provisórias (com Three.js, só no desenvolvimento) |
 | `docs/` | Briefing, referências, créditos das imagens e notas de trabalho |
 
 ## Trocar dados, textos e fotos
@@ -42,7 +41,6 @@ O que ainda depende do doutor está em `CONTEUDO-PENDENTE.md`, com o lugar de ca
 - **Antes e depois:** a lista fica em `src/dados/casos.js`. Um caso real leva `provisorio: false` e `autorizacaoPorEscrito: true`; sem a autorização marcada, o build para com um aviso. Os casos de hoje são fotos de banco, `provisorio: true`, só para a demonstração: com `ficticio: false` em `src/dados/doutor.js`, o build para até eles serem trocados pelos do doutor. As fotos são `fotos/casos/<id>-antes.jpg` e `fotos/casos/<id>-depois.jpg`.
 - **Textos:** direto no HTML de cada seção, em `src/secoes/`.
 - **Fotos:** substitua o arquivo em `fotos/` mantendo o nome e rode `npm run imagens` (o `npm run build` também roda). O script recorta no centro e gera as versões AVIF e WebP em `public/img/`. As provisórias não têm marca na tela (a lista está no `CONTEUDO-PENDENTE.md`): ao trocar uma, ajuste o `alt`. As provisórias de agora são, em boa parte, fotos de banco do Unsplash (autor e link de cada uma em `docs/creditos-imagens.md`); `node scripts/buscar-unsplash.mjs "<busca>"` monta uma folha de contato para escolher outras.
-- **Pérola do hero:** a imagem estática (`fotos/hero/perola.png`) se refaz com `npm run perola`, que precisa do Chrome.
 - **Prévia do link (WhatsApp, Instagram, Facebook):** `public/og-imagem.jpg`, 1200 × 630 px, trocada direto no lugar (não passa pelo `npm run imagens`).
 
 Com `npm run dev` ligado, a página recarrega sozinha ao salvar um dado ou uma seção, e depois de cada `npm run imagens`.
@@ -74,7 +72,6 @@ node scripts/testar-tamanhos.mjs                # roda em 16 tamanhos (celulares
 node scripts/testar-redimensionar.mjs           # girar o celular ou redimensionar mantém a seção
 node scripts/contraste-fundo.mjs                # contraste do texto sobre a foto de fundo do manifesto
 node scripts/verificar-imagens.mjs              # todas as imagens aparecem na tela
-node scripts/capturar-viagem.mjs                # a pérola não passa por cima do texto nem do retrato (10 tamanhos, inclusive celular baixo e deitado)
 node scripts/verificar-seo.mjs                  # meta tags, JSON-LD, robots.txt e sitemap.xml (como os robôs leem)
 ```
 
@@ -93,7 +90,7 @@ npx -y lighthouse@13.6.0 http://localhost:4173/ --output=json --output=html --ou
 node scripts/resumo-lighthouse.mjs capturas/lighthouse/mobile.report.json
 ```
 
-`testar-roda.mjs`, `testar-tamanhos.mjs`, `testar-redimensionar.mjs` e `capturar-viagem.mjs` só funcionam no servidor de desenvolvimento.
+`testar-roda.mjs`, `testar-tamanhos.mjs` e `testar-redimensionar.mjs` só funcionam no servidor de desenvolvimento.
 
 ### Carga (quantas pessoas ao mesmo tempo)
 

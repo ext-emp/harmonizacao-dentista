@@ -7,10 +7,12 @@
    ========================================================================== */
 
 /* Em cima, respiro entre o contato e o nome (com a entrelinha curta, as
-   letras grandes passam do alto da linha). */
+   letras grandes passam do alto da linha). Embaixo, metade da sobra da
+   última tela (--fim-respiro, em contato.css): o fim da página fica
+   centralizado. */
 .rodape {
   padding-top: var(--esp-6);
-  padding-bottom: var(--esp-5);
+  padding-bottom: var(--fim-respiro);
   overflow: clip;
 }
 

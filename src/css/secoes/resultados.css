@@ -96,7 +96,7 @@
   text-align: center;
 }
 
-/* ---- Rodapé do carrossel: nota, contador e setas ---------------------- */
+/* ---- Rodapé do carrossel: nota e setas -------------------------------- */
 .carrossel__rodape {
   align-items: center;
   row-gap: var(--esp-5);
@@ -108,27 +108,13 @@
   font-size: var(--fs-pequeno);
 }
 
+/* As setas ficam à direita (no celular, embaixo da nota). */
 .carrossel__controles {
   grid-column: 1 / -1;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--esp-3);
-}
-
-.carrossel__contador {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4em;
-  margin-right: auto;
-  font-family: var(--fonte-titulo);
-  font-size: var(--fs-titulo-3);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.carrossel__barra,
-.carrossel__contador [data-carrossel-total] {
-  color: var(--tema-texto-2);
 }
 
 .carrossel__seta {
@@ -182,15 +168,10 @@
 
   .carrossel__controles {
     grid-column: 8 / -1;
-    justify-content: flex-end;
-  }
-
-  .carrossel__contador {
-    margin-right: var(--esp-5);
   }
 }
 
-/* Sem JavaScript, o carrossel é só o scroll nativo: setas e contador saem. */
+/* Sem JavaScript, o carrossel é só o scroll nativo: as setas saem. */
 html:not(.js) .carrossel__controles {
   display: none;
 }

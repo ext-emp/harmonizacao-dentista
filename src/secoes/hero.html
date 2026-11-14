@@ -1,14 +1,12 @@
 <!-- Hero: título em serifa revelado linha a linha, subtítulo com os dois
      focos e a cidade, botão principal e o retrato do doutor recortado (sem
-     fundo). Com o scroll, o "O espaço" sobe por cima do hero e a pérola pousa
-     na abertura dele (src/js/modulos/perola-viagem.js).
-     Na tela larga: hero claro, retrato à direita, indicação de scroll e a
-     pérola no espaço livre entre o texto e o retrato. Texto, retrato e pérola
-     ficam em áreas separadas do grid: um nunca cobre o outro.
+     fundo). Com o scroll, o "O espaço" sobe por cima do hero.
+     Na tela larga: hero claro, retrato à direita e indicação de scroll.
+     Texto e retrato ficam em áreas separadas do grid: um nunca cobre o outro.
      No celular e no tablet em pé, o hero é escuro (data-tema-celular): foto
-     do consultório de fundo, o retrato por cima, a pérola ao lado da cabeça e
-     o texto claro embaixo, sobre um véu escuro que cobre o jaleco. O rosto
-     fica sempre acima do texto. -->
+     do consultório de fundo, o retrato por cima e o texto claro embaixo,
+     sobre um véu escuro que cobre o jaleco. O rosto fica sempre acima do
+     texto. -->
 <section class="hero" id="inicio" data-tema="claro" data-tema-celular="escuro" data-pilha aria-labelledby="hero-titulo" tabindex="-1" data-hero>
   <!-- Fundo do celular (só no CSS do celular, então a tela larga não baixa a
        imagem): fotos/hero/fundo-celular.jpg é um recorte em pé de
@@ -61,23 +59,6 @@
         <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
       </a>
       <p class="hero__nota texto-2">Atendimento pelo WhatsApp</p>
-    </div>
-
-    <!-- A pérola: primeiro a imagem estática, depois o 3D (se houver WebGL).
-         O lugar marca a posição de partida; a "viagem" é quem se move. -->
-    <div class="perola-lugar" aria-hidden="true" data-perola-lugar>
-      <div class="perola-viagem" data-perola-viagem>
-        <div class="perola-palco" data-hero-palco>
-          <x-img
-            src="hero/perola"
-            alt=""
-            sizes="(min-width: 64em) 21rem, 9rem"
-            class="perola-palco__img"
-            classe-picture="perola-palco__picture"
-            loading="eager"
-          ></x-img>
-        </div>
-      </div>
     </div>
 
     <a class="hero__rolar area-toque" href="#espaco" aria-label="Rolar para a próxima seção" data-hero-entra>

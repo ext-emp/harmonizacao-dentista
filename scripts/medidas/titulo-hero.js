@@ -11,7 +11,6 @@
     titulo: r(t),
     mascaras: [...t.querySelectorAll('.linha-mask')].map((m) => ({ ...r(m), overflow: getComputedStyle(m).overflow, pad: getComputedStyle(m).padding })),
     linhas: [...t.querySelectorAll('.linha')].map((l) => ({ ...r(l), display: getComputedStyle(l).display })),
-    palco: r(document.querySelector('[data-hero-palco]')),
     subtitulo: r(document.querySelector('.hero__subtitulo')),
     acoes: r(document.querySelector('.hero__acoes')),
     rotulo: r(document.querySelector('.hero__rotulo')),

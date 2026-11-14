@@ -2,8 +2,7 @@
 // O hero em vários tamanhos de tela, inclusive a altura de verdade de um
 // celular com as barras do navegador (390x664 é um iPhone no Safari).
 // Confere que o botão cabe inteiro na primeira tela, que nenhum texto cobre
-// o rosto do retrato, que a pérola não cobre o rosto nem o texto, que nada
-// passa da largura da tela e, no celular, que o header fica claro sobre o
+// o rosto do retrato, que nada passa da largura da tela e, no celular, que o header fica claro sobre o
 // hero escuro e que o texto tem contraste WCAG sobre o véu e o jaleco (como
 // em contraste-fundo.mjs: esconde o texto, fotografa o fundo e compara com o
 // pixel mais claro atrás de cada linha, percentil 98). Mostra também a
@@ -125,11 +124,6 @@ function medir() {
   const botao = caixa(document.querySelector('.hero__acoes .botao'));
   const rotulo = caixa(document.querySelector('.hero__rotulo'));
 
-  // A pérola ocupa uns 65% do quadro que viaja.
-  const q = caixa(document.querySelector('[data-perola-viagem]'));
-  const m = ((q.r - q.l) * 0.35) / 2;
-  const perola = { l: q.l + m, r: q.r - m, t: q.t + m, b: q.b - m };
-
   return {
     largo,
     vp: [innerWidth, innerHeight],
@@ -139,9 +133,6 @@ function medir() {
     botaoNaTela: botao.b <= innerHeight + 0.5,
     botaoFolga: Math.round(innerHeight - botao.b),
     textoNoRosto: !largo && textos.some((t) => cruza(t, rosto)),
-    perolaNoRosto: cruza(perola, rosto),
-    perolaNoTexto: textos.some((t) => cruza(t, perola)),
-    perolaNaTela: perola.l >= 0 && perola.r <= innerWidth && perola.t >= 0,
     sobraLateral: document.documentElement.scrollWidth - innerWidth,
     headerEscuro: document.querySelector('[data-header]').classList.contains('header--escuro'),
   };
@@ -173,8 +164,6 @@ for (const t of LISTA) {
   if (r.largo && r.vp[1] <= 500) console.log('  -     botão abaixo da primeira tela (celular deitado, esperado)');
   else conferir(r.botaoNaTela, 'botão inteiro na primeira tela');
   if (!r.largo) conferir(!r.textoNoRosto, 'nenhum texto sobre o rosto');
-  conferir(!r.perolaNoRosto && !r.perolaNoTexto, 'pérola longe do rosto e do texto');
-  conferir(r.perolaNaTela, 'pérola inteira na tela');
   conferir(r.sobraLateral <= 0, `sem rolagem lateral${r.sobraLateral > 0 ? ` (${r.sobraLateral} px)` : ''}`);
   conferir(r.headerEscuro === !r.largo, `header com texto ${r.largo ? 'escuro' : 'claro'} sobre o hero`);
   if (CAPTURAS) await pagina.screenshot({ path: `${CAPTURAS}/${t}.png` });

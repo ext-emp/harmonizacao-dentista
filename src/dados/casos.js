@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------------
 // Casos de antes e depois da seção Resultados. Lista única: a ordem daqui é
-// a ordem do carrossel, e o contador ("01 / 06") sai do tamanho da lista.
+// a ordem do carrossel.
 //
 // Fotos de cada caso, com o mesmo enquadramento e a mesma luz:
 //   fotos/casos/<id>-antes.jpg   e   fotos/casos/<id>-depois.jpg

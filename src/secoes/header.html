@@ -1,6 +1,7 @@
 <!-- Header fixo: esconde ao rolar para baixo e volta ao rolar para cima.
      No celular o mesmo <nav> vira o menu em tela cheia. Sem JavaScript, o
-     botão "Menu" abre o menu por âncora (#menu). -->
+     botão do menu abre o menu por âncora (#menu). O botão mostra só o ícone;
+     o nome ("Menu" ou "Fechar") fica para o leitor de tela. -->
 <header class="header header--topo" data-header>
   <div class="header__barra">
     <a class="header__marca" href="#inicio" aria-label="{{ nomeCompleto }}, voltar ao início" data-cursor="link">
@@ -51,7 +52,7 @@
         <span class="visualmente-oculto"> pelo WhatsApp (abre em nova aba)</span>
       </a>
       <a class="header__menu-botao" href="#menu" aria-controls="menu" data-menu-botao>
-        <span class="header__menu-rotulo" data-menu-rotulo>Menu</span>
+        <span class="visualmente-oculto" data-menu-rotulo>Menu</span>
         <span class="header__menu-icone" aria-hidden="true"><span></span><span></span></span>
       </a>
     </div>

@@ -26,7 +26,5 @@
       percurso: r.querySelector('[data-roda-percurso]')?.style.height,
       marcos: r.querySelectorAll('.roda__marco').length,
     })),
-    perola: window.__perola?.medidas(),
-    perolaPai: document.querySelector('[data-perola-viagem]')?.parentElement?.className,
   };
 })()

@@ -1,6 +1,6 @@
 // Carrossel dos resultados. O trilho é um scroll horizontal nativo com
 // encaixe (o dedo e o trackpad já funcionam sem script). Aqui entram as
-// setas, o contador "01 / 06" e o estado das setas nas pontas.
+// setas e o estado delas nas pontas.
 // As setas usam aria-disabled (e não disabled) para o foco do teclado não
 // sumir quando o carrossel chega ao fim.
 import { gsap } from '../core/gsap.js';
@@ -13,8 +13,7 @@ export function iniciarCarrossel() {
   const itens = [...trilho.children];
   const anterior = raiz.querySelector('[data-carrossel-anterior]');
   const proximo = raiz.querySelector('[data-carrossel-proximo]');
-  const atual = raiz.querySelector('[data-carrossel-atual]');
-  if (!itens.length || !anterior || !proximo || !atual) return;
+  if (!itens.length || !anterior || !proximo) return;
 
   // Distância entre o começo de um card e o do seguinte (card + calha).
   const passo = () => (itens.length > 1 ? itens[1].offsetLeft - itens[0].offsetLeft : trilho.clientWidth) || 1;
@@ -25,7 +24,6 @@ export function iniciarCarrossel() {
   function atualizar() {
     quadro = 0;
     const i = indice();
-    atual.textContent = String(i + 1).padStart(2, '0');
     anterior.setAttribute('aria-disabled', String(i <= 0));
     proximo.setAttribute('aria-disabled', String(i >= ultimo()));
   }

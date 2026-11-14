@@ -109,11 +109,6 @@ export function horarios(c) {
     .join('\n');
 }
 
-// Total de casos com dois dígitos, para o contador do carrossel ("01 / 06").
-export function totalCasos(c) {
-  return String(c.casos.length).padStart(2, '0');
-}
-
 // Cards do carrossel de antes e depois, a partir de src/dados/casos.js.
 // A foto do depois fica no fundo; a do antes, por cima, recortada até a linha.
 // Cada rótulo mora na camada da sua foto: quando a linha passa por cima dele,

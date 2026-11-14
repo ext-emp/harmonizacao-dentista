@@ -3,7 +3,7 @@
 // capturas dos estados. Sai com código 1 se algum teste falhar.
 //
 //  Desktop (mouse): slider (clicar, arrastar, teclado, leitor de tela),
-//  carrossel (setas e contador), cursor ("Arraste", "Ver", link), imagem da
+//  carrossel (setas), cursor ("Arraste", "Ver", link), imagem da
 //  lista de procedimentos seguindo o cursor, FAQ (abrir e fechar) e a roda
 //  da experiência (um gesto, um passo).
 //  Celular (toque emulado pelo CDP): arrastar perto da linha move o slider;
@@ -142,10 +142,18 @@ const posicao = (pagina, i = 0) =>
   await pagina.keyboard.press('Home');
 
   // ---- Carrossel ----
-  const contador = () => pagina.locator('[data-carrossel-atual]').textContent();
-  conferir('carrossel: contador começa em 01', (await contador()) === '01', await contador());
-  const total = await pagina.locator('[data-carrossel-total]').textContent();
-  conferir('carrossel: total vem da lista de casos', total.trim() === '06', total.trim());
+  // Primeiro card inteiro na tela (1 = o primeiro da lista).
+  const cardAtual = () =>
+    pagina.evaluate(() => {
+      const trilho = document.querySelector('[data-carrossel-trilho]');
+      const [a, b] = trilho.children;
+      return Math.round(trilho.scrollLeft / (b.offsetLeft - a.offsetLeft)) + 1;
+    });
+  conferir('carrossel: começa no primeiro card', (await cardAtual()) === 1, await cardAtual());
+  conferir(
+    'carrossel: sem contador',
+    (await pagina.locator('[data-carrossel-controles]').innerText()).trim() === '',
+  );
   conferir(
     'carrossel: seta anterior desativada no início',
     (await pagina.locator('[data-carrossel-anterior]').getAttribute('aria-disabled')) === 'true',
@@ -161,21 +169,21 @@ const posicao = (pagina, i = 0) =>
   conferir('carrossel: 3 cards inteiros no desktop', visiveis === 3, visiveis);
   await pagina.locator('[data-carrossel-proximo]').click();
   await espera(1100);
-  conferir('carrossel: seta próxima avança o contador', (await contador()) === '02', await contador());
+  conferir('carrossel: seta próxima avança um card', (await cardAtual()) === 2, await cardAtual());
   await salvar('04-carrossel-proximo');
   // Clica além do fim de propósito (force: a seta já fica aria-disabled).
   for (let i = 0; i < 4; i++) {
     await pagina.locator('[data-carrossel-proximo]').click({ force: true });
     await espera(900);
   }
-  conferir('carrossel: para no último grupo (04 / 06)', (await contador()) === '04', await contador());
+  conferir('carrossel: para no último grupo (cards 4 a 6)', (await cardAtual()) === 4, await cardAtual());
   conferir(
     'carrossel: seta próxima desativada no fim',
     (await pagina.locator('[data-carrossel-proximo]').getAttribute('aria-disabled')) === 'true',
   );
   await pagina.locator('[data-carrossel-anterior]').click();
   await espera(1000);
-  conferir('carrossel: seta anterior volta', (await contador()) === '03', await contador());
+  conferir('carrossel: seta anterior volta', (await cardAtual()) === 3, await cardAtual());
 
   // ---- Tratamentos: cursor "Ver" e lista com imagem ----
   await rolarAte(pagina, '.tratamento--rosto', -120);
@@ -267,13 +275,12 @@ const posicao = (pagina, i = 0) =>
       return {
         ativa: s.classList.contains('roda--ativa'),
         marco: [...s.querySelectorAll('.roda__marco')].findIndex((m) => m.classList.contains('esta-ativo')),
-        contador: s.querySelector('[data-roda-atual]').textContent,
         texto: [...s.querySelectorAll('[data-roda-item]')].filter((it) => parseFloat(getComputedStyle(it).opacity) > 0.99).length,
         topo: Math.round(s.querySelector('[data-roda-palco]').getBoundingClientRect().top),
       };
     }, id);
     conferir(`${id}: a roda está ligada e o palco fica fixo no topo`, roda.ativa && Math.abs(roda.topo) <= 1, `topo ${roda.topo}`);
-    conferir(`${id}: um gesto gira a roda para o passo 2`, roda.marco === 1 && roda.contador === '02', `marco ${roda.marco}, contador ${roda.contador}`);
+    conferir(`${id}: um gesto gira a roda para o passo 2`, roda.marco === 1, `marco ${roda.marco}`);
     conferir(`${id}: só o texto do passo ativo aparece`, roda.texto === 1, roda.texto);
     await salvar(`10-${id}-passo-2`);
   }
@@ -331,8 +338,12 @@ const posicao = (pagina, i = 0) =>
   const depoisFoto = await estado();
   conferir('toque: arrastar no resto da foto passa o carrossel', depoisFoto.trilho > depoisLinha.trilho + 100, `${depoisLinha.trilho} -> ${depoisFoto.trilho}`);
   conferir('toque: e o slider fica onde estava', Math.abs(depoisFoto.posicao - depoisLinha.posicao) < 0.5, depoisFoto.posicao.toFixed(1));
-  const contador = await pagina.locator('[data-carrossel-atual]').textContent();
-  conferir('toque: contador acompanha o carrossel', contador === '02', contador);
+  const card = await pagina.evaluate(() => {
+    const trilho = document.querySelector('[data-carrossel-trilho]');
+    const [a, b] = trilho.children;
+    return Math.round(trilho.scrollLeft / (b.offsetLeft - a.offsetLeft)) + 1;
+  });
+  conferir('toque: o carrossel encaixa no segundo card', card === 2, card);
   await salvar('02-toque-carrossel');
 
   const card2 = await pagina.locator('[data-comparador]').nth(1).boundingBox();

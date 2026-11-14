@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Roda (a experiência), no estilo da LAVA dental.
 // O palco fica fixo (sticky) e cada passo gira a roda: o número seguinte
-// chega ao topo, o texto dele aparece embaixo e o contador rola.
+// chega ao topo e o texto dele aparece embaixo.
 //  - Mouse ou trackpad: um gesto de rolagem = um passo. A roda do mouse passa
 //    por aqui antes do Lenis (interceptarRoda): o gesto é engolido e a página
 //    anda exatamente até o passo seguinte. No primeiro e no último passo, o
@@ -71,8 +71,6 @@ function criarRoda(secao) {
   const cabecalho = secao.querySelector('.roda__cabecalho');
   const disco = secao.querySelector('[data-roda-disco]');
   const percurso = secao.querySelector('[data-roda-percurso]');
-  const numero = secao.querySelector('[data-roda-atual]');
-  const totalNoContador = secao.querySelector('.roda__total');
   const total = itens.length;
   if (total < 2 || !palco || !cabecalho || !disco || !percurso) return null;
 
@@ -82,13 +80,12 @@ function criarRoda(secao) {
   const grausPorPasso = 360 / total;
   const passo = () => Math.round(window.innerHeight * PASSO_NA_TELA);
   let ativo = -1;
-  let trocaNumero = null;
   const roda = { secao, irPara, desmontar, total, passo, travada: false, gatilho: null };
 
-  // O número do topo da roda não pode encostar no cabeçalho. No celular, o
-  // título e a nota ocupam a largura toda (e crescem com o texto): a roda
-  // desce o quanto for preciso. Só conta o que está na faixa do meio, por
-  // onde o número passa (no desktop, o título e a nota ficam dos lados).
+  // O número do topo da roda não pode encostar no cabeçalho: o rótulo, o
+  // título e a nota ficam centralizados, bem no caminho dele, e a roda desce
+  // o quanto for preciso. Só conta o que está na faixa do meio, por onde o
+  // número passa.
   function abrirEspacoNoTopo() {
     secao.style.removeProperty('--roda-desce');
     const p = palco.getBoundingClientRect();
@@ -123,8 +120,7 @@ function criarRoda(secao) {
   function desmontar() {
     ScrollTrigger.removeEventListener('refreshInit', medir);
     roda.gatilho?.kill();
-    trocaNumero?.kill();
-    const animados = [disco, numero, ...itens].filter(Boolean);
+    const animados = [disco, ...itens];
     gsap.killTweensOf(animados);
     gsap.set(animados, { clearProps: 'all' });
     secao.classList.remove('roda--ativa');
@@ -132,7 +128,6 @@ function criarRoda(secao) {
     percurso.style.removeProperty('height');
     disco.replaceChildren();
     itens.forEach((item) => item.classList.remove('esta-ativo'));
-    if (numero) numero.textContent = '01';
   }
 
   abrirEspacoNoTopo();
@@ -140,21 +135,7 @@ function criarRoda(secao) {
     desmontar();
     return null;
   }
-  // O total do contador ("/ 06") sai da lista, como a roda.
-  if (totalNoContador) totalNoContador.textContent = `/ ${String(total).padStart(2, '0')}`;
   gsap.set(itens, { opacity: 0 });
-
-  function trocarNumero(i, subindo) {
-    const texto = String(i + 1).padStart(2, '0');
-    trocaNumero?.kill();
-    trocaNumero = gsap
-      .timeline()
-      .to(numero, { yPercent: subindo ? -110 : 110, duration: dur.rapida, ease: ease.cortina })
-      .add(() => {
-        numero.textContent = texto;
-      })
-      .fromTo(numero, { yPercent: subindo ? 110 : -110 }, { yPercent: 0, duration: dur.media, ease: ease.saida });
-  }
 
   function irPara(i, { imediato = false } = {}) {
     const alvo = gsap.utils.clamp(0, total - 1, i);
@@ -167,7 +148,6 @@ function criarRoda(secao) {
     if (imediato || anterior < 0) {
       gsap.set(itens, { opacity: 0, y: 0 });
       gsap.set(itens[alvo], { opacity: 1 });
-      if (numero) numero.textContent = String(alvo + 1).padStart(2, '0');
       return;
     }
     gsap.to(itens[anterior], { opacity: 0, y: -14, duration: dur.rapida, ease: ease.suave, overwrite: true });
@@ -176,7 +156,6 @@ function criarRoda(secao) {
       { opacity: 0, y: 18 },
       { opacity: 1, y: 0, duration: dur.media, ease: ease.saida, delay: dur.rapida * 0.6, overwrite: true },
     );
-    if (numero) trocarNumero(alvo, alvo > anterior);
   }
 
   medir();

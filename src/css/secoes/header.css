@@ -102,14 +102,13 @@
 }
 
 /* ---- Botão do menu (celular) ----------------------------------------- */
+/* Só o ícone, encostado à direita; a área de toque continua com 44 px. */
 .header__menu-botao {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: flex-end;
+  min-width: 2.75rem;
   height: 2.75rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
 }
 
 .header__menu-icone {
@@ -196,7 +195,10 @@
 
 /* ---- Menu em tela cheia (celular e tablet) ---------------------------- */
 @media (max-width: 63.999em) {
-  .header__cta-extra {
+  /* No celular e no tablet, o header fica só com o monograma e o menu (o
+     usuário pediu para tirar o "Agendar" em 13/11/2026): o hero tem o botão
+     grande e o menu aberto tem o seu. */
+  .header__cta {
     display: none;
   }
 
@@ -290,9 +292,5 @@
 
   .header--menu-aberto::before {
     opacity: 0;
-  }
-
-  .header--menu-aberto .header__cta {
-    visibility: hidden;
   }
 }

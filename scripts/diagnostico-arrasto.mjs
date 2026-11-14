@@ -1,6 +1,6 @@
 // Diagnóstico do arrasto no carrossel (toque pelo CDP). Repete o gesto e
 // registra: eventos de ponteiro recebidos, tarefas longas na thread
-// principal (ex.: a pérola 3D compilando) e a posição do trilho no tempo.
+// principal e a posição do trilho no tempo.
 // Uso: node scripts/diagnostico-arrasto.mjs [repeticoes] [atrasoInicialMs]
 import { chromium } from 'playwright';
 
@@ -53,10 +53,9 @@ for (let n = 1; n <= Number(repeticoes); n++) {
   const r = await pagina.evaluate((m) => ({
     eventos: window.__eventos.slice(-4),
     longasPerto: window.__longas.filter((l) => Math.abs(Number(l.split('+')[0]) - m) < 3000),
-    tem3d: Boolean(document.querySelector('.perola-palco__canvas')),
   }), marco);
   console.log(
-    `#${n}: trilho ${amostras.map((a) => `${a.ms}ms=${a.x}`).join(' ')} | eventos ${r.eventos.join(', ')} | tarefas longas perto do gesto: ${r.longasPerto.join(', ') || 'nenhuma'} | pérola 3D ${r.tem3d ? 'criada' : 'ainda não'}`,
+    `#${n}: trilho ${amostras.map((a) => `${a.ms}ms=${a.x}`).join(' ')} | eventos ${r.eventos.join(', ')} | tarefas longas perto do gesto: ${r.longasPerto.join(', ') || 'nenhuma'}`,
   );
   await contexto.close();
 }

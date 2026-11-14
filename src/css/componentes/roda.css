@@ -51,7 +51,6 @@
   grid-row: 3;
 }
 
-.roda__contador,
 .roda__disco,
 .roda__haste {
   display: none;
@@ -103,43 +102,21 @@
   overflow: hidden;
 }
 
+/* Rótulo, título e nota juntos, centralizados acima da roda. A roda desce o
+   quanto o cabeçalho pedir (roda.js). */
 .roda--ativa .roda__cabecalho {
+  justify-items: center;
   padding-top: calc(var(--altura-header) + var(--esp-5));
+  text-align: center;
+}
+
+.roda--ativa .roda__rotulo {
+  grid-column: 1 / -1;
 }
 
 .roda--ativa .roda__titulo-secao {
-  grid-column: 1 / span 8;
   /* Telas baixas: o título não pode encostar no número do topo da roda. */
   font-size: min(var(--fs-titulo-2), 8svh);
-}
-
-/* Contador "01 / 06": o número atual rola dentro de uma janela de uma linha. */
-.roda--ativa .roda__contador {
-  grid-column: 9 / -1;
-  grid-row: 1;
-  justify-self: end;
-  display: flex;
-  align-items: baseline;
-  gap: 0.35em;
-  font-family: var(--fonte-titulo);
-  font-size: var(--fs-titulo-3);
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.roda__atual {
-  display: inline-block;
-  height: 1em;
-  overflow: hidden;
-}
-
-.roda__atual > span {
-  display: block;
-}
-
-.roda__total {
-  font-size: 0.6em;
-  color: var(--tema-texto-2);
 }
 
 /* O disco é só o centro da roda: tudo dentro dele gira junto. */
@@ -258,17 +235,4 @@
 
 .roda--ativa .roda__texto {
   margin-inline: auto;
-}
-
-/* No desktop, a nota fica à direita, sob o contador: longe do caminho dos
-   números quando a roda gira. (No celular, continua sob o título; a roda
-   desce para dar espaço.) */
-@media (min-width: 64em) {
-  .roda--ativa .roda__nota {
-    grid-column: 9 / -1;
-    grid-row: 2;
-    align-self: start;
-    justify-self: end;
-    text-align: end;
-  }
 }

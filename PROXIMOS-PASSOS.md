@@ -50,7 +50,7 @@ npx vite preview --port 4173 --strictPort
 URL_SITE=http://localhost:4173/ node scripts/testar-interacoes.mjs
 ```
 
-`testar-roda.mjs`, `testar-tamanhos.mjs`, `testar-redimensionar.mjs` e `capturar-viagem.mjs` só funcionam com o servidor de desenvolvimento: usam `window.__rodas`, `window.__lenis` e `window.__perola`, que só existem nele.
+`testar-roda.mjs`, `testar-tamanhos.mjs` e `testar-redimensionar.mjs` só funcionam com o servidor de desenvolvimento: usam `window.__rodas` e `window.__lenis`, que só existem nele.
 
 ---
 
@@ -92,7 +92,6 @@ node scripts/testar-tamanhos.mjs                # a roda em 16 tamanhos (celular
 node scripts/testar-redimensionar.mjs           # lugar da leitura e giro do celular
 node scripts/contraste-fundo.mjs
 node scripts/verificar-imagens.mjs
-node scripts/capturar-viagem.mjs                # nenhuma sobreposição
 node scripts/verificar-seo.mjs                  # meta tags, JSON-LD, robots.txt e sitemap.xml
 ```
 
@@ -110,9 +109,6 @@ node scripts/verificar-seo.mjs                  # meta tags, JSON-LD, robots.txt
 # Uma captura por seção, em capturas/final/desktop e capturas/final/mobile.
 # Para movimento reduzido, repita com --reduzido no fim.
 node scripts/capturar.mjs --roteiro secoes --vp desktop,mobile --saida capturas/final --ancoras "#espaco,#manifesto,#tratamentos,#resultados,#sobre,#experiencia,#faq,#contato"
-
-# Hero sem WebGL (a imagem estática da pérola)
-node scripts/capturar.mjs --vp desktop,mobile --sem-webgl --saida capturas/final
 
 # A página inteira em quadros (transições, galeria e rodas) e a folha de contato
 node scripts/capturar-jornada.mjs --vp desktop --ate 60000 --passo 900 --colunas 8
@@ -132,7 +128,7 @@ O `--ate 60000` passa do fim da página de propósito: o script para na rolagem 
 O `capturar-jornada.mjs` sempre inclui a posição final (o rodapé) como último quadro, com pelo menos 3 s de espera, para o nome "Henrique Martins" sair inteiro. A espera dos outros quadros muda com `--espera` (padrão: 750 ms).
 
 - Abrir as imagens e olhar de verdade, porque o script rodar não prova nada sobre o visual: texto sobre texto, imagem cortada, espaço sobrando, contraste, etiquetas `[CONFIRMAR]` sobrepostas, itens fora da tela no celular. Corrigir e capturar de novo.
-- Repetir a verificação do briefing: console sem erros (os scripts avisam), toque emulado, movimento reduzido, slider com mouse, toque e teclado (o `testar-interacoes.mjs` cobre os dois últimos), hero sem WebGL.
+- Repetir a verificação do briefing: console sem erros (os scripts avisam), toque emulado, movimento reduzido, slider com mouse, toque e teclado (o `testar-interacoes.mjs` cobre os dois últimos).
 - Opcional: 1920×1080 com `--vp 1920x1080` no `capturar-jornada.mjs`.
 
 **Pronto quando:** nos dois tamanhos, com e sem movimento reduzido, não há sobreposição, corte nem texto ilegível; o console está limpo; e o usuário viu as folhas de contato.
@@ -146,8 +142,8 @@ O `capturar-jornada.mjs` sempre inclui a posição final (o rodapé) como últim
 - Criar `README.md` na raiz, em português e curto, com:
   - o que é o projeto e a stack;
   - como rodar (`npm install`, `npm run dev`, `npm run build`, `npm run preview`);
-  - a estrutura de pastas (`src/secoes`, `src/css`, `src/js/core`, `src/js/modulos`, `src/js/3d`, `src/dados`, `vite/`, `fotos/`, `public/`, `scripts/`, `ferramentas/`, `docs/`);
-  - como trocar os dados (`src/dados/doutor.js` e `src/dados/casos.js`) e as fotos (`fotos/` e `npm run imagens`; os tamanhos estão em `CONTEUDO-PENDENTE.md`; a pérola se refaz com `npm run perola`);
+  - a estrutura de pastas (`src/secoes`, `src/css`, `src/js/core`, `src/js/modulos`, `src/dados`, `vite/`, `fotos/`, `public/`, `scripts/`, `ferramentas/`, `docs/`);
+  - como trocar os dados (`src/dados/doutor.js` e `src/dados/casos.js`) e as fotos (`fotos/` e `npm run imagens`; os tamanhos estão em `CONTEUDO-PENDENTE.md`);
   - como publicar na Vercel ou na Netlify (comando `npm run build`, pasta `dist`, domínio em `site.url` de `doutor.js`);
   - como rodar os testes de `scripts/`.
 - Conferir que todo `[CONFIRMAR]` do código está em `CONTEUDO-PENDENTE.md`: `git grep -n CONFIRMAR -- src vite index.html`. Acrescentar o que faltar.

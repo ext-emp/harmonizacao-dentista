@@ -7,6 +7,24 @@
    recolhidas, a maior): no fim da página o contato chega ao topo e cobre o
    FAQ inteiro. A altura do rodapé vem do JS (pilha.js); sem ela, nada muda.
    A sobra fica dividida em cima e embaixo do conteúdo. */
+/* Fim da página: na última tela, as informações e o rodapé ficam
+   centralizados na altura. --fim-conteudo (src/js/modulos/fim.js) é a altura
+   do bloco, da linha das informações ao pé do rodapé. O resto da tela vai
+   metade em cima, na margem acima das informações (com um respiro a mais,
+   para o botão ficar inteiro fora da tela), e metade embaixo, no rodapé.
+   Só com a tela deitada: em pé (celular e tablet), a última tela já mostra o
+   contato inteiro ou o botão já fica fora, e a sobra viraria um buraco.
+   Sem a medida (sem JavaScript), valem os respiros normais. */
+:root {
+  --fim-respiro: var(--esp-5);
+}
+
+@media (orientation: landscape) {
+  :root {
+    --fim-respiro: max(var(--esp-5), (100vh - var(--fim-conteudo, 100vh)) / 2);
+  }
+}
+
 .contato {
   display: grid;
   align-content: center;
@@ -55,7 +73,7 @@
 .contato__infos {
   display: grid;
   gap: var(--esp-7);
-  margin-top: clamp(4rem, 2rem + 6vw, 8rem);
+  margin-top: max(clamp(4rem, 2rem + 6vw, 8rem), var(--fim-respiro) + var(--esp-6));
   padding-top: var(--esp-6);
   border-top: 1px solid var(--tema-linha);
 }

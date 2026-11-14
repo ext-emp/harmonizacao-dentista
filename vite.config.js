@@ -15,7 +15,5 @@ export default defineConfig({
     target: 'es2020',
     // Nada de source map no build publicado (nenhum .map no dist).
     sourcemap: false,
-    // Three.js fica num pedaço separado, carregado só depois do conteúdo.
-    chunkSizeWarningLimit: 900,
   },
 });

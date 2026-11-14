@@ -5,7 +5,6 @@
 //  2. o que muda a altura da página (galeria do espaço e rodas), o
 //     empilhamento das seções e os efeitos de cada seção, na ordem da página
 //  3. fontes -> preloader (primeira visita) -> entrada do hero
-//  4. depois do conteúdo e da entrada do hero: a pérola 3D
 // ---------------------------------------------------------------------------
 import { gsap, ScrollTrigger } from './core/gsap.js';
 import { iniciarScroll } from './core/scroll.js';
@@ -19,8 +18,6 @@ import { iniciarAncoras } from './modulos/ancoras.js';
 import { iniciarCursor } from './modulos/cursor.js';
 import { iniciarMagneticos } from './modulos/magnetico.js';
 import { revelarHero } from './modulos/hero.js';
-import { iniciarViagemDaPerola } from './modulos/perola-viagem.js';
-import { carregarPerola3d } from './modulos/hero-3d.js';
 import { iniciarManifesto } from './modulos/manifesto.js';
 import { iniciarContadores } from './modulos/contador.js';
 import { iniciarTratamentos } from './modulos/tratamentos.js';
@@ -29,6 +26,8 @@ import { iniciarCarrossel } from './modulos/carrossel.js';
 import { iniciarEspaco } from './modulos/espaco.js';
 import { iniciarRodas } from './modulos/roda.js';
 import { iniciarPilha } from './modulos/pilha.js';
+import { iniciarFim } from './modulos/fim.js';
+import { iniciarPassagem } from './modulos/passagem.js';
 import { iniciarFaq } from './modulos/faq.js';
 import { iniciarRevelacoes } from './modulos/revelar.js';
 import { iniciarParallax } from './modulos/parallax.js';
@@ -56,11 +55,12 @@ iniciarCursor();
 iniciarMagneticos();
 
 // Primeiro o que muda a altura da página; depois o empilhamento (mede as
-// alturas) e a pérola (precisa saber se o hero ficou preso).
+// alturas). O fim vem antes da pilha: nos refreshes, mede antes dela.
 iniciarEspaco();
 iniciarRodas();
+iniciarFim();
 iniciarPilha();
-const perola = iniciarViagemDaPerola();
+iniciarPassagem();
 iniciarManifesto(fontes);
 iniciarContadores();
 iniciarTratamentos();
@@ -72,28 +72,12 @@ iniciarParallax();
 iniciarToqueCentro();
 manterLugar();
 
-let preloader = Promise.resolve();
-// Fim da entrada do hero (título, retrato e pérola).
-let entradaDoHero = Promise.resolve();
 if (semAnimacao()) {
   // O script chegou tarde demais: a página já está toda visível.
   document.querySelector('[data-preloader]')?.remove();
 } else {
-  let fimDaEntrada;
-  entradaDoHero = new Promise((resolver) => {
-    fimDaEntrada = resolver;
-  });
-  preloader = rodarPreloader({ fontes, aoAbrir: () => fontes.then(revelarHero).then(fimDaEntrada) });
+  rodarPreloader({ fontes, aoAbrir: () => fontes.then(revelarHero) });
 }
-
-// A pérola 3D só depois da entrada do hero: montá-la custa caro (no celular,
-// a tela trava por uns instantes) e travaria a animação. Até lá, fica a
-// imagem estática, igual. (Com um limite, se a entrada não terminar.)
-const limite = (ms) => new Promise((resolver) => setTimeout(resolver, ms));
-carregarPerola3d({
-  depoisDe: Promise.all([preloader, Promise.race([entradaDoHero, limite(8000)])]),
-  aoCriar: (perola3d) => perola.definirPerola(perola3d),
-});
 
 // Posições do ScrollTrigger. Cada gatilho mede a sua ao nascer; recalcular a
 // página inteira custa caro (no celular, de 50 a 200 ms de tela travada):

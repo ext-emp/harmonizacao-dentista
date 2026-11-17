@@ -33,6 +33,9 @@
   letter-spacing: -0.015em;
   text-align: center;
   text-wrap: pretty;
+  /* Os &shy; do HTML só valem no celular, onde o texto é justificado. */
+  -webkit-hyphens: none;
+  hyphens: none;
 }
 
 .manifesto__texto em {
@@ -45,6 +48,27 @@
 .manifesto__texto .palavra {
   color: var(--cor-manifesto-apagado);
   text-indent: 0;
+}
+
+/* No celular, justificado (pedido do usuário em 16/11/2026). A última linha
+   fica centralizada, no mesmo eixo do rótulo. Com letra grande em coluna
+   estreita, o justificado abria vãos largos entre as palavras: os hifens
+   opcionais (&shy; no HTML) fecham esses vãos, e text-wrap: wrap no lugar do
+   pretty, que evita os hifens (mesmo caso do Sobre e do FAQ). O SplitText põe
+   cada palavra num inline-block, que não quebra no hífen; aqui ela volta a
+   ser inline (o acender é só cor). */
+@media (max-width: 47.999em) {
+  .manifesto__texto {
+    text-align: justify;
+    text-align-last: center;
+    text-wrap: wrap;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .manifesto__texto .palavra {
+    display: inline !important;
+  }
 }
 
 @media (min-width: 64em) {

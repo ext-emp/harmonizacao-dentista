@@ -121,7 +121,13 @@
 
   --raio-pilula: 999px;
   --raio-card: 1.25rem;
-  --altura-header: clamp(4.25rem, 3.6rem + 1.6vw, 5.5rem);
+  /* A página usa viewport-fit=cover: no iPhone, ela passa por baixo da barra
+     de status (hora, sinal, bateria). O header soma essa faixa à altura da
+     barra, e tudo o que se afasta do header (--altura-header) já conta com
+     ela. Fora do iPhone, a faixa é 0. */
+  --topo-seguro: env(safe-area-inset-top, 0px);
+  --altura-barra: clamp(4.25rem, 3.6rem + 1.6vw, 5.5rem);
+  --altura-header: calc(var(--altura-barra) + var(--topo-seguro));
 }
 
 /* Seções claras alternativas (linho): o resto do tema claro continua valendo. */

@@ -12,7 +12,10 @@
   position: fixed;
   inset: 0 0 auto;
   z-index: var(--z-header);
+  /* No iPhone, a barra fica abaixo da hora e da bateria; o fundo do header
+     sobe por baixo delas (--topo-seguro, tokens.css). */
   height: var(--altura-header);
+  padding-top: var(--topo-seguro);
   color: var(--header-texto);
   transition:
     transform var(--dur-media) var(--ease-cortina),
@@ -178,7 +181,6 @@
     background-size: 100% 1px;
   }
 
-  .menu__numero,
   .menu__extras,
   .menu__fechar-semjs,
   .header__menu-botao {
@@ -226,42 +228,41 @@
 
   .menu__lista {
     display: grid;
-    gap: 0.125rem;
   }
 
-  /* Cada item é a máscara do próprio link, que entra subindo. */
+  /* Cada item é a máscara do próprio link, que entra subindo. Um filete
+     separa um item do outro (pedido do usuário em 16/11/2026): ele chega com
+     a cortina e os links sobem entre os filetes. */
   .menu__item {
     overflow: hidden;
   }
 
+  .menu__item + .menu__item {
+    border-top: 1px solid var(--cor-linha-escura);
+  }
+
+  /* Sem a numeração 01–06 (o usuário pediu para tirar em 16/11/2026). */
   .menu__link {
     display: flex;
     align-items: baseline;
-    gap: var(--esp-4);
-    padding-block: 0.1em;
+    padding-block: 0.14em;
     font-family: var(--fonte-titulo);
     font-size: clamp(2.75rem, 1.6rem + 6vw, 4.5rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
   }
 
-  .menu__numero {
-    min-width: 1.75rem;
-    font-family: var(--fonte-texto);
-    font-size: var(--fs-rotulo);
-    font-weight: 600;
-    letter-spacing: var(--ls-rotulo);
-    color: var(--cor-texto-2-escuro);
-  }
-
+  /* Botão, Instagram e cidade centralizados (pedido de 16/11/2026). */
   .menu__extras {
     display: grid;
-    justify-items: start;
+    justify-items: center;
     gap: var(--esp-5);
+    text-align: center;
   }
 
   .menu__info {
     display: grid;
+    justify-items: center;
     gap: var(--esp-2);
     font-size: var(--fs-pequeno);
     color: var(--cor-texto-2-escuro);

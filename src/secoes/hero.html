@@ -14,20 +14,18 @@
        do doutor no consultório, ela vira o fundo e o retrato recortado sai. -->
   <div class="hero__fundo" aria-hidden="true"></div>
   <div class="hero__grade grade">
-    <!-- PROVISÓRIO: fotos/hero/doutor-capa.png é uma foto de banco (Unsplash)
-         de um modelo, com o fundo recortado aqui (docs/creditos-imagens.md).
-         Não é o doutor: não pode ir ao ar como retrato dele (e não tem marca
-         na tela: está na lista do CONTEUDO-PENDENTE.md).
-         Ao trocar pela foto dele recortada (PNG transparente, 4:5, 1600 × 2000):
-         troque o alt por "Retrato do Dr. Henrique Martins". A classe
-         hero__composicao--sangria encosta a foto na borda direita da tela,
-         para fotos cortadas no ombro. Esta foto não
-         usa a classe: a pessoa cabe inteira na largura. -->
+    <!-- fotos/hero/doutor-capa.png: o Dr. Henrique, recortado (sem fundo) de
+         uma captura do Instagram dele que o usuário mandou em 16/11/2026
+         (docs/creditos-imagens.md). Tem 1136 × 1332 px: uma foto original,
+         maior (4:5, 1600 × 2000), fica mais nítida na tela larga.
+         A classe hero__composicao--sangria encosta a foto na borda direita da
+         tela, para fotos cortadas no ombro. Esta foto não usa a classe: a
+         pessoa cabe inteira na largura. -->
     <div class="hero__composicao" data-hero-composicao>
       <div class="hero__retrato" data-hero-retrato>
         <x-img
           src="hero/doutor-capa"
-          alt="Imagem provisória no lugar do retrato do Dr. Henrique Martins"
+          alt="Retrato do Dr. Henrique Martins"
           sizes="(min-width: 64em) and (orientation: landscape) 40vw, (min-width: 40em) 48vw, 74vw"
           class="hero__retrato-img"
           classe-picture="hero__retrato-picture"

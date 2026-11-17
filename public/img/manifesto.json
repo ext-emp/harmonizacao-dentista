@@ -1,31 +1,29 @@
 {
   "casos/caso-01-antes": {
-    "largura": 1080,
-    "altura": 1080,
+    "largura": 720,
+    "altura": 720,
     "larguras": [
       480,
-      720,
-      1080
+      720
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#d8a8a8"
+    "cor": "#c89878"
   },
   "casos/caso-01-depois": {
-    "largura": 1080,
-    "altura": 1080,
+    "largura": 720,
+    "altura": 720,
     "larguras": [
       480,
-      720,
-      1080
+      720
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#080808"
+    "cor": "#a87858"
   },
   "casos/caso-02-antes": {
     "largura": 1080,
@@ -39,7 +37,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#182828"
+    "cor": "#080808"
   },
   "casos/caso-02-depois": {
     "largura": 1080,
@@ -53,21 +51,19 @@
       "avif",
       "webp"
     ],
-    "cor": "#182828"
+    "cor": "#080808"
   },
   "casos/caso-03-antes": {
-    "largura": 1080,
-    "altura": 1080,
+    "largura": 451,
+    "altura": 451,
     "larguras": [
-      480,
-      720,
-      1080
+      451
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#181818"
+    "cor": "#f8b898"
   },
   "casos/caso-03-depois": {
     "largura": 1080,
@@ -81,49 +77,45 @@
       "avif",
       "webp"
     ],
-    "cor": "#181818"
+    "cor": "#080808"
   },
   "casos/caso-04-antes": {
-    "largura": 1080,
-    "altura": 1080,
+    "largura": 720,
+    "altura": 720,
     "larguras": [
       480,
-      720,
-      1080
+      720
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#883858"
+    "cor": "#886858"
   },
   "casos/caso-04-depois": {
-    "largura": 1080,
-    "altura": 1080,
+    "largura": 720,
+    "altura": 720,
     "larguras": [
       480,
-      720,
-      1080
+      720
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#883858"
+    "cor": "#886858"
   },
   "casos/caso-05-antes": {
-    "largura": 1080,
-    "altura": 1080,
+    "largura": 480,
+    "altura": 480,
     "larguras": [
-      480,
-      720,
-      1080
+      480
     ],
     "formatos": [
       "avif",
       "webp"
     ],
-    "cor": "#987868"
+    "cor": "#c8a878"
   },
   "casos/caso-05-depois": {
     "largura": 1080,
@@ -137,35 +129,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#987868"
-  },
-  "casos/caso-06-antes": {
-    "largura": 1080,
-    "altura": 1080,
-    "larguras": [
-      480,
-      720,
-      1080
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#d8d8c8"
-  },
-  "casos/caso-06-depois": {
-    "largura": 1080,
-    "altura": 1080,
-    "larguras": [
-      480,
-      720,
-      1080
-    ],
-    "formatos": [
-      "avif",
-      "webp"
-    ],
-    "cor": "#d8d8c8"
+    "cor": "#886868"
   },
   "espaco/espaco-01": {
     "largura": 2880,
@@ -246,13 +210,11 @@
     "cor": "#181818"
   },
   "hero/doutor-capa": {
-    "largura": 1600,
-    "altura": 2000,
+    "largura": 800,
+    "altura": 938,
     "larguras": [
       480,
-      800,
-      1200,
-      1600
+      800
     ],
     "formatos": [
       "avif",
@@ -381,7 +343,7 @@
       "avif",
       "webp"
     ],
-    "cor": "#e8d8c8"
+    "cor": "#d8c8b8"
   },
   "tratamentos/rosto": {
     "largura": 1600,

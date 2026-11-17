@@ -20,14 +20,16 @@
 // ---------------------------------------------------------------------------
 
 export const casos = [
-  // FICTÍCIO: casos, tratamentos e fotos. Os seis abaixo são provisórios: fotos de
-  // banco do Unsplash, a pedido do usuário (10/11/2026). O 01 é um par de verdade
-  // (de outra clínica); nos outros cinco, a mesma foto nos dois lados, porque não
-  // existe par livre desses tratamentos. Origem de cada foto: docs/creditos-imagens.md.
-  { id: 'caso-01', tratamento: 'Lentes de contato dental', provisorio: true, autorizacaoPorEscrito: false },
-  { id: 'caso-02', tratamento: 'Harmonização orofacial', provisorio: true, autorizacaoPorEscrito: false },
-  { id: 'caso-03', tratamento: 'Preenchimento labial', provisorio: true, autorizacaoPorEscrito: false },
-  { id: 'caso-04', tratamento: 'Lentes de contato dental', provisorio: true, autorizacaoPorEscrito: false },
-  { id: 'caso-05', tratamento: 'Clareamento dental', provisorio: true, autorizacaoPorEscrito: false },
-  { id: 'caso-06', tratamento: 'Bioestimulador de colágeno', provisorio: true, autorizacaoPorEscrito: false },
+  // Fotos do Instagram do doutor (@dr.henriquemartinss), recortadas de capturas
+  // de tela que o usuário mandou em 16/11/2026 (docs/creditos-imagens.md).
+  // São casos dele, mas continuam como provisórios: falta confirmar a
+  // autorização por escrito de cada paciente e o nome do tratamento. Com a
+  // autorização em mãos, troque para provisorio: false e
+  // autorizacaoPorEscrito: true (sem isso, o build de produção para).
+  { id: 'caso-01', tratamento: 'Preenchimento labial', provisorio: true, autorizacaoPorEscrito: false },
+  { id: 'caso-02', tratamento: 'Facetas de resina', provisorio: true, autorizacaoPorEscrito: false },
+  { id: 'caso-03', tratamento: 'Harmonização orofacial', provisorio: true, autorizacaoPorEscrito: false },
+  { id: 'caso-04', tratamento: 'Preenchimento labial', provisorio: true, autorizacaoPorEscrito: false },
+  // A CONFIRMAR: o tratamento deste caso (lentes ou facetas).
+  { id: 'caso-05', tratamento: 'Lentes de contato dental', provisorio: true, autorizacaoPorEscrito: false },
 ];

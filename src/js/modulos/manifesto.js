@@ -15,7 +15,7 @@ export function iniciarManifesto(fontes) {
     // Cópia para o leitor de tela + cópia visual (aria-hidden) dividida.
     const leitura = document.createElement('span');
     leitura.className = 'visualmente-oculto';
-    leitura.textContent = paragrafo.textContent.replace(/\s+/g, ' ').trim();
+    leitura.textContent = paragrafo.textContent.replace(/­/g, '').replace(/\s+/g, ' ').trim();
     const visual = document.createElement('span');
     visual.setAttribute('aria-hidden', 'true');
     visual.append(...paragrafo.childNodes);

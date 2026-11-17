@@ -20,8 +20,13 @@
      scripts/testar-hero.mjs: duas linhas de título mais o resto, que cresce
      um pouco com a largura), e largura do retrato. O retrato tem 1,25 × a
      largura de altura e só 0,62 dessa altura (0,775 × a largura) fica acima
-     do rótulo: o resto passa por trás do véu. */
-  --hero-titulo: var(--fs-display);
+     do rótulo: o resto passa por trás do véu.
+     O título tem um teto pela largura: "parecer você.", a linha mais larga,
+     mede 4,13 × o corpo, e precisa caber na largura do grid. Sem o teto, num
+     celular estreito ou com a fonte do sistema aumentada (o rem cresce, o vw
+     não), as linhas quebravam e o "O" podia ficar sozinho. */
+  --hero-titulo-max: calc((100vw - 2 * var(--grade-margem)) / 4.3);
+  --hero-titulo: min(var(--fs-display), var(--hero-titulo-max));
   --hero-texto: calc(var(--hero-titulo) * 1.8 + 13.5rem + 6.3vw + var(--hero-texto-extra, 0rem));
   --retrato-l: clamp(9rem, (100svh - var(--altura-header) - var(--hero-texto)) / 0.775, min(104vw, 44rem));
   /* Celular: tema escuro. O atributo data-tema-celular avisa o header.js. */
@@ -162,8 +167,18 @@
   text-align: center;
 }
 
+.hero__titulo.titulo-display {
+  font-size: var(--hero-titulo);
+}
+
 .hero__linha {
   display: block;
+}
+
+/* "O luxo de" nunca quebra: o "O" não fica sozinho numa linha (pedido do
+   usuário em 16/11/2026). O teto do --hero-titulo garante que ela cabe. */
+.hero__linha:first-child {
+  white-space: nowrap;
 }
 
 .hero__subtitulo {
@@ -244,11 +259,7 @@
    encolhe um pouco pela altura, para sobrar espaço para o retrato. */
 @media (orientation: portrait) and (max-height: 47.5em) {
   .hero {
-    --hero-titulo: min(var(--fs-display), 11svh);
-  }
-
-  .hero__titulo.titulo-display {
-    font-size: var(--hero-titulo);
+    --hero-titulo: min(var(--fs-display), 11svh, var(--hero-titulo-max));
   }
 }
 
@@ -299,6 +310,20 @@
   .hero__retrato-img {
     -webkit-mask-image: none;
     mask-image: none;
+  }
+
+  /* Enquadramento de capa (pedido do usuário em 16/11/2026): na foto, o
+     doutor está sentado, com as mãos à frente. O retrato cresce a partir do
+     alto e o que passa do pé do hero é cortado: ficam cabeça, ombros e peito,
+     sem as mãos nem as pernas. Só na vertical (os ombros podem passar dos
+     lados do quadro). No celular, o véu do texto já cobre essa parte. */
+  .hero__composicao {
+    overflow-y: clip;
+  }
+
+  .hero__retrato-picture {
+    scale: 1.3;
+    transform-origin: 50% 0;
   }
 
   .hero__rotulo {

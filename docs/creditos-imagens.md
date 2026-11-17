@@ -43,3 +43,18 @@ As quatro fotos do atendimento (`fotos/atendimento/atendimento-01` a `04`, Unspl
 Os renders antigos do espaço, do sobre, dos blocos de tratamento e da lista de procedimentos continuam reproduzíveis (`ferramentas/ambientes.html` e `ferramentas/natureza-morta.html`), assim como as placas "Caso 01" a "Caso 06" dos casos (`ferramentas/placa.html`), que ficaram no lugar das fotos até 10/11/2026. O `gerar-provisorias.mjs` grava esses em `capturas/renders/`, para não apagar as fotos.
 
 Procurei antes e depois de lentes, clareamento, lábios, toxina e harmonização no Unsplash, no Pexels, no Pixabay e no Wikimedia Commons em 10/11/2026. Só o par do caso 01 serve: no Commons há só radiografias e fotos clínicas de baixa resolução, e o Pixabay não tem nada. Pexels bloqueou parte das buscas. Não foi feito nenhum "antes" por edição de uma foto de "depois", para não fabricar resultado.
+
+## 16/11/2026: fotos do Instagram do doutor (substitui as linhas do hero e dos casos acima)
+
+O usuário mandou capturas de tela do Instagram do doutor (@dr.henriquemartinss). Os recortes foram feitos com `sharp`, a partir das capturas (1170 × 2532).
+
+| Arquivo | Onde aparece | Origem | Pendência |
+| --- | --- | --- | --- |
+| `fotos/hero/doutor-capa.png` | Hero | Quadro de um vídeo do doutor (camisa preta, sentado), recortado e sem fundo (`@imgly/background-removal-node`, com a borda afinada). 1136 × 1332 | Uma foto original maior (4:5, 1600 × 2000) fica mais nítida na tela larga |
+| `fotos/casos/caso-01-*.jpg` | Resultados, caso 01 (preenchimento labial) | Post de 10/06/2024, fotos 2/2 (antes) e 1/2 (depois). 1019 × 1019 | Autorização por escrito do paciente |
+| `fotos/casos/caso-02-*.jpg` | Resultados, caso 02 (facetas de resina) | Post de 21/05/2025, fotos 2/2 (antes) e 1/2 (depois). 1170 × 1170 | Autorização por escrito do paciente |
+| `fotos/casos/caso-03-*.jpg` | Resultados, caso 03 (harmonização orofacial) | Antes: metade esquerda da foto do iPad com o comparativo (475 × 475, baixa resolução). Depois: a foto de perfil sozinha (1170 × 1170) | Autorização por escrito; a foto original do "antes"; confirmar o tratamento |
+| `fotos/casos/caso-04-*.jpg` | Resultados, caso 04 (preenchimento labial) | Post de 24/03, fotos 2/2 (antes) e 1/2 (depois). 1019 × 1019 | Autorização por escrito do paciente |
+| `fotos/casos/caso-05-*.jpg` | Resultados, caso 05 | Antes: a foto dos dentes sobreposta num vídeo (601 × 601). Depois: close do sorriso, girado 90° (1170 × 1170). O usuário informou que é o mesmo paciente | Autorização por escrito; confirmar o tratamento (lentes ou facetas) |
+
+O caso 06 (foto de banco) saiu. O retrato do Sobre (`fotos/sobre/retrato.jpg`) é o mesmo recorte do doutor do hero, ampliado (2050 px de largura) e cortado no peito, sobre um degradê de linho (#d7cebd a #dfd6c7), 1600 × 2000.

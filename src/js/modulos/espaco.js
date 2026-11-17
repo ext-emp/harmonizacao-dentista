@@ -15,9 +15,16 @@
 // galeria usa) é recalculada a cada refresh, para o trilho andar mais ou
 // menos no ritmo da mão. Com movimento reduzido, nada disso: a galeria é uma
 // faixa com scroll lateral nativo.
+// No Safari do iPhone, a galeria tremia ao rolar. A causa principal estava no
+// CSS (o overflow em .espaco tirava o palco sticky da rolagem do navegador:
+// ver espaco.css). Aqui, no toque, o trilho segue o scroll com uma suavização
+// curta (com mouse, o Lenis já suaviza): no embalo depois de soltar o dedo,
+// as posições chegam ao JavaScript em passos irregulares. E as fotos, com
+// lazy loading, são baixadas e decodificadas antes de o trilho andar (antes,
+// cada uma só carregava ao entrar na tela, já em movimento).
 // ---------------------------------------------------------------------------
 import { gsap, ScrollTrigger } from '../core/gsap.js';
-import { layoutLargo, reduzMovimento } from '../core/ambiente.js';
+import { layoutLargo, reduzMovimento, temMouse } from '../core/ambiente.js';
 
 // Fatias do trecho de scroll: trilho andando, foto abrindo e uma pausa no fim.
 const FASE_TRILHO = 0.72;
@@ -28,6 +35,21 @@ const INICIO_NA_TELA = 0.5;
 const FUNDO_MINIMO = 0.8;
 // Celular: px entre o pé da frase e o alto das fotos quando elas começam a entrar.
 const FOLGA_DA_FRASE = 24;
+// Toque: segundos que o trilho leva para alcançar o scroll (suaviza os passos).
+const SUAVIZAR_TOQUE = 0.35;
+
+// As fotos da galeria vêm com lazy loading, e no celular o trilho começa fora
+// da tela: cada uma só seria baixada ao entrar, já andando. Depois do load da
+// página (o hero já carregou), baixa todas e deixa decodificadas.
+function prepararFotos(trilho) {
+  const preparar = () =>
+    trilho.querySelectorAll('img').forEach((img) => {
+      img.loading = 'eager';
+      img.decode?.().catch(() => {});
+    });
+  if (document.readyState === 'complete') preparar();
+  else window.addEventListener('load', preparar, { once: true });
+}
 
 export function iniciarEspaco() {
   const secao = document.querySelector('[data-espaco]');
@@ -60,7 +82,10 @@ export function iniciarEspaco() {
     // Celular: o primeiro cartão começa logo depois da borda direita da tela.
     m.x0 = celular ? largura : largura * INICIO_NA_TELA;
     m.x1 = -fundo.offsetLeft;
-    m.topo = Math.max(0, (altura - cartao.height) / 2);
+    // Pela altura do palco (100svh), onde os cartões estão centralizados, e
+    // não pela da janela: no Safari do iPhone a janela cresce quando a barra
+    // de endereço some, e o recorte da última foto ficava fora do lugar.
+    m.topo = Math.max(0, (palco.clientHeight - cartao.height) / 2);
     m.lado = Math.max(0, (largura - cartao.width) / 2);
     // Celular: a subida (uma tela, junto com a abertura) e a espera pela
     // frase entram no trecho do trilho sem tirar o ritmo dele. A espera é o
@@ -80,6 +105,7 @@ export function iniciarEspaco() {
 
   medir();
   ScrollTrigger.addEventListener('refreshInit', medir);
+  prepararFotos(trilho);
 
   const recorte = () => `inset(${m.topo}px ${m.lado}px ${m.topo}px ${m.lado}px)`;
 
@@ -92,7 +118,7 @@ export function iniciarEspaco() {
         start: 'top bottom',
         endTrigger: percurso,
         end: 'bottom bottom',
-        scrub: true,
+        scrub: temMouse ? true : SUAVIZAR_TOQUE,
         invalidateOnRefresh: true,
       },
     })

@@ -17,8 +17,11 @@
   /* Cartão da última foto (3:2), antes de abrir. */
   --fundo-largura: calc(var(--espaco-alto) * 1.5);
   --fundo-altura: var(--espaco-alto);
+  /* Sem overflow aqui: o palco (sticky) é quem recorta as fotos. No Safari,
+     um sticky dentro de um ancestral que recorta (até com overflow: clip)
+     deixa de andar junto com a rolagem e é reposicionado pelo JavaScript a
+     cada quadro: no iPhone, a galeria tremia ao rolar. */
   position: relative;
-  overflow-x: clip;
 }
 
 /* Celular: os cartões da galeria animada são grandes e em pé, todos do mesmo
